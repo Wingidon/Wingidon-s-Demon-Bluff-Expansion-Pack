@@ -15,6 +15,3 @@ Game Start:
 Most characters are Minions.
 
 I Lie and Disguise.
-
-## NOTICE
-Every role added, regardless of alignment, currently uses Villager colours. Apologies about that, you should probably use ArtSwap to go in and change those.
