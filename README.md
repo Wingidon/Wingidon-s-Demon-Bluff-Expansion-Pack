@@ -1,5 +1,18 @@
 ## Welcome!
-This is a mod that adds a LOT of new roles. Currently, it includes the following:
+This is a mod that adds a LOT of new roles.
+There is an ArtSwap folder attached containing the art I use for each role.
+None of the art was made by me. Most are either by Normandia, or edits of Normandia's work. Here are the ones that aren't:
+Arithmetician: Blue Cheesed (https://discord.com/channels/1148903384968089640/1399932582723846144/1439413413645254800)
+Forager: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1409917727770021898)
+Scavenger: LostIllustrator (https://discord.com/channels/1148903384968089640/1408446574685585458/1408446574685585458)
+Sentinel: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1433438063341731881)
+Spy: Panda, though the original message was deleted for some reason? Remnants exist at https://discord.com/channels/1148903384968089640/1400730209472221234/1426689893211570293.
+Lunatic: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1417961198258753627)
+Caedoccidere: I edited together a bunch of stock images I found online.
+
+
+
+Currently, this mod includes the following roles:
 #### Arithmetician (Villager)
 Learn the sum of all Evil characters' positions.
 #### Clairvoyant (Villager)
