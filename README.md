@@ -36,6 +36,10 @@ Learn if they are a Villager.
 Pick 1 character:
 They die without yielding any extra info.
 For each Unrevealed character, deal 1 damage to you if Villager picked, or 2 healing otherwise.
+#### Introvert (Villager)
+Learn 2 characters that sit within 2 seats of me.
+#### Lamb (Villager)
+Learn how far from me to a particular Outcast.
 #### Performer (Villager)
 Learn 1 Evil character.
 If I am adjacent to Evil, Learn false info.
@@ -104,6 +108,10 @@ I Lie and Disguise.
 #### Emenverax (Demon)
 1 Good Villager Disguises as Emenverax.
 Take 3 extra damage if you Execute them.
+#### Mendaverte
+Good Villagears are Corrupted.
+Evil characters tell the truth.
+I Lie and Disguise.
 #### Praesect (Demon)
 Game Start:
 2 Good Villagers become Acolytes.
