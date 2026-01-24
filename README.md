@@ -71,6 +71,9 @@ I Disguise.
 #### Acolyte (Minion)
 I am an Evil created by another character's ability.
 I Lie and Disguise as an out-of-play character unless stated otherwise.
+#### Professional (Minion)
+I Lie and Disguise.
+I Register as Good and as my Disguise.
 #### Swarm, Good (Minion)
 Game Start:
 2 other Good Villagers become Swarm. Both are Evil.
@@ -115,6 +118,12 @@ I Lie and Disguise.
 #### Praesect (Demon)
 Game Start:
 2 Good Villagers become Acolytes.
+
+I Lie and Disguise.
+#### Venelum (Demon)
+Game Start:
+1 Good Villager adjacent to me becomes Corrupted, if possible. They *cannot be Cured.*
+1 Good Corrupted character becomes Evil.
 
 I Lie and Disguise.
 #### Veniyon (Demon)
