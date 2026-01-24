@@ -112,7 +112,7 @@ I Lie and Disguise.
 1 Good Villager Disguises as Emenverax.
 Take 3 extra damage if you Execute them.
 #### Mendaverte
-Good Villagears are Corrupted.
+Good Villagers are Corrupted.
 Evil characters tell the truth.
 I Lie and Disguise.
 #### Praesect (Demon)
