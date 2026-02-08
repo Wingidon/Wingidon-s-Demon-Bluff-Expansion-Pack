@@ -17,6 +17,8 @@ None of the art was made by me. Most are either by Normandia, or edits of Norman
 Currently, this mod includes the following roles:
 #### Arithmetician (Villager)
 Learn the sum of all Evil characters' positions.
+#### Chiromancer (Villager)
+Learn 3 characters and which Evil role each is. Only 1 is correct.
 #### Clairvoyant (Villager)
 Learn 2 characters: Both are Good, or both are Evil.
 #### Convict (Villager)
@@ -120,6 +122,10 @@ Game Start:
 2 Good Villagers become Acolytes.
 
 I Lie and Disguise.
+#### Specularus (Demon)
+Everyone Disguises, but nobody Lies.
+
+Many fake Villagers and Outcasts are added to the Deck View.
 #### Venelum (Demon)
 Game Start:
 1 Good Villager adjacent to me becomes Corrupted, if possible. They *cannot be Cured.*
