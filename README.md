@@ -7,6 +7,7 @@ None of the art was made by me. Most are either by Normandia, or edits of Norman
 - Arithmetician: Blue Cheesed (https://discord.com/channels/1148903384968089640/1399932582723846144/1439413413645254800)
 - Forager: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1409917727770021898)
 - Jewelsmith: Astery (https://discord.com/channels/1148903384968089640/1399932582723846144/1433225282143129702)
+- Lunatic: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1417961198258753627)
 - Scavenger: LostIllustrator (https://discord.com/channels/1148903384968089640/1408446574685585458/1408446574685585458)
 - Sentinel: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1433438063341731881)
 - Sheriff: I recoloured the silhouette of the role from Town of Salem 2. (https://town-of-salem.fandom.com/wiki/Sheriff_(ToS_2))
