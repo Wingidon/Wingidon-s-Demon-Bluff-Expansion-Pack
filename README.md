@@ -26,6 +26,7 @@ Currently, this mod includes the following roles:
 ### Villagers
 - Arbiter
 - Arithmetician
+- Bloodseer
 - Cardshark
 - Chiromancer
 - Clairvoyant
@@ -66,6 +67,7 @@ Currently, this mod includes the following roles:
 ### Demons
 - Agmeres
 - Caedoccidere
+- Carnicarius
 - Iris
 - Leviathan
 - Mendaverte
