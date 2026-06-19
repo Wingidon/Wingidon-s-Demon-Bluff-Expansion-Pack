@@ -78,7 +78,7 @@ Currently, this mod includes the following roles:
 - Iris - Registers as Good and turns a Villager Evil. Lies and Disguises.
 - Leviathan - Most characters are Outcasts. Lose if you execute a Villager. Lies and Disguises.
 - Mendaverte - Villagers are Corrupted. Evil characters tell the truth. Lies and Disguises.
-- Praesect - Creates an Acolyte and a Zealot. Deals damage if Executed before both are killed.
+- Praesect - Creates an Acolyte and a Zealot. Deals damage if Executed before both are killed. Lies and Diguises.
 - Sanguitaurus - Night falls twice as fast. Kills at night. Lose if all Good characters die. Lies and Disguises.
 - Tenecaligo - Effectively hides the Minion & Outcast count. Lies and Disguises.
 - Venelum - Corrupts an adjacent Villager. Turns a Corrupted character Evil. Lies and Disguises.
