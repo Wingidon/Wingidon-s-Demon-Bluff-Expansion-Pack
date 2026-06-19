@@ -17,7 +17,7 @@ public class w_InvertDemon : Demon
     public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.Start)
+        if (trigger == ETriggerPhase.AfterRoundStart)
         {
             foreach (Character character in Gameplay.CurrentCharacters)
             {
@@ -25,6 +25,7 @@ public class w_InvertDemon : Demon
                 {
                     character.statuses.AddStatus(ECharacterStatus.Corrupted, charRef); // Corrupts them.
                     character.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef); // Lets Witness see them.
+                    character.statuses.statuses.Remove(ECharacterStatus.HealthyBluff); // To avoid shenanigans
                     Debug.Log(string.Format("Corrupted #{0}.", character.id));
                 }
                 if (character.alignment == EAlignment.Evil && character.dataRef.characterId != "Undying_WING") // Specific exception for the Undying, since they're a non-Disguising Minion and I think HealthyBluff is somehow for some reason bugging them out.

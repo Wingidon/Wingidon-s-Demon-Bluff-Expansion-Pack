@@ -88,7 +88,7 @@ public class w_Ranger : Role
         if (steps == 1)
             return $"I am 1 card away from my furthest Evil";
         else if (steps == 0)
-            return "This village confuses me";
+            return "Something does not make sense";
         else
             return $"I am {steps} cards away from my furthest Evil";
     }

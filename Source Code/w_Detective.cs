@@ -72,141 +72,29 @@ public class w_Detective : Role
     }
     public override ActedInfo GetBluffInfo(Character charRef)
     {
-        Il2CppSystem.Collections.Generic.List<Character> fakeTruthers = new Il2CppSystem.Collections.Generic.List<Character>();
-        Il2CppSystem.Collections.Generic.List<Character> fakeLiars = new Il2CppSystem.Collections.Generic.List<Character>();
-        Il2CppSystem.Collections.Generic.List<Character> newList = new Il2CppSystem.Collections.Generic.List<Character>();
-        Il2CppSystem.Collections.Generic.List<Character> liars = new Il2CppSystem.Collections.Generic.List<Character>();
-        Il2CppSystem.Collections.Generic.List<Character> truthers = new Il2CppSystem.Collections.Generic.List<Character>();
-        Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
-        Characters charInst = Characters.Instance;
-        newList = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
-        newList.Remove(charRef);
-        string info = "Info";
-        int trueInfo = 0;
-
-        foreach (Character character in newList)
-        {
-            selection.Add(character);
-            if (checkIfCharacterLying(character)) trueInfo++;
-        }
-
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+        Il2CppSystem.Collections.Generic.List<Character> realLiars = new Il2CppSystem.Collections.Generic.List<Character>();
         foreach (Character character in Gameplay.CurrentCharacters)
         {
-            fakeTruthers.Add(character);
+            if (CharacterHelper.CheckLyingAppearance(character))
+            {
+                realLiars.Add(character);
+            }
         }
-
-        Character fakeLiar = new Character();
-        // First, let's sort every character into truthful and lying
-        foreach (Character character in Gameplay.CurrentCharacters)
+        Il2CppSystem.Collections.Generic.List<Character> fakeLiars = sharedScripts.GetFakeGroup(realLiars);
+        Il2CppSystem.Collections.Generic.List<Character> unrevealedChars = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
+        unrevealedChars.Remove(charRef);
+        int trueNum = 0;
+        int falseNum = 0;
+        if (unrevealedChars.Count == 0) return GetLyingFailsafe(charRef);
+        foreach (Character character in unrevealedChars)
         {
-            if (checkIfCharacterLying(character))
-            {
-                truthers.Add(character);
-            }
-            else
-            {
-                liars.Add(character);
-                // fakeLiar = fakeTruthers[UnityEngine.Random.RandomRangeInt(0, fakeTruthers.Count)]; // For lying convincingly
-                // fakeLiars.Add(fakeLiar);
-                // fakeTruthers.Remove(fakeLiar);
-            }
+            if (realLiars.Contains(character)) trueNum++;
+            if (fakeLiars.Contains(character)) falseNum++;
         }
-
-        // If nobody is unrevealed, we go to the failsafe.
-        if (newList.Count == 0)
-        {
-            bool canDoTruthers = false;
-            bool canDoLiars = false;
-            if (truthers.Count > 1) canDoTruthers = true;
-            if (truthers.Count > 1) canDoLiars = true;
-            if (canDoTruthers && canDoLiars)
-            {
-                if (UnityEngine.Random.RandomRangeInt(0, 2) == 0)
-                {
-                    canDoTruthers = false;
-                }
-                else
-                {
-                    canDoLiars = false;
-                }
-            }
-            if (canDoTruthers)
-            {
-                selection.Add(truthers[UnityEngine.Random.RandomRangeInt(0, truthers.Count)]);
-                truthers.Remove(selection[0]);
-                selection.Add(truthers[UnityEngine.Random.RandomRangeInt(0, truthers.Count)]);
-            }
-            else
-            {
-                selection.Add(liars[UnityEngine.Random.RandomRangeInt(0, liars.Count)]);
-                liars.Remove(selection[0]);
-                selection.Add(liars[UnityEngine.Random.RandomRangeInt(0, liars.Count)]);
-            }
-            selection = SortList(selection); // Sort them
-            info = $"One is Lying:\n#{selection[0].id}, #{selection[1].id}"; // Learn that one is lying.
-            return new ActedInfo(info, selection); // Return.
-        }
-
-        /* Right, this system is fucked, I'm scrapping it for the moment. Going to just use RNG.
-        int trueLiarCount = 0; // Set our liar count.
-        int falseLiarCount = 0; // Set our false liar count.
-        foreach (Character character in newList)
-        {
-            selection.Add(character); // Add all Unrevealed characters to the selection.
-            if (liars.Contains(character)) // If they're Lying...
-            {
-                // ...increment the liar count by 1.
-                trueLiarCount++;
-            }
-            if (fakeLiars.Contains(character)) // If they're fake-Lying...
-            {
-                // ...increment the false liar count by 1.
-                falseLiarCount++;
-            }
-        }
-        if (falseLiarCount == trueLiarCount) // Failsafe to avoid accidentally true info.
-        {
-            if (falseLiarCount == 0)
-            {
-                falseLiarCount += 1;
-            }
-            else
-            {
-                falseLiarCount -= 1;
-            }
-        }
-        */
-
-        int liarCount = liars.Count;
-        int unrevealedCharCount = newList.Count;
-        int upperBound = 0;
-        if (liarCount < unrevealedCharCount)
-        {
-            upperBound = unrevealedCharCount;
-        }
-        else
-        {
-            upperBound = liarCount;
-        }
-
-        upperBound = UnityEngine.Mathf.Min(liarCount, unrevealedCharCount);
-
-        int falseLiarCount = UnityEngine.Random.RandomRangeInt(0, upperBound);
-        if (falseLiarCount == trueInfo) // Failsafe to avoid accidentally true info.
-        {
-            if (falseLiarCount == 0)
-            {
-                falseLiarCount += 1;
-            }
-            else
-            {
-                falseLiarCount -= 1;
-            }
-        }
-
-        // Conjure the info
-        info = ConjureInfo(selection, falseLiarCount);
-        return new ActedInfo(info, selection);
+        falseNum = sharedScripts.MakeNumberWrong(trueNum, falseNum, 0);
+        string info = ConjureInfo(unrevealedChars, falseNum);
+        return new ActedInfo(info, unrevealedChars);
     }
     public override string Description
     {
@@ -214,6 +102,47 @@ public class w_Detective : Role
         {
             return "Learn how many Lying characters aren't Revealed yet";
         }
+    }
+    public ActedInfo GetLyingFailsafe(Character charRef)
+    {
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+        Il2CppSystem.Collections.Generic.List<Character> lyingChars = new Il2CppSystem.Collections.Generic.List<Character>();
+        Il2CppSystem.Collections.Generic.List<Character> truthfulChars = new Il2CppSystem.Collections.Generic.List<Character>();
+        Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
+        string info = "";
+        foreach (Character character in Gameplay.CurrentCharacters)
+        {
+            if (CharacterHelper.CheckLyingAppearance(character)) lyingChars.Add(character);
+            else truthfulChars.Add(character);
+        }
+        lyingChars.Remove(charRef);
+        truthfulChars.Remove(charRef);
+        bool canDoTruthful = false;
+        bool canDoLying = false;
+        if (truthfulChars.Count > 1) canDoTruthful = true;
+        if (lyingChars.Count > 1) canDoLying = true;
+        if (canDoTruthful && canDoLying)
+        {
+            if (sharedScripts.PercentChance(50)) canDoLying = false;
+            else canDoTruthful = false;
+        }
+
+        if (canDoLying)
+        {
+            selection.Add(lyingChars[UnityEngine.Random.RandomRangeInt(0, lyingChars.Count)]);
+            lyingChars.Remove(selection[0]);
+            selection.Add(lyingChars[UnityEngine.Random.RandomRangeInt(0, lyingChars.Count)]);
+        }
+        else
+        {
+            selection.Add(truthfulChars[UnityEngine.Random.RandomRangeInt(0, truthfulChars.Count)]);
+            truthfulChars.Remove(selection[0]);
+            selection.Add(truthfulChars[UnityEngine.Random.RandomRangeInt(0, truthfulChars.Count)]);
+        }
+
+        selection = sharedScripts.SortList(selection);
+        info = $"One is Lying:\n#{selection[0].id}, #{selection[1].id}";
+        return new ActedInfo(info, selection);
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {

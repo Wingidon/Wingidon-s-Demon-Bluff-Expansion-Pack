@@ -46,6 +46,7 @@ public class w_Minos : Demon
             newList.Remove(charRef);
             newList = Characters.Instance.FilterAliveCharacters(newList);
             newList = Characters.Instance.FilterAlignmentCharacters(newList, EAlignment.Good);
+            newList = Characters.Instance.FilterCharacterMissingStatus(newList, ECharacterStatus.KilledByEvil);
             revealedChars = Characters.Instance.FilterRevealedCharacters(Gameplay.CurrentCharacters);
             Health health = PlayerController.PlayerInfo.health;
             health.Damage(2);
@@ -180,9 +181,11 @@ public class w_Minos : Demon
             if (!goodLives && minosInPlay)
             {
                 UnityEngine.Debug.Log("No Good characters live. Initiating Sanguitaurus loss.");
-                ch.RevealAllReal();
+                Health health = PlayerController.PlayerInfo.health;
+                health.Damage(9999);
+                //ch.RevealAllReal();
                 //getWinCons();
-                winConditions.Lose();
+                //winConditions.Lose();
                 //minosLose();
             }
         }

@@ -30,7 +30,7 @@ public class w_Sheriff : Role
         string line = "info";
         if (newList.Count == 0)
         {
-            line = "This village confuses me";
+            line = "Something does not make sense";
         }
         else
         {
@@ -69,7 +69,7 @@ public class w_Sheriff : Role
         string line = "info";
         if (bluffsList.Count == 0)
         {
-            line = "This village confuses me";
+            line = "Something does not make sense";
         }
         else
         {

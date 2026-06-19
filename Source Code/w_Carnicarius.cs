@@ -73,15 +73,13 @@ public class w_Carnicarius : Demon
             valuableCharacters_OnlyHidden.Add(false);
             valuableCharacters_IDs.Add("Recruiter_scm");
             valuableCharacters_OnlyHidden.Add(true);
-            valuableCharacters_Prio.Add(12);
-            valuableCharacters_Prio.Add(12);
-            valuableCharacters_Prio.Add(12);
-            valuableCharacters_Prio.Add(12);
-            valuableCharacters_Prio.Add(12);
-            valuableCharacters_Prio.Add(12);
-            valuableCharacters_Prio.Add(12);
-            valuableCharacters_Prio.Add(12);
+            while (valuableCharacters_Prio.Count < valuableCharacters_IDs.Count)
+            {
+                valuableCharacters_Prio.Add(60);
+            }
 
+            valuableCharacters_IDs.Add("Devout_WING");
+            valuableCharacters_OnlyHidden.Add(false);
             valuableCharacters_IDs.Add("Fortune Teller_74565681");
             valuableCharacters_OnlyHidden.Add(false);
             valuableCharacters_IDs.Add("Hunter_93427887");
@@ -118,24 +116,10 @@ public class w_Carnicarius : Demon
             valuableCharacters_OnlyHidden.Add(true);
             valuableCharacters_IDs.Add("Coach_scm");
             valuableCharacters_OnlyHidden.Add(false);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
-            valuableCharacters_Prio.Add(8);
+            while (valuableCharacters_Prio.Count < valuableCharacters_IDs.Count)
+            {
+                valuableCharacters_Prio.Add(40);
+            }
 
             valuableCharacters_IDs.Add("Confessor_18741708");
             valuableCharacters_OnlyHidden.Add(true);
@@ -157,6 +141,8 @@ public class w_Carnicarius : Demon
             valuableCharacters_OnlyHidden.Add(false);
             valuableCharacters_IDs.Add("Introvert_WING");
             valuableCharacters_OnlyHidden.Add(true);
+            valuableCharacters_IDs.Add("Knave_WING");
+            valuableCharacters_OnlyHidden.Add(false);
             valuableCharacters_IDs.Add("Riddler_scm");
             valuableCharacters_OnlyHidden.Add(true);
             valuableCharacters_IDs.Add("Obsessor_scm");
@@ -173,24 +159,14 @@ public class w_Carnicarius : Demon
             valuableCharacters_OnlyHidden.Add(true);
             valuableCharacters_IDs.Add("Pioneer_ehm");
             valuableCharacters_OnlyHidden.Add(true);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
-            valuableCharacters_Prio.Add(4);
+            while (valuableCharacters_Prio.Count < valuableCharacters_IDs.Count)
+            {
+                valuableCharacters_Prio.Add(20);
+            }
+
+            valuableCharacters_IDs.Add("Knight_47970624");
+            valuableCharacters_OnlyHidden.Add(false);
+            valuableCharacters_Prio.Add(0); // This should just make Carnicarius never stab the Knight, just in case the other check didn't work.
 
 
             int corruptMult = 2; // Multiplier for Pure characters, because leaving Corrupted characters alive is good I think
@@ -252,7 +228,7 @@ public class w_Carnicarius : Demon
                         listNum = valuableCharacters_IDs.IndexOf(character.dataRef.characterId);
                         if ((valuableCharacters_OnlyHidden[listNum] == true && !revealedChars.Contains(character)) || valuableCharacters_OnlyHidden[listNum] == false)
                         {
-                            multiplier *= valuableCharacters_Prio[listNum] * 2;
+                            multiplier *= valuableCharacters_Prio[listNum];
                             if (valuableCharacters_Prio[listNum] != 1) killReason += $" They were a valuable target with a priority level of {valuableCharacters_Prio[listNum]}.";
                         }
                     }
@@ -262,7 +238,7 @@ public class w_Carnicarius : Demon
                 {
                     multiplier = 0;
                 }
-                if (character.statuses.Contains(ECharacterStatus.UnkillableByDemon))
+                if (character.statuses.Contains(ECharacterStatus.UnkillableByDemon) || character.statuses.Contains(ECharacterStatus.KilledByEvil))
                 {
                     multiplier = 0;
                 }
@@ -294,6 +270,7 @@ public class w_Carnicarius : Demon
                 if (revealedChars.Contains(myTarget)) myTarget.statuses.AddStatus(CarniKill.carniKill, charRef);
                 myTarget.KillByDemon(charRef);
                 myTarget.pickable.SetActive(false);
+                myTarget.statuses.AddStatus(ECharacterStatus.KilledByEvil, charRef);
                 MelonLogger.Msg($"Killed the {myTarget.dataRef.characterName} at #{myTarget.id}");
                 //MelonLogger.Msg($"The target list was: {sharedScripts.MentionEveryCharacterInList(validTargets, "")}");
                 MelonLogger.Msg($"The reason was as follows: {killReasons[myTarget.id]}");

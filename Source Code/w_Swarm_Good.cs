@@ -25,6 +25,8 @@ public class w_Swarm_Good : Minion
             {
                 chars = Characters.Instance.FilterCharacterType(chars, ECharacterType.Villager);
                 chars = Characters.Instance.FilterAlignmentCharacters(chars, EAlignment.Good);
+                chars = Characters.Instance.FilterRealAlignmentCharacters(chars, EAlignment.Good);
+                chars = Characters.Instance.FilterRealCharacterType(chars, ECharacterType.Villager);
                 if (chars.Count > 0)
                 {
                     pickedChar = chars[UnityEngine.Random.Range(0, chars.Count)];
@@ -74,6 +76,7 @@ public class w_Swarm_Good : Minion
     {
         if (trigger == ETriggerPhase.Day)
         {
+            this.onActed.Invoke(this.GetBluffInfo(charRef));
         }
     }
     public override ActedInfo GetInfo(Character charRef)
@@ -100,7 +103,7 @@ public class w_Swarm_Good : Minion
             }
         }
         string line = "Info";
-        if (newList2.Count > 1)
+        if (newList2.Count > 1 && newList.Count > 1)
         {
             Character random = newList[UnityEngine.Random.RandomRangeInt(0, newList.Count)];
             selection.Add(random);
@@ -139,6 +142,7 @@ public class w_Swarm_Good : Minion
         {
             //line = "I am the only Swarm.";
             line = "Something does not make sense";
+            selection.Add(charRef);
         }
 
         ActedInfo actedInfo = new ActedInfo(line, selection);
@@ -148,7 +152,8 @@ public class w_Swarm_Good : Minion
     {
         Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
 
-        string line = string.Format("I feel off.");
+        string line = string.Format("Something does not make sense");
+        selection.Add(charRef);
 
         ActedInfo actedInfo = new ActedInfo(line, selection);
         return actedInfo;

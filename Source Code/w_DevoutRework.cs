@@ -60,8 +60,8 @@ public class w_DevoutRework : Role
         Il2CppSystem.Collections.Generic.List<Character> revealedChars = Characters.Instance.FilterRevealedCharacters(Gameplay.CurrentCharacters);
         if (!revealedChars.Contains(pickedChars[0]))
         {
-            DenyInfo(chRef, "Unrevealed", pickedChars);
-            chRef.pickableUses = 1;
+            //DenyInfo(chRef, "Unrevealed", pickedChars);
+            //chRef.pickableUses = 1;
             return;
         }
 
@@ -76,8 +76,8 @@ public class w_DevoutRework : Role
         */
         if (pickedChars[0].GetCharacterBluffIfAble().characterId == "Devout_WING")
         {
-            DenyInfo(chRef, "Devout", pickedChars);
-            chRef.pickableUses = 1;
+            //DenyInfo(chRef, "Devout", pickedChars);
+            //chRef.pickableUses = 1;
             return;
         }
 
@@ -136,6 +136,7 @@ public class w_DevoutRework : Role
 
 
         pickedChars[0].statuses.AddStatus(ECharacterStatus.Corrupted, chRef); // Corrupt them if Lying
+        pickedChars[0].statuses.statuses.Remove(ECharacterStatus.HealthyBluff);
         
         // Now, let's check if they're a Pick character,
         if (pickedChars[0].GetCharacterBluffIfAble().picking) // If they're a Pick role,

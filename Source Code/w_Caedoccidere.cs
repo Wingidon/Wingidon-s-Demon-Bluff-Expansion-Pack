@@ -36,6 +36,7 @@ public class w_Caedoccidere : Demon
             validTargets = Characters.Instance.FilterRevealedCharacters(validTargets);
             validTargets = Characters.Instance.FilterAlignmentCharacters(validTargets, EAlignment.Good);
             validTargets = Characters.Instance.FilterCharacterMissingStatus(validTargets, ECharacterStatus.UnkillableByDemon);
+            validTargets = Characters.Instance.FilterCharacterMissingStatus(validTargets, ECharacterStatus.KilledByEvil);
             Health health = PlayerController.PlayerInfo.health;
             health.Damage(3);
             if (!(validTargets.Count == 0))

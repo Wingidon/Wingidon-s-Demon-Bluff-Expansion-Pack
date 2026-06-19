@@ -128,6 +128,7 @@ public class MainMod : MelonMod
         // Partisan - Good characters adjacent to me can't die.
         // Saint - I am always Good.
         // Writer - Learn a Villager role and its distance to its nearest Outcast.
+        // ??? (Visionary?) - Every 4 Reveals, Learn that a random character is either a particular Good role or a particular Evil role.
 
         // Occultist - Has a Minion ability (Make them become a Good Minion that Disguises as Occultist?)
         // Provocateur - Kills a Villager each night, lose if all Villagers die.
@@ -146,24 +147,24 @@ public class MainMod : MelonMod
         // Tempriam - Dead Minions appear as Tempriams. Need to think about how I'd implement something like this. Could overwrite the CharacterData of Minions with Tempriam when their true role is revealed, maybe.
 
 
-        CharacterData w_prince = newCharacter("Prince", EAlignment.Good, ECharacterType.Villager, true, false, "\"Secretly wishes that his mother was more trusting.\"");
+        CharacterData w_prince = newCharacter("Prince", EAlignment.Good, ECharacterType.Villager, true, false, "\"Secretly wishes that his mother was more trusting.\"", "Bishop_58855542");
         w_prince.role = new w_Prince();
         w_prince.description = "Learn that exactly 1 of 2 characters is Disguised.";
         w_prince.ifLies = $"Both characters in my info are {formattedKeyText("Honest")}.";
         w_prince.gender = EGender.Male;
 
-        CharacterData w_clairvoyant = newCharacter("Clairvoyant", EAlignment.Good, ECharacterType.Villager, true, false, "\"Sees a friendship in the future. Doesn't always understand why.\"");
+        CharacterData w_clairvoyant = newCharacter("Clairvoyant", EAlignment.Good, ECharacterType.Villager, true, false, "\"Sees a friendship in the future. Doesn't always understand why.\"", "Enlightened_62576217");
         w_clairvoyant.role = new w_Clairvoyant();
         w_clairvoyant.description = "Learn 2 characters that share an alignment.";
         w_clairvoyant.gender = EGender.Female;
 
-        CharacterData w_forager = newCharacter("Forager", EAlignment.Good, ECharacterType.Villager, true, false, "\"Her instructions are clear, it's just that her assistants don't follow them.\"");
+        CharacterData w_forager = newCharacter("Forager", EAlignment.Good, ECharacterType.Villager, true, false, "\"Her instructions are clear, it's just that her assistants don't follow them.\"", "Gossip_85354100");
         w_forager.role = new w_Forager();
         w_forager.description = "<b>Pick 1 character:</b>\nLearn if they are a Villager.";
-        w_forager.hints = customHint("Ability Refresh Hint", "Each Night") + $"\n\nArt by {formattedKeyText("WeekendWolf")} ({formattedKeyText("@weekendwolf")}) on {formattedKeyText("Discord")}";
+        w_forager.hints = customHint("Ability Refresh Hint", "Once Per Game") + $"\n\nArt by {formattedKeyText("WeekendWolf")} ({formattedKeyText("@weekendwolf")}) on {formattedKeyText("Discord")}";
         w_forager.gender = EGender.Female;
         w_forager.picking = true;
-        w_forager.abilityUsage = EAbilityUsage.ResetAfterNight;
+        w_forager.abilityUsage = EAbilityUsage.Once;
 
         /*
         CharacterData w_gambler = new CharacterData();
@@ -185,21 +186,21 @@ public class MainMod : MelonMod
         w_gambler.color = new Color(1f, 0.935f, 0.7302f);
         */
 
-        CharacterData w_sentinel = newCharacter("Sentinel", EAlignment.Good, ECharacterType.Villager, true, false, "\"She rarely ever rejects anyone from the village.\nShe does have some suspicions though.\"");
+        CharacterData w_sentinel = newCharacter("Sentinel", EAlignment.Good, ECharacterType.Villager, true, false, "\"She rarely ever rejects anyone from the village.\nShe does have some suspicions though.\"", "Knight_47970624");
         w_sentinel.role = new w_Sentinel();
         w_sentinel.description = "Learn that exactly 1 of 2 characters is Corrupted.";
         w_sentinel.hints = $"Art by {formattedKeyText("WeekendWolf")} ({formattedKeyText("@weekendwolf")}) on {formattedKeyText("Discord")}";
         w_sentinel.ifLies = $"Both characters in my info are {formattedKeyText("Pure")}.";
         w_sentinel.gender = EGender.Male;
 
-        CharacterData w_spy = newCharacter("Spy", EAlignment.Good, ECharacterType.Villager, true, false, "\"Thinks he's extremely stealthy. He's not.\"");
+        CharacterData w_spy = newCharacter("Spy", EAlignment.Good, ECharacterType.Villager, true, false, "\"Thinks he's extremely stealthy. He's not.\"", "Doppleganger_52694042");
         w_spy.role = new w_Spy();
         w_spy.description = $"Learn an Evil role that has not been {formattedKeyText("Revealed")} yet (or that all have been).";
         w_spy.hints = $"If I am {formattedKeyText("Revealed")} last, Learn that 1 of 2 characters is a particular Evil.\n\nArt by {formattedKeyText("Panda")} ({formattedKeyText("@Panda")}) on {formattedKeyText("Discord")}";
         w_spy.ifLies = $"If I am {formattedKeyText("Revealed")} last, both characters in my info are Good.";
         w_spy.gender = EGender.Male;
 
-        CharacterData w_arithmetician = newCharacter("Arithmetician", EAlignment.Good, ECharacterType.Villager, true, false, "\"Her accusations are so complicated that nobody even knows what they're being accused of.\"");
+        CharacterData w_arithmetician = newCharacter("Arithmetician", EAlignment.Good, ECharacterType.Villager, true, false, "\"Her accusations are so complicated that nobody even knows what they're being accused of.\"", "Fortune Teller_74565681");
         w_arithmetician.role = new w_Arithmetician();
         w_arithmetician.description = "Learn the sum of all Evil characters' positions.";
         w_arithmetician.hints = $"Art by {formattedKeyText("Blue Cheesed")} ({formattedKeyText("@Blue Cheesed")}) on {formattedKeyText("Discord")}";
@@ -208,10 +209,10 @@ public class MainMod : MelonMod
         w_arithmetician.additionalFlavorTexts = new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppStringArray(1);
         w_arithmetician.additionalFlavorTexts[0] = w_arithmetician.flavorText;
 
-        CharacterData w_scavenger = newCharacter("Scavenger", EAlignment.Good, ECharacterType.Villager, true, false, "\"They've always hated the term 'loot goblin', despite how perfectly it describes them.\"");
+        CharacterData w_scavenger = newCharacter("Scavenger", EAlignment.Good, ECharacterType.Villager, true, false, "\"She's always hated the term 'loot goblin', despite how perfectly it describes her.\"", "Gambler_42592744");
         w_scavenger.role = new w_Scavenger();
         w_scavenger.description = $"<b>Activate Me:</b>\nFor every {formattedKeyText("Dead")} Evil character, gain 1 {formattedKeyText("Max Health")} and {formattedKeyText("Heal")} you for 2 {formattedKeyText("Health")}.";
-        w_scavenger.hints = $"{customHint("Ability Refresh Hint", "Once Per Game")}\n\nIf no Evil characters are {formattedKeyText("Dead")}, my ability fails & is refunded.\n\nArt by {formattedKeyText("LostIllustrator")} ({formattedKeyText("@lostillustrator")}) on {formattedKeyText("Discord")}";
+        w_scavenger.hints = $"If no Evil characters are {formattedKeyText("Dead")}, my ability fails & is refunded.\n\nArt by {formattedKeyText("LostIllustrator")} ({formattedKeyText("@lostillustrator")}) on {formattedKeyText("Discord")}";
         w_scavenger.ifLies = $"<b>Activate Me:</b>\nFor every {formattedKeyText("Dead")} Evil character, deal 2 {formattedKeyText("Damage")} to you.";
         w_scavenger.picking = true;
         w_scavenger.gender = EGender.Female;
@@ -248,16 +249,16 @@ public class MainMod : MelonMod
         w_devout.gender = EGender.Female;
         */
 
-        CharacterData w_devoutNew = newCharacter("Devout", EAlignment.Good, ECharacterType.Villager, true, false, "\"Your greatest follower, or so she claims.\"");
+        CharacterData w_devoutNew = newCharacter("Devout", EAlignment.Good, ECharacterType.Villager, true, false, "\"Your greatest follower, or so she claims.\"", "Oracle_07039445");
         w_devoutNew.role = new w_DevoutRework();
         w_devoutNew.description = $"<b>Pick 1 {formattedKeyText("Revealed")} character:</b>\nIf they have an Active Ability, they gain another use of it.\nOtherwise, they Act again.";
-        w_devoutNew.hints = $"I cannot help other {roleColour("Villager")}Devout</color> claims.";
+        w_devoutNew.hints = $"{customHint("Ability Refresh Hint", "Once Per Game")}\n\nI cannot help other {roleColour("Villager")}Devout</color> claims.";
         w_devoutNew.ifLies = $"My ability still works, but I Corrupt the character I pick.";
         w_devoutNew.gender = EGender.Female;
         w_devoutNew.picking = true;
         w_devoutNew.abilityUsage = EAbilityUsage.Once;
 
-        CharacterData w_sheriff = newCharacter("Sheriff", EAlignment.Good, ECharacterType.Villager, true, false, "\"Paid to deal with common criminals, not demons.\"");
+        CharacterData w_sheriff = newCharacter("Sheriff", EAlignment.Good, ECharacterType.Villager, true, false, "\"Paid to deal with common criminals, not demons.\"", "Bishop_58855542");
         w_sheriff.role = new w_Sheriff();
         w_sheriff.description = "Learn 1 role that is being used as a Disguise.";
         w_sheriff.gender = EGender.Male;
@@ -286,7 +287,7 @@ public class MainMod : MelonMod
         w_slayerRework.additionalFlavorTexts[0] = w_slayerRework.flavorText;
         */
 
-        CharacterData w_performer = newCharacter("Performer", EAlignment.Good, ECharacterType.Villager, true, false, "\"Puts on a good show, but relies heavily on her background actors.");
+        CharacterData w_performer = newCharacter("Performer", EAlignment.Good, ECharacterType.Villager, true, false, "\"Puts on a good show, but relies heavily on her background actors.", "Athlete_95133291");
         w_performer.role = new w_Performer();
         w_performer.description = "Learn 1 Evil character.\nIf I am adjacent to Evil, Learn false info.";
         w_performer.hints = "If I Learn false info due only to my ability, it does not count as Lying, as my ability is functioning as intended.";
@@ -295,53 +296,53 @@ public class MainMod : MelonMod
         // w_performer.flavorText = "\"What a wonderful performance!\n...is what I would say if her background characters weren't saboteurs.\"";
         // w_performer.flavorText = "\"So what we learned today is the Muppets always lie.\"\n-@docomputernerd4096, YouTube"; // comment on https://www.youtube.com/watch?v=i3AV7WdGVVs
 
-        CharacterData w_lamb = newCharacter("Lamb", EAlignment.Good, ECharacterType.Villager, true, false, "\"Looking for a shepherd.\nAn adequate one, that is.\"");
+        CharacterData w_lamb = newCharacter("Lamb", EAlignment.Good, ECharacterType.Villager, true, false, "\"Looking for a shepherd.\nAn adequate one, that is.\"", "Imp_58992273");
         w_lamb.role = new w_Lamb();
         w_lamb.description = "Learn how far from me to a particular Outcast.";
         w_lamb.hints = $"If an Outcast Disguised as me is {formattedKeyText("Truthful")} and is also the only Outcast, they will say that there are no Outcasts.";
         w_lamb.gender = EGender.Male;
 
-        CharacterData w_introvert = newCharacter("Introvert", EAlignment.Good, ECharacterType.Villager, true, false, "\"People think she's nice to be around.\nShe hates it.\"");
+        CharacterData w_introvert = newCharacter("Introvert", EAlignment.Good, ECharacterType.Villager, true, false, "\"People think she's nice to be around.\nShe hates it.\"", "Pooka_13445289");
         w_introvert.role = new w_Introvert();
         w_introvert.description = "Learn 2 characters that sit within 2 seats of me.";
         w_introvert.ifLies = "At least one of my statements is incorrect.";
         w_introvert.gender = EGender.Female;
 
-        CharacterData w_chiromancer = newCharacter("Chiromancer", EAlignment.Good, ECharacterType.Villager, true, false, "\"She sees several possible futures, and none of them are good.\"");
+        CharacterData w_chiromancer = newCharacter("Chiromancer", EAlignment.Good, ECharacterType.Villager, true, false, "\"She sees several possible futures, and none of them are good.\"", "Fortune Teller_74565681");
         w_chiromancer.role = new w_Chiromancer();
         w_chiromancer.description = "Learn 3 characters and which Evil role each is.\nOnly 1 is correct.";
         w_chiromancer.ifLies = "None are correct.";
         w_chiromancer.gender = EGender.Female;
 
-        CharacterData w_warden = newCharacter("Warden", EAlignment.Good, ECharacterType.Villager, true, false, "\"His interrogation skills are unmatched.\nHis note-taking, on the other hand...\"");
+        CharacterData w_warden = newCharacter("Warden", EAlignment.Good, ECharacterType.Villager, true, false, "\"His interrogation skills are unmatched.\nHis note-taking, on the other hand...\"", "Knight_47970624");
         w_warden.role = new w_Warden();
         w_warden.description = "<b>Pick 4 characters:</b>\nLearn which character type is the most common among them.";
-        w_warden.hints = "If multiple types are tied for most common, you Learn this instead.\n\n" + customHint("Ability Refresh Hint", "Each Night") + $"\n\nArt by {formattedKeyText("Hiraeth")} ({formattedKeyText("@hiraeth")}) on {formattedKeyText("Discord")}";
+        w_warden.hints = "If multiple types are tied for most common, you Learn this instead.\n\n" + customHint("Ability Refresh Hint", "Once Per Game") + $"\n\nArt by {formattedKeyText("Hiraeth")} ({formattedKeyText("@hiraeth")}) on {formattedKeyText("Discord")}";
         w_warden.picking = true;
-        w_warden.abilityUsage = EAbilityUsage.ResetAfterNight;
+        w_warden.abilityUsage = EAbilityUsage.Once;
         w_warden.gender = EGender.Male;
 
-        CharacterData w_gossip = newCharacter("Gossip", EAlignment.Good, ECharacterType.Villager, true, false, "\"Did you hear? No?\nWell she certainly did.\"");
+        CharacterData w_gossip = newCharacter("Gossip", EAlignment.Good, ECharacterType.Villager, true, false, "\"Did you hear? No?\nWell she certainly did.\"", "Baker_22847064");
         w_gossip.role = new w_Gossip();
         w_gossip.description = "<b>Pick 1 character:</b>\nLearn random info about them.";
-        w_gossip.hints = customHint("Ability Refresh Hint", "Each Night");
+        w_gossip.hints = customHint("Ability Refresh Hint", "Once Per Game");
         w_gossip.picking = true;
-        w_gossip.abilityUsage = EAbilityUsage.ResetAfterNight;
+        w_gossip.abilityUsage = EAbilityUsage.Once;
         w_gossip.gender = EGender.Female;
 
-        CharacterData w_jewelsmith = newCharacter("Jewelsmith", EAlignment.Good, ECharacterType.Villager, true, false, "\"Lives with the Gemcrafter.\nThey share stories over their morning coffee.\"");
+        CharacterData w_jewelsmith = newCharacter("Jewelsmith", EAlignment.Good, ECharacterType.Villager, true, false, "\"Lives with the Gemcrafter.\nThey share stories over their morning coffee.\"", "Archivist_34476114");
         w_jewelsmith.role = new w_Jewelsmith();
         w_jewelsmith.name = "Jewelsmith";
         w_jewelsmith.description = $"Learn 1 {formattedKeyText("Honest")} character.";
         w_jewelsmith.hints = $"{formattedKeyText("Honest")} is a keyword that means \"Not Disguised\".\n\nArt edit by {formattedKeyText("Astery")} ({formattedKeyText("@astery")}) on {formattedKeyText("Discord")}";
         w_jewelsmith.gender = EGender.Female;
 
-        CharacterData w_ranger = newCharacter("Ranger", EAlignment.Good, ECharacterType.Villager, true, false, "\"He can sense his targets.\nBut only at optimal range.\"");
+        CharacterData w_ranger = newCharacter("Ranger", EAlignment.Good, ECharacterType.Villager, true, false, "\"He can sense his targets.\nBut only at optimal range.\"", "Hunter_93427887");
         w_ranger.role = new w_Ranger();
         w_ranger.description = "Learn how far from me to my furthest Evil.";
         w_ranger.gender = EGender.Male;
 
-        CharacterData w_cardshark = newCharacter("Cardshark", EAlignment.Good, ECharacterType.Villager, true, false, "\"They say fortune favours the bold.\"");
+        CharacterData w_cardshark = newCharacter("Cardshark", EAlignment.Good, ECharacterType.Villager, true, false, "\"They say fortune favours the bold.\"", "Fortune Teller_74565681");
         w_cardshark.role = new w_Cardshark();
         w_cardshark.description = $"<b>Pick 3 characters:</b>\nFor each Villager picked, deal 1 {formattedKeyText("Damage")} to you.\nFor each non-Villager picked, {formattedKeyText("Heal")} you for 1 {formattedKeyText("Health")}.";
         w_cardshark.hints = customHint("Ability Refresh Hint", "Once Per Game");
@@ -351,12 +352,12 @@ public class MainMod : MelonMod
         w_cardshark.gender = EGender.Female;
         w_cardshark.characterId = "Gambler_WING";
 
-        CharacterData w_arbiter = newCharacter("Arbiter", EAlignment.Good, ECharacterType.Villager, true, false, "\"The scales tip, but in whose favour?\"");
+        CharacterData w_arbiter = newCharacter("Arbiter", EAlignment.Good, ECharacterType.Villager, true, false, "\"The scales tip, but in whose favour?\"", "Judge_87202475");
         w_arbiter.role = new w_Arbiter();
         w_arbiter.description = "<b>Pick 1 character:</b>\nLearn if they are Disguised.";
-        w_arbiter.hints = customHint("Ability Refresh Hint", "Each Night");
+        w_arbiter.hints = customHint("Ability Refresh Hint", "Once Per Game");
         w_arbiter.picking = true;
-        w_arbiter.abilityUsage = EAbilityUsage.ResetAfterNight;
+        w_arbiter.abilityUsage = EAbilityUsage.Once;
         w_arbiter.gender = EGender.Male;
 
         /*Faerie
@@ -383,7 +384,7 @@ public class MainMod : MelonMod
         w_fiDragonfly.additionalFlavorTexts[0] = w_fiDragonfly.flavorText;
         */
 
-        CharacterData w_gravekeeper = newCharacter("Gravekeeper", EAlignment.Good, ECharacterType.Villager, true, false, "\"The spirits like him more than the Medium for some reason.\"");
+        CharacterData w_gravekeeper = newCharacter("Gravekeeper", EAlignment.Good, ECharacterType.Villager, true, false, "\"The spirits like him more than the Medium for some reason.\"", "Lookout_41018246");
         w_gravekeeper.role = new w_Gravekeeper();
         w_gravekeeper.description = $"<b>Activate Me:</b>\nLearn random info about every {formattedKeyText("Dead")} character.";
         w_gravekeeper.hints = customHint("Ability Refresh Hint", "Once Per Game") + $"\n\nArt by {formattedKeyText("LostIllustrator")} ({formattedKeyText("@lostillustrator")}) on {formattedKeyText("Discord")}";
@@ -392,7 +393,7 @@ public class MainMod : MelonMod
         w_gravekeeper.abilityUsage = EAbilityUsage.Once;
         w_gravekeeper.gender = EGender.Male;
 
-        CharacterData w_detective = newCharacter("Detective", EAlignment.Good, ECharacterType.Villager, true, false, "\"Nobody knows how she comes to her conclusions, but results are results.\"");
+        CharacterData w_detective = newCharacter("Detective", EAlignment.Good, ECharacterType.Villager, true, false, "\"Nobody knows how she comes to her conclusions, but results are results.\"", "Gossip_85354100");
         w_detective.role = new w_Detective();
         w_detective.description = $"Learn how many Lying characters have not been {formattedKeyText("Revealed")} yet.";
         w_detective.hints = $"If I am {formattedKeyText("Revealed")} last, Learn that 1 of 2 characters is Lying.\nIn this situation, if everyone is Lying or everyone is telling the {formattedKeyText("Truth")}, \"I got nothing\".";
@@ -417,7 +418,7 @@ public class MainMod : MelonMod
         w_agent.color = new Color(1f, 0.935f, 0.7302f);
         */
 
-        CharacterData w_copycat = newCharacter("Copycat", EAlignment.Good, ECharacterType.Villager, false, true, "\"Once challenged the Doppelganger to a copy contest.\nThe Witness is still having nightmares about it.\"");
+        CharacterData w_copycat = newCharacter("Copycat", EAlignment.Good, ECharacterType.Villager, false, true, "\"Once challenged the Doppelganger to a copy contest.\nThe Witness is still having nightmares about it.\"", "Doppleganger_52694042");
         w_copycat.role = new w_Copycat();
         w_copycat.description = $"<b>Game Start:</b>\nGain 3 {formattedKeyText("Max Health")}.\n\nI Disguise as an in-play Villager.";
         w_copycat.hints = $"If I am turned into the {roleColour("Minion")}Puppet</color>, I {formattedKeyText("Reveal")} as the {roleColour("Villager")}Copycat</color>.\n\nArt by {formattedKeyText("Blue Cheesed")} ({formattedKeyText("@Blue Cheesed")}) on {formattedKeyText("Discord")}";
@@ -425,7 +426,7 @@ public class MainMod : MelonMod
         // w_copycat.flavorText = "\"The Doppelganger's twin sibling.\nOnly the Druid has noticed so far.\"";
 
 
-        CharacterData w_bloodseer = newCharacter("Bloodseer", EAlignment.Good, ECharacterType.Villager, true, false, "\"Gathers a lot of info... for a price.\"");
+        CharacterData w_bloodseer = newCharacter("Bloodseer", EAlignment.Good, ECharacterType.Villager, true, false, "\"Gathers a lot of info... for a price.\"", "Lillith_90453844");
         w_bloodseer.role = new w_Bloodseer();
         w_bloodseer.description = $"<b>Activate Me:</b>\nDeal 1 {formattedKeyText("Damage")} to you.\nLearn random info.";
         w_bloodseer.ifLies = $"I still deal {formattedKeyText("Damage")} to you, but my info is wrong.\n\nNote that I do not follow the usual Lying rules of the characters whose info I copy.";
@@ -433,6 +434,14 @@ public class MainMod : MelonMod
         w_bloodseer.gender = EGender.They;
         w_bloodseer.picking = true;
         w_bloodseer.abilityUsage = EAbilityUsage.ResetAfterNight;
+
+
+        CharacterData w_knave = newCharacter("Knave", EAlignment.Good, ECharacterType.Villager, true, false, "\"The people don't trust him.\nThat's probably for the best.\"", "Knight_47970624");
+        w_knave.role = new w_Knave();
+        w_knave.description = $"Learn two sets of random info:\nOnly one is true.";
+        w_knave.ifLies = $"Both or neither of my statements are true.";
+        w_knave.hints = $"My incorrect statement does not follow the Lying rules you might expect it to. It can be any wrong statement.";
+        w_knave.gender = EGender.Male;
 
 
         //CharacterData w_saint = newCharacter("Saint", EAlignment.Good, ECharacterType.Villager, false, false, "\"Wisdom begets peace. Patience begets wisdom. Fear not, for the time shall come when fear too shall pass.\nLet us pray, and may the unity of our vision make saints of us all.\"");
@@ -623,18 +632,18 @@ public class MainMod : MelonMod
         //w_henchman.color = new Color(0.9647f, 1f, 0.4471f);
         */
 
-        CharacterData w_chatterbox = newCharacter("Chatterbox", EAlignment.Good, ECharacterType.Outcast, true, false, "\"Some people can whisper secrets.\nSome people never shut up.\"");
+        CharacterData w_chatterbox = newCharacter("Chatterbox", EAlignment.Good, ECharacterType.Outcast, true, false, "\"Some people can whisper secrets.\nSome people never shut up.\"", "Jester_41367606");
         w_chatterbox.role = new w_Chatterbox();
-        w_chatterbox.description = $"<b>Reveal:</b>\n1 {formattedKeyText("Unrevealed")} Good Villager becomes Corrupted, if possible.";
+        w_chatterbox.description = $"<b>Reveal:</b>\n1 {formattedKeyText("Unrevealed")} Good Villager becomes Corrupted, if possible.\nLearn that I Corrupted one of up to three characters.";
         w_chatterbox.gender = EGender.Female;
 
-        CharacterData w_lunatic = newCharacter("Lunatic", EAlignment.Good, ECharacterType.Outcast, false, true, "\"Constantly attempts to search everyone's shadows for the truth.\nMight have taken the Poet's writings a bit too literally.\"");
+        CharacterData w_lunatic = newCharacter("Lunatic", EAlignment.Good, ECharacterType.Outcast, false, true, "\"Constantly attempts to search everyone's shadows for the truth.\nMight have taken the Poet's writings a bit too literally.\"", "Bombardier_79093372");
         w_lunatic.role = new w_Lunatic();
         w_lunatic.description = "I Disguise.\nI have a 50% chance to be Corrupted.";
         w_lunatic.hints = $"I only Lie if I am Corrupted.\nThe {roleColour("Villager")}Alchemist</color> cannot {formattedKeyText("Cure")} me.\n\nTake 2 less {formattedKeyText("Damage")} when you Execute me.\n\n" + customHint("Outcast Disguise Hint", "Advanced") + $"\n\nArt by {formattedKeyText("WeekendWolf")} ({formattedKeyText("@weekendwolf")}) on {formattedKeyText("Discord")}";
         w_lunatic.gender = EGender.Male;
 
-        CharacterData w_marionette = newCharacter("Marionette", EAlignment.Good, ECharacterType.Outcast, false, true, "\"You ever feel like you're losing control over your life?\"");
+        CharacterData w_marionette = newCharacter("Marionette", EAlignment.Good, ECharacterType.Outcast, false, true, "\"You ever feel like you're losing control over your life?\"", "Puppet_15989619");
         w_marionette.role = new w_Marionette();
         w_marionette.description = "<b>Game Start:</b>\nI sit next to the Demon, if possible.\n\nI Register as a <color=#FF9999>Puppet</color>.\nI Lie and Disguise.";
         w_marionette.hints = $"You take 2 less {formattedKeyText("Damage")} if you Execute me.\n\nIf the {roleColour("Minion")}Chancellor</color> creates me, I immediately move to be next to the Demon.\nThis can result in a {roleColour("Minion")}Chancellor</color> with no Outcast neighbours.\n\n" + customHint("Outcast Disguise Hint", "Simple");
@@ -660,13 +669,13 @@ public class MainMod : MelonMod
         //Characters.Instance.startGameActOrder = insertAfterAct("Baa", w_occultist);
         */
 
-        CharacterData w_renegade = newCharacter("Renegade", EAlignment.Evil, ECharacterType.Outcast, false, true, "\"She doesn't like the village, but she doesn't like the demons either.\"");
+        CharacterData w_renegade = newCharacter("Renegade", EAlignment.Evil, ECharacterType.Outcast, false, true, "\"She doesn't like the village, but she doesn't like the demons either.\"", "Bombardier_79093372");
         w_renegade.role = new w_Renegade();
         w_renegade.description = "I am Evil.\nI Lie and Disguise.";
         w_renegade.hints = customHint("Outcast Disguise Hint", "Advanced");
         w_renegade.gender = EGender.Female;
 
-        CharacterData w_revolutionary = newCharacter("Revolutionary", EAlignment.Good, ECharacterType.Outcast, false, true, "\"Has attempted to kill the Empress on multiple occasions.\nUsually gets held back by the Knight or Slayer.\"");
+        CharacterData w_revolutionary = newCharacter("Revolutionary", EAlignment.Good, ECharacterType.Outcast, false, true, "\"Has attempted to kill the Empress on multiple occasions.\nUsually gets held back by the Knight or Slayer.\"", "Bombardier_79093372");
         w_revolutionary.role = new w_Revolutionary();
         w_revolutionary.description = $"<b>On Death:</b>\nI Execute an {formattedKeyText("Alive")} Villager, if possible.\n\nI Disguise.";
         w_revolutionary.hints = $"You take 3 {formattedKeyText("Damage")} instead of 5 when you Execute me.\nI may attempt to Execute a <color=#C080FF>Knight</color>, but I cannot {formattedKeyText("Kill")} him.\n\n" + customHint("Outcast Disguise Hint", "Advanced");
@@ -693,80 +702,80 @@ public class MainMod : MelonMod
         w_pilgrim.usuallyDisguised = false;
         */
 
-        CharacterData w_mutant = newCharacter("Mutant", EAlignment.Good, ECharacterType.Outcast, false, false, "\"It seems volatile.\nNo, not he, <b>it</b> seems volatile.\"");
+        CharacterData w_mutant = newCharacter("Mutant", EAlignment.Good, ECharacterType.Outcast, false, false, "\"It seems volatile.\nNo, not he, <b>it</b> seems volatile.\"", "Mutant_84675843");
         w_mutant.role = new w_Mutant();
         w_mutant.description = $"<b>Game Start:</b>\n1 Minion is added to the {formattedKeyText("Deck")}.\nIt is only in-play if I am Good.\nI have a 50% chance to become Evil.";
         w_mutant.hints = "I cannot be Disguised as.";
         w_mutant.gender = EGender.Male;
         w_mutant.additionalPossibleCharacters.count.Add(NewPossibleCharacterCount(ECharacterType.Minion, 1));
 
+        CharacterData w_tergiversator = newCharacter("Tergiversator", EAlignment.Good, ECharacterType.Outcast, false, false, "\"Nobody knows her beliefs.\nOr if she even has any.\"", "Witch_25286521");
+        w_tergiversator.role = new w_Tergiversator();
+        w_tergiversator.description = $"My starting Alignment is random.\n\n<b>At Night:</b>\nMy Alignment flips.\nIf I am the last Evil and become Good this way, I {formattedKeyText("Die")}.\n\nWhile Good, I {formattedKeyText("Bluff")} being {formattedKeyText("Truthful")} & {formattedKeyText("Honest")}.\nWhile Evil, I {formattedKeyText("Bluff")} Lying & Disguising.\n\nI tell you something really interesting.";
+        w_tergiversator.hints = $"I cannot be Disguised as.\n\n{customHint("Keyword", "Bluff")}";
+        w_tergiversator.gender = EGender.Female;
+        nightPhase.nightCharactersOrder.Add(w_tergiversator);
 
-        CharacterData w_turncoat = newCharacter("Turncoat", EAlignment.Evil, ECharacterType.Minion, false, true, "\"Hurt me with the truth, but don't comfort me with a lie.\"");
+
+        CharacterData w_turncoat = newCharacter("Turncoat", EAlignment.Evil, ECharacterType.Minion, false, true, "\"Hurt me with the truth, but don't comfort me with a lie.\"", "Wretch_80988916");
         w_turncoat.role = new w_Turncoat();
         w_turncoat.description = "I Disguise as an in-play character.";
         w_turncoat.hints = $"I am uniquely capable of Disguising as {roleColour("GoodMinion")}Swarm</color>. I do not copy its <b>Game Start</b> ability, however.\n\nI Register as Lying if (and only if) I am Disguised as the {roleColour("Villager")}Knight</color> or the {roleColour("Outcast")}Bombardier</color>, whose abilities I cannot gain.\nOtherwise, I Register as {formattedKeyText("Truthful")}.";
         w_turncoat.gender = EGender.Male;
         w_turncoat.usuallyDisguised = true;
 
-        CharacterData w_swarm_good = newCharacter("Swarm", EAlignment.Good, ECharacterType.Minion, false, false, "\"This one seems defective.\nPerhaps they can help you.\"");
+        CharacterData w_swarm_good = newCharacter("Swarm", EAlignment.Good, ECharacterType.Minion, false, false, "\"This one seems defective.\nPerhaps they can help you.\"", "Witch_25286521");
         w_swarm_good.role = new w_Swarm_Good();
         w_swarm_good.description = $"<b>Game Start:</b>\n2 other Good Villagers become {roleColour("Minion")}Swarm</color>. Both are Evil.\n\nLearn 4 characters, 2 of which are {roleColour("Minion")}Swarm</color>.";
         w_swarm_good.hints = customHint("Interactions", "Good Swarm");
-        w_swarm_good.ifLies = "I stay silent.";
+        w_swarm_good.ifLies = $"\"Something does not make sense\"\nNote that I also say this while Truthful if there are less than two {roleColour("Minion")}Swarm</color>.";
         w_swarm_good.characterId = "Swarm_Good_WING";
         w_swarm_good.gender = EGender.They;
         w_swarm_good.additionalPossibleCharacters.count.Add(NewPossibleCharacterCount(ECharacterType.Minion, 2));
 
-        CharacterData w_swarm_evil = newCharacter("Swarm", EAlignment.Evil, ECharacterType.Minion, false, true, "\"Keep your guard up, or they'll outnumber and overwhelm you.\"");
+        CharacterData w_swarm_evil = newCharacter("Swarm", EAlignment.Evil, ECharacterType.Minion, false, true, "\"Keep your guard up, or they'll outnumber and overwhelm you.\"", "Poisoner_64796285");
         w_swarm_evil.role = new w_Swarm_Evil();
         w_swarm_evil.description = $"<b>Game Start:</b>\n2 other Good Villagers become {roleColour("Minion")}Swarm</color>. One is Good, one is Evil.\n\nI Lie and Disguise.";
         w_swarm_evil.hints = customHint("Interactions", "Clone Evil");
         w_swarm_evil.characterId = "Swarm_Evil_WING";
         w_swarm_evil.gender = EGender.They;
 
-        /*
-        //CharacterData w_snakecharmer = new CharacterData();
-        //w_snakecharmer.role = new w_SnakeCharmer();
-        //w_snakecharmer.name = "Snake Charmer";
-        //w_snakecharmer.description = "<b>Game Start:</b>\n1 Good Villager is Corrupted.\n\n<b>Execute Me:</b>\nLearn the role of the Villager I Corrupted.\n\nI Lie and Disguise.";
-        //w_snakecharmer.flavorText = "\"The snakes aren't deadly, but their venom still hurts.\"";
-        //w_snakecharmer.hints = "";
-        //w_snakecharmer.ifLies = "";
-        //w_snakecharmer.picking = false;
-        //w_snakecharmer.startingAlignment = EAlignment.Evil;
-        //w_snakecharmer.type = ECharacterType.Minion;
-        //w_snakecharmer.bluffable = false;
-        //w_snakecharmer.characterId = "SnakeCharmer_WING";
-        //w_snakecharmer.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
-        //w_snakecharmer.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
-        //w_snakecharmer.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
-        //w_snakecharmer.color = new Color(1f, 0.3804f, 0.3804f);
-        //Characters.Instance.startGameActOrder = insertAfterAct("Poisoner", w_snakecharmer);
-        */
-
-        CharacterData w_undying = newCharacter("Undying", EAlignment.Evil, ECharacterType.Minion, false, false, "\"Laughs in the face of death.\nThat is, until it has no teammates to fall back on.\"");
+        CharacterData w_undying = newCharacter("Undying", EAlignment.Evil, ECharacterType.Minion, false, false, "\"Laughs in the face of death.\nThat is, until it has no teammates to fall back on.\"", "Knight_47970624");
         w_undying.role = new w_Undying();
         w_undying.description = $"<b>Game Start:</b>\n1 Good Villager might become a {roleColour("Minion")}Fanatic</color>.\n\n<b>Execute Me:</b>\nIf other Evil characters still live, I don't die; deal 4 {formattedKeyText("Damage")} to you.";
         w_undying.hints = $"Attempting to {formattedKeyText("Kill")} me using a character ability counts as Executing me.\n<i>You're not getting me that easily.</i>";
         w_undying.gender = EGender.Male;
         w_undying.additionalPossibleCharacters.count.Add(NewPossibleCharacterCount(ECharacterType.Minion, 1));
 
-        CharacterData w_professional = newCharacter("Professional", EAlignment.Evil, ECharacterType.Minion, false, true, "\"If you're going to be committing crimes, you really ought to clean up the mess behind you.\"");
+        CharacterData w_professional = newCharacter("Professional", EAlignment.Evil, ECharacterType.Minion, false, true, "\"If you're going to be committing crimes, you really ought to clean up the mess behind you.\"", "Doppleganger_52694042");
         w_professional.role = new w_Professional();
         w_professional.description = "I Lie and Disguise.\nI Register as Good and as my Disguise.";
         w_professional.hints = $"If I am Disguised as the {roleColour("Villager")}Confessor</color>, I will say \"I am Good\".\nI can also be converted by the {roleColour("Villager")}Baker</color>. If this happens, I will appear 'Evil' when Executed, and will not convert anyone else.";
         w_professional.gender = EGender.Male;
 
-        CharacterData w_saboteur = newCharacter("Saboteur", EAlignment.Evil, ECharacterType.Minion, false, true, "\"The Architect has been trying to work out what was wrong with the Gemcrafter's house for weeks.\nHere's a hint: Sabotage.\"");
+        CharacterData w_saboteur = newCharacter("Saboteur", EAlignment.Evil, ECharacterType.Minion, false, true, "\"The Architect has been trying to work out what was wrong with the Gemcrafter's house for weeks.\nHere's a hint: Sabotage.\"", "Poisoner_64796285");
         w_saboteur.role = new w_Saboteur();
         w_saboteur.description = "<b>Game Start:</b>\n1 Good Villager furthest away from me is Corrupted.\n\nI Lie and Disguise.";
         w_saboteur.hints = "I Corrupt the Good Villager furthest away from me, but they do not need to be directly opposite to me.";
         w_saboteur.gender = EGender.Female;
 
-        CharacterData w_heretic = newCharacter("Heretic", EAlignment.Evil, ECharacterType.Minion, false, true, "The Bishop is wondering who keeps turning all the church's crucifixes upside-down");
+        CharacterData w_heretic = newCharacter("Heretic", EAlignment.Evil, ECharacterType.Minion, false, true, "\"The Bishop is wondering who keeps turning all the church's crucifixes upside-down\"", "Bishop_58855542");
         w_heretic.role = new w_Heretic();
         w_heretic.description = $"<b>Game Start:</b>\n2 Minions & 2 Demons are added to the {formattedKeyText("Deck")}.\n\nI Lie and Disguise.";
         w_heretic.gender = EGender.Female;
+
+        CharacterData w_ritualist = newCharacter("Ritualist", EAlignment.Evil, ECharacterType.Minion, false, true, "\"If you do literally anything around him,\nhe will retaliate very angrily.\"", "Gambler_42592744");
+        w_ritualist.role = new w_Ritualist();
+        w_ritualist.description = $"<b>{formattedKeyText("Cycle 3")}:</b>\nDeal 1 {formattedKeyText("Damage")} to you.\n\nI Lie and Disguise.";
+        w_ritualist.hints = customHint("Keyword", "Cycle");
+        w_ritualist.gender = EGender.Male;
+
+        CharacterData w_snakeCharmer = newCharacter("Snake Charmer", EAlignment.Evil, ECharacterType.Minion, false, true, "\"I wouldn't recommend getting bitten. The venom is very deadly.\"", "Poisoner_64796285");
+        w_snakeCharmer.role = new w_SnakeCharmer();
+        w_snakeCharmer.description = $"<b>Game Start</b>:\nOne random Good Villager is {formattedKeyText("Poisoned")}.\nAfter five {formattedKeyText("Reveals")}, if they are still Good, they {formattedKeyText("Die")}; deal 2 {formattedKeyText("Damage")} to you.\n\nI Lie and Disguise.";
+        // When this happens, if I am {formattedKeyText("Alive")}, a random {formattedKeyText("Unrevealed")} Good Villager becomes Corrupted, if possible.
+        w_snakeCharmer.hints = $"{customHint("Keyword", "Poison")}";
+        w_snakeCharmer.gender = EGender.They;
 
         /*CharacterData w_toxomancer = new CharacterData();
         w_toxomancer.role = new w_Toxomancer();
@@ -839,25 +848,25 @@ public class MainMod : MelonMod
         //Characters.Instance.startGameActOrder = insertAfterAct("Shaman", w_cardshark);
         */
 
-        CharacterData w_acolyte = newCharacter("Acolyte", EAlignment.Evil, ECharacterType.Minion, false, true, "\"If you ask the Acolytes, the Demons are the good guys.\nThey really aren't.\"");
+        CharacterData w_acolyte = newCharacter("Acolyte", EAlignment.Evil, ECharacterType.Minion, false, true, "\"If you ask the Acolytes, the Demons are the good guys.\nThey really aren't.\"", "Minion_71804875");
         w_acolyte.role = new w_Acolyte();
         w_acolyte.description = "I am an Evil created by another character's ability.\nI Lie and Disguise as an out-of-play character.";
         w_acolyte.hints = customHint("Interactions", "Clone Evil");
         w_acolyte.gender = EGender.They;
 
-        CharacterData w_fanatic = newCharacter("Fanatic", EAlignment.Evil, ECharacterType.Minion, false, true, "\"How many of these guys <i>are</i> there?!\"");
+        CharacterData w_fanatic = newCharacter("Fanatic", EAlignment.Evil, ECharacterType.Minion, false, true, "\"How many of these guys <i>are</i> there?!\"", "Imp_58992273");
         w_fanatic.role = new w_Fanatic();
         w_fanatic.description = "I am an Evil created by another character's ability.\nI Lie and Disguise.";
         w_fanatic.hints = customHint("Interactions", "Clone Evil");
         w_fanatic.gender = EGender.They;
 
-        CharacterData w_zealot = newCharacter("Zealot", EAlignment.Evil, ECharacterType.Minion, false, true, "\"You got what you wished for, genius.\nNow you live with a demon. Happy now?\"");
+        CharacterData w_zealot = newCharacter("Zealot", EAlignment.Evil, ECharacterType.Minion, false, true, "\"You got what you wished for, genius.\nNow you live with a demon. Happy now?\"", "Twin Minion_15695218");
         w_zealot.role = new w_Zealot();
         w_zealot.description = "I am an Evil created by another character's ability.\nI Lie and Disguise as an in-play character.";
         w_zealot.hints = $"Art by {formattedKeyText("Blue Cheesed")} ({formattedKeyText("@Blue Cheesed")}) on {formattedKeyText("Discord")}";
         w_zealot.gender = EGender.They;
 
-        CharacterData w_legion = newCharacter("Agmeres", EAlignment.Evil, ECharacterType.Demon, false, true, "\"A legion of Evil rises up against the village.\nCan Good pull through?\"");
+        CharacterData w_legion = newCharacter("Agmeres", EAlignment.Evil, ECharacterType.Demon, false, true, "\"A legion of Evil rises up against the village.\nCan Good pull through?\"", "Lillith_90453844");
         w_legion.role = new w_Legion();
         //w_legion.name = "Agmeres"; // Name derived from Latin 'Agmen' meaning 'Army' and 'Plures' meaning 'Outnumber'.
         w_legion.description = $"<b>Setup:</b>\nMost characters are Minions.\n\n<b>Game Start:</b>\nYou have 2 less {formattedKeyText("Max Health")}.\n\n<b>At Night:</b>\nDeal 2 {formattedKeyText("Damage")} to you. Lose 2 {formattedKeyText("Max Health")}.\n\n{formattedKeyText("Lose")} if all Good characters {formattedKeyText("Die")}, even if I'm {formattedKeyText("Dead")}.\n\nI Lie and Disguise.";
@@ -867,7 +876,7 @@ public class MainMod : MelonMod
         w_legion.gender = EGender.They;
         nightPhase.nightCharactersOrder.Add(w_legion);
 
-        CharacterData w_praesect = newCharacter("Praesect", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Nobody knows if its acolytes are hypnotised, or if they're just morons.\"");
+        CharacterData w_praesect = newCharacter("Praesect", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Nobody knows if its acolytes are hypnotised, or if they're just morons.\"", "Pooka_13445289");
         w_praesect.role = new w_Praesect();
         //w_praesect.name = "Praesect"; // Name derived from Latin "praefectus" meaning "officer" and "sectator" meaning "follower"
         w_praesect.description = $"<b>Game Start:</b>\n2 Good Villagers become an {roleColour("Minion")}Acolyte</color> and a {roleColour("Minion")}Zealot</color>.\n\n<b>Execute Me:</b>\nDeal 2 {formattedKeyText("Damage")} to you per {formattedKeyText("Living")} {roleColour("Minion")}Acolyte</color>, {roleColour("Minion")}Fanatic</color> or {roleColour("Minion")}Zealot</color>.\n\nI Lie and Disguise.";
@@ -875,7 +884,7 @@ public class MainMod : MelonMod
         w_praesect.gender = EGender.They;
         w_praesect.additionalPossibleCharacters.count.Add(NewPossibleCharacterCount(ECharacterType.Minion, 2));
 
-        CharacterData w_twindemon = newCharacter("Veniyon", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Minion and Twin Minion's older siblings.\nThe younger twins see their siblings as role models.\"");
+        CharacterData w_twindemon = newCharacter("Veniyon", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Minion and Twin Minion's older siblings.\nThe younger twins see their siblings as role models.\"", "Twin Minion_15695218");
         w_twindemon.role = new w_TwinDemon();
         w_twindemon.description = $"<b>Game Start:</b>\n1 Good Villager closest to me becomes Corrupted.\n\nI Lie and Disguise like a Minion.";
         // w_twindemon.hints = "TRIVIA:\nUsed to be called 'Twin Demon'.\nThen, she and her brother were renamed to Hellspawn and Twin Hellspawn, before eventually being renamed again.";
@@ -884,7 +893,7 @@ public class MainMod : MelonMod
         //nightPhase.nightCharactersOrder.Add(w_twindemon);
         w_twindemon.gender = EGender.Female;
 
-        CharacterData w_twindemontwin = newCharacter("Vidiyon", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Claims to be independent.\nHis twin sister doesn't believe him.\"");
+        CharacterData w_twindemontwin = newCharacter("Vidiyon", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Claims to be independent.\nHis twin sister doesn't believe him.\"", "Minion_71804875");
         w_twindemontwin.role = new w_TwinDemonTwin();
         w_twindemontwin.description = $"<b>Game Start:</b>\nCorrupted Good Villagers become Evil.\nIf none are, 1 Good Villager becomes Evil & Corrupted.\n\nI Lie and Disguise.";
         //w_twindemontwin.hints = "TRIVIA:\nWasn't originally planned to have a unique ability.\nHe has no horns due to a birth defect. He likes it, it means he can fit through doors and blend in more easily.";
@@ -892,7 +901,7 @@ public class MainMod : MelonMod
         w_twindemontwin.characterId = "TwinDemonTwin_WING";
         w_twindemontwin.gender = EGender.Male;
 
-        CharacterData w_twindemontriplet = newCharacter("Viciyon", EAlignment.Evil, ECharacterType.Demon, false, true, "\"The eldest of the Hellspawn.\nShe doesn't like to associate with her siblings.\"");
+        CharacterData w_twindemontriplet = newCharacter("Viciyon", EAlignment.Evil, ECharacterType.Demon, false, true, "\"The eldest of the Hellspawn.\nShe doesn't like to associate with her siblings.\"", "Lillith_90453844");
         w_twindemontriplet.role = new w_TwinDemonThree();
         // w_twindemontriplet.description = $"<b>At Night:</b>\nDeal 1 {formattedKeyText("Damage")} to you.\nIf it's my first night, deal 2 instead.\n\nWe Lie and Disguise.";
         w_twindemontriplet.description = $"<b>On Death:</b>\nTake 1 {formattedKeyText("Damage")}, then 1 extra per {formattedKeyText("Living")} Evil character.\n\nI Lie and Disguise.";
@@ -924,7 +933,7 @@ public class MainMod : MelonMod
         w_illusionist.usuallyDisguised = false;
         */
 
-        CharacterData w_caedoc = newCharacter("Caedoccidere", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Most demons wait until they have enough power to destroy the entire town at once.\nThis one doesn't.\"");
+        CharacterData w_caedoc = newCharacter("Caedoccidere", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Most demons wait until they have enough power to destroy the entire town at once.\nThis one doesn't.\"", "Lillith_90453844");
         w_caedoc.role = new w_Caedoccidere();
         //w_caedoc.name = "Caedoccidere"; // Name derived from Latin 'caedes' (meaning "slaughter) and 'occidere' (meaning "to kill")
         w_caedoc.description = $"<b>At Night:</b>\n{formattedKeyText("Kill")} 1 {formattedKeyText("Revealed")} character.\nDeal 3 {formattedKeyText("Damage")} to you.\n\nI Lie and Disguise.";
@@ -932,15 +941,15 @@ public class MainMod : MelonMod
         w_caedoc.gender = EGender.They;
         nightPhase.nightCharactersOrder.Add(w_caedoc);
 
-        CharacterData w_invertDemon = newCharacter("Mendaverte", EAlignment.Evil, ECharacterType.Demon, false, true, "\"You and your so-called Good and Evil...\nSuch arbitrary divisors, is it really that black-and-white to you?\"");
+        CharacterData w_invertDemon = newCharacter("Mendaverte", EAlignment.Evil, ECharacterType.Demon, false, true, "\"You and your so-called Good and Evil...\nSuch arbitrary divisors, is it really that black-and-white to you?\"", "Pooka_13445289");
         w_invertDemon.role = new w_InvertDemon();
         //w_invertDemon.name = "Mendaverte"; // Name derived from Latin "Mendacium", meaning "Lie", and "Subvertere" meaning "Subvert"
         w_invertDemon.description = $"Good Villagers are Corrupted.\nEvil characters tell the {formattedKeyText("Truth")}.\nI Disguise.";
         //w_invertDemon.flavorText = "You and your so-called Good and Evil...\nSuch arbitrary divisors, is it really that black-and-white to you?"; //Used to be: "\"You and your 'Good' and 'Evil', like that Plague Doctor is pure Good but the Poisoner is pure Evil.\nIs it really so black-and-white to you?\"";
-        w_invertDemon.hints = $"Characters I Corrupt Register as affected by Evil.\nEvils who tell the {formattedKeyText("Truth")} due to my ability do not.\n\nMy <b>Game Start</b> ability is unaffected by misregistration.";
+        w_invertDemon.hints = $"Characters I Corrupt Register as affected by Evil.\nEvils who tell the {formattedKeyText("Truth")} due to my ability do not.\n\nMy <b>Game Start</b> ability is unaffected by misregistration.\nThe {roleColour("Villager")}Alchemist</color> cannot see or Cure my Corruptions.";
         w_invertDemon.gender = EGender.They;
 
-        CharacterData w_mezepheles = newCharacter("Venelum", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Sign this contract and it will all fall into place...\n Oh, how naive you truly are.\""); ; // This was a Minion, but wound up being too strong. Whoops.
+        CharacterData w_mezepheles = newCharacter("Venelum", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Sign this contract and it will all fall into place...\n Oh, how naive you truly are.\"", "Mezepheles_09511163"); // This was a Minion, but wound up being too strong. Whoops.
         w_mezepheles.role = new w_Mezepheles();
         // w_mezepheles.name = "Venelum"; // Was 'Proselytiser'. New name derived from Latin "Malum" meaning Evil, and "Venenum" meaning Poison.
         w_mezepheles.description = $"<b>Game Start:</b>\n1 Good Villager adjacent to me becomes Corrupted, if possible. They <i>cannot be {formattedKeyText("Cured")}</i>.\n1 Good Corrupted character becomes Evil.\n\nI Lie and Disguise.";
@@ -969,7 +978,7 @@ public class MainMod : MelonMod
         w_shard.usuallyDisguised = true;
         */
 
-        CharacterData w_minos = newCharacter("Sanguitaurus", EAlignment.Evil, ECharacterType.Demon, false, true, "\"As sharp as claws can be, having a bladed weapon still tends to speed up the process.\"");
+        CharacterData w_minos = newCharacter("Sanguitaurus", EAlignment.Evil, ECharacterType.Demon, false, true, "\"As sharp as claws can be, having a bladed weapon still tends to speed up the process.\"", "Imp_58992273");
         w_minos.role = new w_Minos();
         // w_minos.name = "Sanguitaurus"; // Name derived from Latin 'Sanguis' meaning 'Blood', and 'Minotaurus' meaning 'Minotaur'
         w_minos.description = $"<b>Game Start:</b>\nYou have more or less {formattedKeyText("Max Health")} depending on the size of the village.\nNight takes <color=#FF9999>half as long to fall</color>.\n\n<b>At Night:</b>\n{formattedKeyText("Kill")} & {formattedKeyText("Reveal")} 1 Good character.\nDeal 2 {formattedKeyText("Damage")} to you.\n\n{formattedKeyText("Lose")} if all Good characters {formattedKeyText("Die")}.\n\nI Lie and Disguise.";
@@ -1001,14 +1010,14 @@ public class MainMod : MelonMod
         w_pandemonium.additionalFlavorTexts[0] = w_pandemonium.flavorText;
         */
 
-        CharacterData w_leviathan = newCharacter("Leviathan", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Its arrival sews chaos within any village. Beware of it.\"");
+        CharacterData w_leviathan = newCharacter("Leviathan", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Its arrival sews chaos within any village. Beware of it.\"", "Pooka_13445289");
         w_leviathan.role = new w_Leviathan();
         //w_leviathan.name = "Leviathan"; // Leviathan. Just... Leviathan.
         w_leviathan.description = $"<b>Setup:</b>\nMost Villagers are replaced with Outcasts.\nThere are additional Outcasts and Minions in the {formattedKeyText("Deck")}.\n\n{formattedKeyText("Lose")} if you Execute a Good Villager.\n\nI Lie and Disguise.";
         w_leviathan.hints = $"{customHint("Keyword", "Setup")}\n\nArt by {formattedKeyText("Derpy_Feesh")} ({formattedKeyText("@derpy_feesh")}) on {formattedKeyText("Discord")}";
         w_leviathan.gender = EGender.They;
 
-        CharacterData w_fogDemon = newCharacter("Tenecaligo", EAlignment.Evil, ECharacterType.Demon, false, true, "\"In the looming mist, a Demon preys on the worst fear:\nthe fear of the unknown.\"");
+        CharacterData w_fogDemon = newCharacter("Tenecaligo", EAlignment.Evil, ECharacterType.Demon, false, true, "\"In the looming mist, a Demon preys on the worst fear:\nthe fear of the unknown.\"", "Shaman_26945607");
         w_fogDemon.role = new w_Tenecaligo();
         //w_fogDemon.name = "Tenecaligo"; // Name derived from Latin "Tenebrae" and "Caligo", both meaning "Darkness"
         w_fogDemon.description = $"<b>Setup:</b>\nThere are no starting Outcasts or Minions.\n\n<b>Game Start:</b>\n4 Outcasts and 4 Minions are added to the {formattedKeyText("Deck")}.\n4 Good Villagers become a random combination of Outcasts and Minions.\n\nI Lie and Disguise.";
@@ -1017,7 +1026,7 @@ public class MainMod : MelonMod
         w_fogDemon.additionalPossibleCharacters.count.Add(NewPossibleCharacterCount(ECharacterType.Outcast, 4));
         w_fogDemon.additionalPossibleCharacters.count.Add(NewPossibleCharacterCount(ECharacterType.Minion, 4));
 
-        CharacterData w_iris = newCharacter("Iris", EAlignment.Evil, ECharacterType.Demon, false, true, "\"When the village discusses who did it, 'It couldn't have possibly been Iris!', they say.\nHow foolish they are...\"");
+        CharacterData w_iris = newCharacter("Iris", EAlignment.Evil, ECharacterType.Demon, false, true, "\"When the village discusses who did it, 'It couldn't have possibly been Iris!', they say.\nHow foolish they are...\"", "Lover_91302708");
         w_iris.role = new w_Iris();
         //w_iris.name = "Iris"; // Named after the part of the eye.
         w_iris.description = $"<b>Game Start:</b>\n1 Good Villager becomes Evil.\nThey {formattedKeyText("Bluff")} Lying.\n\nI Lie and Disguise.\nI Register as Good and as my Disguise.\nI {formattedKeyText("Bluff")} being {formattedKeyText("Truthful")} and {formattedKeyText("Honest")}.";
@@ -1027,7 +1036,7 @@ public class MainMod : MelonMod
 
 
 
-        CharacterData w_carnicarius = newCharacter("Carnicarius", EAlignment.Evil, ECharacterType.Demon, false, true, "\"The village idiot has nothing to worry about.\nThe Bishop, on the other hand...\"");
+        CharacterData w_carnicarius = newCharacter("Carnicarius", EAlignment.Evil, ECharacterType.Demon, false, true, "\"The village idiot has nothing to worry about.\nThe Bishop, on the other hand...\"", "Hunter_93427887");
         // Derived from Latin "Sicarius" meaning "Assassin" and "Carnifex" meaning "Executioner"
         w_carnicarius.role = new w_Carnicarius();
         w_carnicarius.description = $"<b>At Night:</b>\nDeal 2 {formattedKeyText("Damage")} to you.\n{formattedKeyText("Kill")} a Good character.\nOn my first night, {formattedKeyText("Kill")} two.\nI pick my targets wisely.\n\nI Lie and Disguise.";
@@ -1090,16 +1099,17 @@ public class MainMod : MelonMod
         Characters.Instance.startGameActOrder = InsertAfterAct("Baa", w_minos);
 
 
-        Characters.Instance.startGameActOrder = InsertAfterAct("Chancellor", w_marionette);
         Characters.Instance.startGameActOrder = InsertAfterAct("Chancellor", w_swarm_good);
         Characters.Instance.startGameActOrder = InsertAfterAct("Chancellor", w_undying);
         Characters.Instance.startGameActOrder = InsertAfterAct("Chancellor", w_praesect);
         // Characters.Instance.startGameActOrder = insertAfterAct("Chancellor", w_twindemontriplet); // No longer needs to act on start after rework
         Characters.Instance.startGameActOrder = InsertAfterAct("Chancellor", w_mutant);
+        Characters.Instance.startGameActOrder = InsertAfterAct("Chancellor", w_marionette);
 
         //Characters.Instance.startGameActOrder = insertBeforeAct("Pooka", w_politician);
         //Characters.Instance.startGameActOrder = insertBeforeAct("Pooka", w_twindemon);
         //Characters.Instance.startGameActOrder = insertBeforeAct("Pooka", w_saboteur);
+        Characters.Instance.startGameActOrder = InsertAfterAct("Pooka", w_snakeCharmer);
         Characters.Instance.startGameActOrder = InsertAfterAct("Pooka", w_saboteur);
         Characters.Instance.startGameActOrder = InsertAfterAct("Pooka", w_twindemon);
 
@@ -1117,11 +1127,17 @@ public class MainMod : MelonMod
         //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_shard);
         //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_pilgrim);
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_invertDemon);
+        Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_tergiversator);
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_copycat);
         //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_devout);
 
 
         MelonLogger.Msg($"Act order done.");
+
+        foreach (CharacterData character in Characters.Instance.startGameActOrder)
+        {
+            MelonLogger.Msg($"Act Order: {character.characterName}");
+        }
 
 
 
@@ -1799,20 +1815,20 @@ public class MainMod : MelonMod
         leviathanScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
         leviathanScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
         CharactersCount leviathanCounter01 = setCharacterCount(1, 4, 1, 1); // 7
-        leviathanCounter01.dOuts = 7;
-        leviathanCounter01.dMinion = 4;
+        leviathanCounter01.dOuts = 6;
+        leviathanCounter01.dMinion = 3;
         CharactersCount leviathanCounter02 = setCharacterCount(2, 4, 1, 1); // 8
-        leviathanCounter02.dOuts = 7;
-        leviathanCounter02.dMinion = 4;
+        leviathanCounter02.dOuts = 6;
+        leviathanCounter02.dMinion = 3;
         CharactersCount leviathanCounter03 = setCharacterCount(2, 4, 2, 1); // 9
-        leviathanCounter03.dOuts = 7;
-        leviathanCounter03.dMinion = 5;
+        leviathanCounter03.dOuts = 6;
+        leviathanCounter03.dMinion = 4;
         CharactersCount leviathanCounter04 = setCharacterCount(2, 5, 2, 1); // 10
-        leviathanCounter04.dOuts = 8;
-        leviathanCounter04.dMinion = 5;
+        leviathanCounter04.dOuts = 7;
+        leviathanCounter04.dMinion = 4;
         CharactersCount leviathanCounter05 = setCharacterCount(3, 5, 1, 1); // 10
-        leviathanCounter05.dOuts = 8;
-        leviathanCounter05.dMinion = 4;
+        leviathanCounter05.dOuts = 7;
+        leviathanCounter05.dMinion = 3;
         Il2CppSystem.Collections.Generic.List<CharactersCount> leviathanCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
 
 
@@ -2174,9 +2190,22 @@ public class MainMod : MelonMod
 
 
         MelonLogger.Msg($"Adding roles to scripts");
+        Il2CppSystem.Collections.Generic.List<string> displayedScripts = new Il2CppSystem.Collections.Generic.List<string>();
         foreach (CustomScriptData scriptData in advancedAscension.possibleScriptsData)
         {
             ScriptInfo script = scriptData.scriptInfo;
+            if (!displayedScripts.Contains(scriptData.name))
+            {
+                MelonLogger.Msg($"Found a script! Name: {scriptData.name}. Compositions:");
+                displayedScripts.Add(scriptData.name);
+                Il2CppSystem.Collections.Generic.List<string> characterCounts = new Il2CppSystem.Collections.Generic.List<string>();
+                foreach (CharactersCount characterCount in script.characterCounts)
+                {
+                    string charCount = $"{characterCount.town}/{characterCount.outs}/{characterCount.minion}/{characterCount.demon}";
+                    if (!characterCounts.Contains(charCount)) MelonLogger.Msg(charCount);
+                    characterCounts.Add(charCount);
+                }
+            }
             addRole(script.startingTownsfolks, w_arbiter);
             addRole(script.startingTownsfolks, w_arithmetician);
             addRole(script.startingTownsfolks, w_bloodseer);
@@ -2194,6 +2223,7 @@ public class MainMod : MelonMod
             //addRole(script.startingTownsfolks, w_insomniac);
             addRole(script.startingTownsfolks, w_introvert);
             addRole(script.startingTownsfolks, w_jewelsmith);
+            addRole(script.startingTownsfolks, w_knave);
             addRole(script.startingTownsfolks, w_lamb);
             addRole(script.startingTownsfolks, w_performer);
             addRole(script.startingTownsfolks, w_prince);
@@ -2213,15 +2243,20 @@ public class MainMod : MelonMod
             //addRoleIfNotJinxed(script.startingOutsiders, w_pilgrim, pilgrimJinxes, script.startingDemons);
             addRole(script.startingOutsiders, w_renegade);
             addRole(script.startingOutsiders, w_revolutionary);
+            addRole(script.startingOutsiders, w_tergiversator);
             addRole(script.startingMinions, w_heretic);
             addRole(script.startingMinions, w_professional);
+            addRole(script.startingMinions, w_ritualist);
             addRole(script.startingMinions, w_saboteur);
             addRole(script.startingMinions, w_swarm_good);
             addRoleIfNotJinxed(script.startingMinions, w_turncoat, turncoatJinxes, script.startingDemons);
             addRoleIfNotJinxed(script.startingMinions, w_undying, undyingJinxes, script.startingDemons);
             for (int i = 0; i < 100; i++)
             {
-                // addRoleEvenIfDupe(script.startingTownsfolks, w_saint);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_knave);
+                //addRoleEvenIfDupe(script.startingOutsiders, w_tergiversator);
+                //addRoleEvenIfDupe(script.startingMinions, w_ritualist);
+                //addRoleEvenIfDupe(script.startingMinions, w_snakeCharmer);
             }
             for (int i = 0; i < allDatas.Length; i++)
             {
@@ -2613,12 +2648,20 @@ public class MainMod : MelonMod
             {
                 hint = $"<b>Bluff</b>:\nCharacters think I have the attribute that I am {formattedKeyText("Bluffing")}.";
             }
+            if (parameter == "Poison")
+            {
+                hint = $"<b>Poison</b>:\nThis character is Corrupted & acts as such.\nAfter a certain number of {formattedKeyText("Reveals")}, they die.\nThe {roleColour("Villager")}Alchemist</color> can Cure the Corruption, but can't stop the {formattedKeyText("Poison")} from killing the victim.";
+            }
+            if (parameter == "Cycle")
+            {
+                hint = $"<b>Cycle X</b>:\nThis ability happens every X times any character is {formattedKeyText("Revealed")}.";
+            }
         }
         return hint;
     }
 
 
-    public static CharacterData newCharacter(string name, EAlignment alignment, ECharacterType type, bool bluffable, bool usuallyDisguised, string flavour)
+    public static CharacterData newCharacter(string name, EAlignment alignment, ECharacterType type, bool bluffable, bool usuallyDisguised, string flavour, string placeholderArtID)
     {
 
 
@@ -2628,7 +2671,8 @@ public class MainMod : MelonMod
         MelonLogger.Msg($"refIDs[0] = {refIDs[0]}");
         MelonLogger.Msg($"refIDs[1] = {refIDs[1]}");
         CharacterData backgroundRef = ProjectContext.Instance.gameData.GetCharacterDataOfId(refIDs[0]);
-        CharacterData artRef = ProjectContext.Instance.gameData.GetCharacterDataOfId(refIDs[1]);
+        CharacterData artRef = ProjectContext.Instance.gameData.GetCharacterDataOfId(placeholderArtID);
+        if (artRef == null) artRef = ProjectContext.Instance.gameData.GetCharacterDataOfId(refIDs[1]);
         if (backgroundRef == null)
         {
             MelonLogger.Msg("backgroundRef is null! Resetting to Bishop...");
@@ -3017,6 +3061,7 @@ public class MainMod : MelonMod
             case "Truthful": return "<color=#3A95D6>Truthful</color>";
             case "Truth": return "<color=#3A95D6>Truth</color>";
             case "Reveal": return "<color=#A1E6E2>Reveal</color>";
+            case "Reveals": return "<color=#A1E6E2>Reveals</color>";
             case "Revealed": return "<color=#A1E6E2>Revealed</color>";
             case "Hidden": return "<color=#697D91>Hidden</color>";
             case "Unrevealed": return "<color=#697D91>Unrevealed</color>";
@@ -3032,6 +3077,14 @@ public class MainMod : MelonMod
             case "Living": return "<color=#A4EDB7>Living</color>";
             case "Deck": return "<color=#789AF0>Deck</color>";
             case "Lose": return "<color=#FF0000>Lose</color>";
+            // Cycle is gonna be a long one because of the fancy gradient I'm doing
+            case "Cycle": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e</color>";
+            case "Cycle 1": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 1</color>";
+            case "Cycle 2": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 2</color>";
+            case "Cycle 3": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 3</color>";
+            case "Cycle 4": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 4</color>";
+            case "Cycle 5": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 5</color>";
+            case "Cycle 6": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 6</color>"; // Cycles beyond 6 are pointless
 
             // Custom role keywords
             case "Poison": return "<color=#3F8538>Poison</color>"; // For unused Toxomancer role.

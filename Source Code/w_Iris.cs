@@ -127,13 +127,13 @@ public static class IrisStatus
             {
                 __instance.chName.text = __instance.dataRef.name.ToUpper() + "<color=#FF00AE><size=18>\n<Hypnotised></color></size>";
             }
-            if (__instance.statuses.Contains(w_irisName))
-            {
-                if (__instance.name.ToString() != "Iris")
-                {
-                    __instance.chName.text = "IRIS";
-                }
-            }
+            //if (__instance.statuses.Contains(w_irisName))
+            //{
+            //    if (__instance.name.ToString() != "Iris")
+            //    {
+            //        __instance.chName.text = "IRIS";
+            //    }
+            //}
         }
     }
 }

@@ -26,7 +26,7 @@ public class w_Jewelsmith : Role
         string line = "info";
         if (honestChars.Count == 0)
         {
-            line = "This village confuses me";
+            line = "Something does not make sense";
         }
         else
         {
@@ -55,7 +55,7 @@ public class w_Jewelsmith : Role
         string line = "info";
         if (disguisedChars.Count == 0)
         {
-            line = "This village confuses me";
+            line = "Something does not make sense";
         }
         else
         {

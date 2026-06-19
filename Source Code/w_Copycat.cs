@@ -24,11 +24,11 @@ public class w_Copycat : Role
     }
     public override ActedInfo GetInfo(Character charRef)
     {
-        return new ActedInfo("This village confuses me");
+        return new ActedInfo("Something does not make sense");
     }
     public override ActedInfo GetBluffInfo(Character charRef)
     {
-        return new ActedInfo("This village confuses me");
+        return new ActedInfo("Something does not make sense");
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {

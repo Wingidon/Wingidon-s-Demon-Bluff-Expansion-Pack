@@ -11,6 +11,8 @@ public class w_Sentinel : Role
 {
     public override ActedInfo GetInfo(Character charRef)
     {
+        ActedInfo checkedInfo = CheckIfUniqueCharacter(charRef);
+        if (checkedInfo.desc != "False") return checkedInfo;
         Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;
         System.Collections.Generic.List<Character> newList = new System.Collections.Generic.List<Character>();
         System.Collections.Generic.List<Character> newList2 = new System.Collections.Generic.List<Character>();
@@ -58,6 +60,8 @@ public class w_Sentinel : Role
     }
     public override ActedInfo GetBluffInfo(Character charRef)
     {
+        ActedInfo checkedInfo = CheckIfUniqueCharacter(charRef);
+        if (checkedInfo.desc != "False") return checkedInfo;
         Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;
         System.Collections.Generic.List<Character> newList = new System.Collections.Generic.List<Character>();
         System.Collections.Generic.List<Character> newList2 = new System.Collections.Generic.List<Character>();
@@ -129,6 +133,28 @@ public class w_Sentinel : Role
     }
     public w_Sentinel(IntPtr ptr) : base(ptr)
     {
+    }
+
+    public ActedInfo CheckIfUniqueCharacter(Character charRef) // Checks if the character is one that gives unique info
+    {
+        if (charRef.dataRef.characterId == "Hypnotist_scm")
+        {
+            return new ActedInfo("There are no Corrupted characters");
+        }
+        if (charRef.dataRef.characterId == "Captivator_scm")
+        {
+            Il2CppSystem.Collections.Generic.List<Character> corruptedChars = new Il2CppSystem.Collections.Generic.List<Character>();
+            corruptedChars = Characters.Instance.FilterCharacterContainsStatus(Gameplay.CurrentCharacters, ECharacterStatus.Corrupted);
+            if (corruptedChars.Count < 2) return new ActedInfo("Something does not make sense");
+            ActedInfo returnInfo = new ActedInfo("");
+            returnInfo.characters.Add(corruptedChars[UnityEngine.Random.RandomRangeInt(0, corruptedChars.Count)]);
+            corruptedChars.Remove(returnInfo.characters[0]);
+            returnInfo.characters.Add(corruptedChars[UnityEngine.Random.RandomRangeInt(0, corruptedChars.Count)]);
+            wx_SavedScripts sharedScripts = new wx_SavedScripts();
+            returnInfo.characters = sharedScripts.SortList(returnInfo.characters);
+            returnInfo.desc = $"One is Corrupted:\n#{returnInfo.characters[0].id}, #{returnInfo.characters[1].id}";
+        }
+        return new ActedInfo("False");
     }
 
     public bool randomPercent(float chance)

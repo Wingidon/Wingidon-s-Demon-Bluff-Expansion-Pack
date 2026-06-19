@@ -29,15 +29,26 @@ public class w_Chatterbox : Role
         {
             chatterPoisonTarget = charRef;
             Il2CppSystem.Collections.Generic.List<Character> unrevealedCharacters = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
+            unrevealedCharacters = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
+            unrevealedCharacters.Remove(charRef);
+            if (unrevealedCharacters.Count == 0)
+            {
+                onActed.Invoke(new ActedInfo("All characters have been revealed"));
+                return;
+            }
             unrevealedCharacters = Characters.Instance.FilterCharacterType(unrevealedCharacters, ECharacterType.Villager);
             unrevealedCharacters = Characters.Instance.FilterAlignmentCharacters(unrevealedCharacters, EAlignment.Good);
             unrevealedCharacters = Characters.Instance.FilterCharacterMissingStatus(unrevealedCharacters, ECharacterStatus.Corrupted);
-            onActed.Invoke(GetInfo(charRef));
-            if (unrevealedCharacters.Count == 0) return;
+            if (unrevealedCharacters.Count == 0)
+            {
+                onActed.Invoke(GetInfo(charRef));
+                return;
+            }
             Character poisonTarget = unrevealedCharacters[UnityEngine.Random.RandomRangeInt(0, unrevealedCharacters.Count)];
             chatterPoisonTarget = poisonTarget;
             poisonTarget.statuses.AddStatus(ECharacterStatus.Corrupted, charRef);
             if (poisonTarget.dataRef.characterId == "Copycat_WING") poisonTarget.statuses.statuses.Remove(ECharacterStatus.HealthyBluff);
+            onActed.Invoke(GetInfo(charRef));
         }
     }
     public override ActedInfo GetInfo(Character charRef)
@@ -45,18 +56,41 @@ public class w_Chatterbox : Role
         Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
         string info = "Info";
         Il2CppSystem.Collections.Generic.List<Character> unrevealedCharacters = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
+        unrevealedCharacters = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
         unrevealedCharacters.Remove(charRef);
-        if (unrevealedCharacters.Count == 0)
+
+        unrevealedCharacters.Remove(chatterPoisonTarget);
+        for (int i = 0; i < 2; i++)
         {
-            info = "All characters have been revealed";
+            if (unrevealedCharacters.Count != 0)
+            {
+                Character charAdd = unrevealedCharacters[UnityEngine.Random.RandomRangeInt(0, unrevealedCharacters.Count)];
+                selection.Add(charAdd);
+                unrevealedCharacters.Remove(charAdd);
+            }
         }
-        else if (unrevealedCharacters.Count == 1)
+        if (chatterPoisonTarget && chatterPoisonTarget != charRef)
         {
-            info = string.Format("I spoke to #{0}", unrevealedCharacters[0].id);
+            selection.Add(chatterPoisonTarget);
         }
         else
         {
-            info = $"I spoke to {new wx_SavedScripts().MentionEveryCharacterInList(unrevealedCharacters, "or")}";
+            if (unrevealedCharacters.Count != 0) selection.Add(unrevealedCharacters[UnityEngine.Random.RandomRangeInt(0, unrevealedCharacters.Count)]);
+        }
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+        selection = sharedScripts.SortList(selection);
+
+        if (selection.Count == 0)
+        {
+            info = "All characters have been revealed";
+        }
+        else if (selection.Count == 1)
+        {
+            info = string.Format("I spoke to #{0}", selection[0].id);
+        }
+        else
+        {
+            info = $"I spoke to {sharedScripts.MentionEveryCharacterInList(selection, "or")}";
         }
         return new ActedInfo(info, selection);
     }
@@ -72,6 +106,13 @@ public class w_Chatterbox : Role
     public string ConjourInfo()
     {
         return "";
+    }
+
+    public ActedInfo GetRandomNonsense()
+    {
+        Il2CppSystem.Collections.Generic.List<string> randomNonsense = new Il2CppSystem.Collections.Generic.List<string>();
+        ActedInfo returnInfo = new ActedInfo("");
+        return returnInfo;
     }
 
     public override CharacterData GetBluffIfAble(Character charRef)
