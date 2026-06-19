@@ -187,6 +187,7 @@ public class w_Chiromancer : Role
                 {
                     allCharacters.Add(character);
                 }
+                if (character.GetRegisterAlignment() == EAlignment.Evil) evilCharacters.Add(character);
             }
             selection.Add(evilCharacters[UnityEngine.Random.RandomRangeInt(0, evilCharacters.Count)]);
             evilCharacters.Remove(selection[0]);
@@ -211,8 +212,8 @@ public class w_Chiromancer : Role
             }
 
             string infoString = "One is correct:\n"
-                + $"#{selection[0].id} is {CheckIfThe(chosenInfo[0])}{chosenInfo[0]}"
-                + $"#{selection[1].id} is {CheckIfThe(chosenInfo[1])}{chosenInfo[1]}"
+                + $"#{selection[0].id} is {CheckIfThe(chosenInfo[0])}{chosenInfo[0]}\n"
+                + $"#{selection[1].id} is {CheckIfThe(chosenInfo[1])}{chosenInfo[1]}\n"
                 + $"#{selection[2].id} is {CheckIfThe(chosenInfo[2])}{chosenInfo[2]}";
 
             returnInfo.desc = infoString;

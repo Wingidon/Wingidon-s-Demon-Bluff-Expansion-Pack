@@ -29,7 +29,7 @@ public class w_Chatterbox : Role
         {
             chatterPoisonTarget = charRef;
             Il2CppSystem.Collections.Generic.List<Character> unrevealedCharacters = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
-            unrevealedCharacters = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
+            unrevealedCharacters = Characters.Instance.FilterAliveCharacters(unrevealedCharacters);
             unrevealedCharacters.Remove(charRef);
             if (unrevealedCharacters.Count == 0)
             {
@@ -56,7 +56,7 @@ public class w_Chatterbox : Role
         Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
         string info = "Info";
         Il2CppSystem.Collections.Generic.List<Character> unrevealedCharacters = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
-        unrevealedCharacters = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
+        unrevealedCharacters = Characters.Instance.FilterAliveCharacters(unrevealedCharacters);
         unrevealedCharacters.Remove(charRef);
 
         unrevealedCharacters.Remove(chatterPoisonTarget);
