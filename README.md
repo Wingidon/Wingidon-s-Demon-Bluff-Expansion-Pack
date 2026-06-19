@@ -15,6 +15,7 @@ Almost none of the art was made by me. Most are either by Normandia, or edits of
 - Spy: Panda, though the original message was deleted for some reason? Remnants exist at https://discord.com/channels/1148903384968089640/1400730209472221234/1426689893211570293.
 - Warden: LullabiesMourn (https://discord.com/channels/1148903384968089640/1399932582723846144/1455229912179933244)
 - Lunatic: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1417961198258753627)
+- Snake Charmer: Blood on the Clocktower art from the same character name (https://wiki.bloodontheclocktower.com/Snake_Charmer)
 - Zealot: HydeTheFish (Sent to me in DMs)
 - Caedoccidere: I edited together a bunch of stock images I found online.
 - Carnicarius: Made by me!
@@ -39,6 +40,7 @@ Currently, this mod includes the following roles:
 - Gravekeeper - Learns random info about every dead character when activated.
 - Introvert - Learns 2 roles that sit within 2 cards of herself.
 - Jewelsmith - Learns an Honest character.
+- Knave - Learns two sets of info, but only one is true.
 - Lamb - Learns his distance to a particular Outcast.
 - Performer - Learns an Evil character, but gets bad info if adjacent to Evil.
 - Prince - Learns that one of two characters is Disguised.
@@ -55,12 +57,15 @@ Currently, this mod includes the following roles:
 - Mutant - Might become Evil. If it remains Good, it creates an additional Minion.
 - Revolutionary - Disguises. If executed, executes another Villager.
 - Renegade - Evil Outcast that Lies and Disguises.
+- Tergiversator - Starts with a random alignment, flips to the opposite each night.
 ### Minions
 - Acolyte - Minion created by another character's ability. Lies and Disguises as a not-in-play character.
 - Fanatic - Minion created by another character's ability. Lies and Disguises.
 - Heretic - Adds two fake Minions and two fake Demons to the Deck. Lies and Disguises.
 - Professional - Registers as Good. Lies and Disguises.
+- Ritualist - Deals damage based on characters revealed.
 - Saboteur - Corrupts the character furthest away from it. Lies and Disguises.
+- Snake Charmer - Poisons a random character, killing them after five characters are Revealed
 - Swarm - There are 3 Swarm. Two of them are Evil, they Lie and Disguise, and the other is Good, Learning that two of four characters are Swarm.
 - Turncoat - Disguises as an in-play character.
 - Undying - Doesn't Disguise, but can't be killed unless they're the last remaining Evil. Might create a Fanatic.
