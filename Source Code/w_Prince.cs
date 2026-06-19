@@ -140,6 +140,7 @@ public class w_Prince : Role
             wx_SavedScripts sharedScripts = new wx_SavedScripts();
             returnInfo.characters = sharedScripts.SortList(returnInfo.characters);
             returnInfo.desc = $"One is Disguised:\n#{returnInfo.characters[0].id}, #{returnInfo.characters[1].id}";
+            return returnInfo;
         }
         return new ActedInfo("False");
     }
