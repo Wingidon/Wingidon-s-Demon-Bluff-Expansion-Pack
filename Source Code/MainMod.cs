@@ -1029,7 +1029,7 @@ public class MainMod : MelonMod
         CharacterData w_iris = newCharacter("Iris", EAlignment.Evil, ECharacterType.Demon, false, true, "\"When the village discusses who did it, 'It couldn't have possibly been Iris!', they say.\nHow foolish they are...\"", "Lover_91302708");
         w_iris.role = new w_Iris();
         //w_iris.name = "Iris"; // Named after the part of the eye.
-        w_iris.description = $"<b>Game Start:</b>\n1 Good Villager becomes Evil.\nThey {formattedKeyText("Bluff")} Lying.\n\nI Lie and Disguise.\nI Register as Good and as my Disguise.\nI {formattedKeyText("Bluff")} being {formattedKeyText("Truthful")} and {formattedKeyText("Honest")}.";
+        w_iris.description = $"<b>Game Start:</b>\n1 Good Villager closest or furthest away from me becomes Evil.\nThey {formattedKeyText("Bluff")} Lying.\n\nI Lie and Disguise.\nI Register as Good and as my Disguise.\nI {formattedKeyText("Bluff")} being {formattedKeyText("Truthful")} and {formattedKeyText("Honest")}.";
         w_iris.hints = "The Villager turned Evil by my ability will appear <color=#FF00AE>Hypnotised</color> when Executed.\nIf there are no Minions, some characters may get confused and remain silent.\n\n" + customHint("Keyword", "Bluff");
         w_iris.characterId = "Iris_WING";
         w_iris.gender = EGender.Female;
@@ -2248,6 +2248,7 @@ public class MainMod : MelonMod
             addRole(script.startingMinions, w_professional);
             addRole(script.startingMinions, w_ritualist);
             addRole(script.startingMinions, w_saboteur);
+            addRole(script.startingMinions, w_snakeCharmer);
             addRole(script.startingMinions, w_swarm_good);
             addRoleIfNotJinxed(script.startingMinions, w_turncoat, turncoatJinxes, script.startingDemons);
             addRoleIfNotJinxed(script.startingMinions, w_undying, undyingJinxes, script.startingDemons);

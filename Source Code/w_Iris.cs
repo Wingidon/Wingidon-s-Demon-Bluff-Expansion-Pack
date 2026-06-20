@@ -15,6 +15,8 @@ namespace ExpansionPack;
 [RegisterTypeInIl2Cpp]
 public class w_Iris : Role
 {
+
+    // TODO: CODE PLACEMENT RESTRICTIONS
     public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
     public w_Iris() : base(ClassInjector.DerivedConstructorPointer<w_Iris>())
     {
@@ -28,15 +30,55 @@ public class w_Iris : Role
     {
         if (trigger == ETriggerPhase.Start)
         {
+            Il2CppSystem.Collections.Generic.List<Character> possibleVictims = new Il2CppSystem.Collections.Generic.List<Character>();
+            Il2CppSystem.Collections.Generic.List<Character> closestChars = new Il2CppSystem.Collections.Generic.List<Character>();
+            Il2CppSystem.Collections.Generic.List<Character> furthestChars = new Il2CppSystem.Collections.Generic.List<Character>();
             Il2CppSystem.Collections.Generic.List<Character> evilTargets = new Il2CppSystem.Collections.Generic.List<Character>();
             ApplyStatuses(charRef);
             wx_SavedScripts sharedScripts = new wx_SavedScripts();
             foreach (Character character in Gameplay.CurrentCharacters)
             {
-                if (character.dataRef.type == ECharacterType.Villager && character.alignment == EAlignment.Good && !sharedScripts.CheckIfAlwaysGood(character))
+                if (character.dataRef.type == ECharacterType.Villager && character.alignment == EAlignment.Good && !sharedScripts.CheckIfAlwaysGood(character) && !character.statuses.Contains(ECharacterStatus.Corrupted))
                 {
-                    evilTargets.Add(character);
+                    possibleVictims.Add(character);
                 }
+            }
+            int dist = 0;
+            int closestDist = 1000;
+            int furthestDist = 0;
+            foreach (Character character in possibleVictims)
+            {
+                dist = sharedScripts.GetDistanceBetweenCharacters(character, charRef);
+                if (dist == closestDist)
+                {
+                    closestChars.Add(character);
+                }
+                if (dist < closestDist)
+                {
+                    closestChars.Clear();
+                    closestDist = dist;
+                    closestChars.Add(character);
+                }
+                if (dist == furthestDist)
+                {
+                    furthestChars.Add(character);
+                }
+                if (dist > furthestDist)
+                {
+                    furthestChars.Clear();
+                    furthestDist = dist;
+                    furthestChars.Add(character);
+                }
+            }
+            MelonLogger.Msg($"Closest character(s): {sharedScripts.MentionEveryCharacterInList(closestChars, "")}");
+            MelonLogger.Msg($"Furthest character(s): {sharedScripts.MentionEveryCharacterInList(furthestChars, "")}");
+            foreach (Character character in closestChars)
+            {
+                evilTargets.Add(character);
+            }
+            foreach (Character character in furthestChars)
+            {
+                evilTargets.Add(character);
             }
             if (evilTargets.Count != 0)
             {
@@ -44,7 +86,7 @@ public class w_Iris : Role
                 chosenEvilTarget.ChangeAlignment(EAlignment.Evil);
                 chosenEvilTarget.statuses.AddStatus(IrisStatus.w_irisTrick, charRef);
                 chosenEvilTarget.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
-                chosenEvilTarget.statuses.AddStatus(ECharacterStatus.HealthyBluff, charRef);
+                if (chosenEvilTarget.dataRef.characterId != "Knight_47970624") chosenEvilTarget.statuses.AddStatus(ECharacterStatus.HealthyBluff, charRef);
                 chosenEvilTarget.statuses.AddStatus(ECharacterStatus.WorkingAbility, charRef);
                 chosenEvilTarget.statuses.AddStatus(ECharacterStatus.AppearLying, charRef);
             }

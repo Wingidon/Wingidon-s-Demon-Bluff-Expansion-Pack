@@ -404,6 +404,10 @@ namespace ExpansionPack
         public int MakeNumberWrong(int trueNumber, int falseNumber, int minimum)
         {
             int returnVal = falseNumber;
+            if (returnVal < minimum)
+            {
+                while (returnVal < minimum) returnVal++;
+            }
             if (trueNumber != falseNumber) return falseNumber;
             if (falseNumber == minimum) returnVal++;
             else returnVal--;
@@ -1512,6 +1516,7 @@ namespace ExpansionPack
             // Knitter
             if (chosenInfoType == "Knitter")
             {
+                if (charRef.GetRegisterAlignment() == EAlignment.Evil && !evilCharacters.Contains(charRef)) evilCharacters.Add(charRef);
                 int chosenNum = 0;
                 if (lying)
                 {
@@ -1544,6 +1549,7 @@ namespace ExpansionPack
             // GoodKnitter
             if (chosenInfoType == "GoodKnitter")
             {
+                if (charRef.GetRegisterAlignment() == EAlignment.Good && !goodCharacters.Contains(charRef)) goodCharacters.Add(charRef);
                 int chosenNum = 0;
                 if (lying)
                 {
@@ -1576,6 +1582,7 @@ namespace ExpansionPack
             // VillagerKnitter
             if (chosenInfoType == "VillagerKnitter")
             {
+                if (charRef.GetCharacterType() == ECharacterType.Villager && !villagerCharacters.Contains(charRef)) villagerCharacters.Add(charRef);
                 int chosenNum = 0;
                 if (lying)
                 {

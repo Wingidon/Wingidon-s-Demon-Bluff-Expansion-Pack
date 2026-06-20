@@ -1,4 +1,5 @@
-﻿using Il2Cpp;
+﻿using HarmonyLib;
+using Il2Cpp;
 using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppInterop.Runtime.InteropTypes;
@@ -9,6 +10,7 @@ using System;
 using System.ComponentModel.Design;
 using UnityEngine;
 using static Il2CppSystem.Globalization.CultureInfo;
+using static MelonLoader.MelonLaunchOptions;
 
 namespace ExpansionPack;
 
@@ -378,6 +380,44 @@ public class w_Undying : Minion
         {
             undyingLoss.SetActive(true);
             winConditions.Lose();
+        }
+    }
+
+
+    [HarmonyPatch(typeof(Slayer), nameof(Slayer.CharacterPicked))]
+    private static class SlayerUndying
+    {
+        private static bool Prefix(Slayer __instance)
+        {
+            CharacterPicker.OnCharactersPicked -= (Il2CppSystem.Action)__instance.CharacterPicked;
+            CharacterPicker.OnStopPick -= (Il2CppSystem.Action)__instance.StopPick;
+
+            Il2CppSystem.Collections.Generic.List<Character> chars = new Il2CppSystem.Collections.Generic.List<Character>();
+            chars.Add(CharacterPicker.PickedCharacters[0]);
+
+            string info = $"";
+            bool shouldExecute = false;
+
+            if (chars[0].GetRegisterAlignment() == EAlignment.Evil && chars[0].role.CheckIfCanBeKilled(chars[0]))
+            {
+                info = __instance.ConjourInfo(chars[0].id, EAlignment.Evil, chars[0]);
+                shouldExecute = true;
+            }
+            else
+                info = __instance.ConjourInfo(chars[0].id, EAlignment.Good, chars[0]);
+
+            if (chars[0].state == ECharacterState.Dead)
+            {
+                shouldExecute = false;
+                return false;
+            }
+
+            __instance.onActed?.Invoke(new ActedInfo(info, chars));
+            Debug.Log($"{info}");
+
+            if (shouldExecute)
+                chars[0].KillAndReveal();
+            return false;
         }
     }
 }
