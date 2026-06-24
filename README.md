@@ -42,7 +42,9 @@ Currently, this mod includes the following roles:
 - Jewelsmith - Learns an Honest character.
 - Knave - Learns two sets of info, but only one is true.
 - Lamb - Learns his distance to a particular Outcast.
+- Paperboy - Learns how long his chain of Good characters is.
 - Performer - Learns an Evil character, but gets bad info if adjacent to Evil.
+- Politician - Corrupted Villager that Learns two sets of false info.
 - Prince - Learns that one of two characters is Disguised.
 - Ranger - Learns his distance to his furthest Evil character.
 - Scavenger - Heals you based on the number of dead Evil characters.
@@ -52,6 +54,7 @@ Currently, this mod includes the following roles:
 - Warden - Picks 4 and learns the most common character type among them.
 ### Outcasts
 - Chatterbox - Corrupts an unrevealed character on reveal.
+- Echo - Registers as anyone and anything.
 - Lunatic - Disguises, but only Lies sometimes.
 - Marionette - Lies, Disguises, Registers as a Puppet, and sits next to the Demon.
 - Mutant - Might become Evil. If it remains Good, it creates an additional Minion.
@@ -60,6 +63,7 @@ Currently, this mod includes the following roles:
 - Tergiversator - Starts with a random alignment, flips to the opposite each night.
 ### Minions
 - Acolyte - Minion created by another character's ability. Lies and Disguises as a not-in-play character.
+- Cryptid - Becomes a random unknown Minion.
 - Fanatic - Minion created by another character's ability. Lies and Disguises.
 - Heretic - Adds two fake Minions and two fake Demons to the Deck. Lies and Disguises.
 - Professional - Registers as Good. Lies and Disguises.
@@ -77,6 +81,7 @@ Currently, this mod includes the following roles:
 - Carnicarius - Kills at night, picking its targets wisely. Lies and Disguises.
 - Iris - Registers as Good and turns a Villager Evil. Lies and Disguises.
 - Leviathan - Most characters are Outcasts. Lose if you execute a Villager. Lies and Disguises.
+- Magnere - Attacks you with bigger villages, becoming a different Demon in the process.
 - Mendaverte - Villagers are Corrupted. Evil characters tell the truth. Lies and Disguises.
 - Praesect - Creates an Acolyte and a Zealot. Deals damage if Executed before both are killed. Lies and Diguises.
 - Sanguitaurus - Night falls twice as fast. Kills at night. Lose if all Good characters die. Lies and Disguises.
