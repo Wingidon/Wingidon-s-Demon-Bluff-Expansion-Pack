@@ -98,6 +98,8 @@ public class w_Carnicarius : Demon
             valuableCharacters_OnlyHidden.Add(true);
             valuableCharacters_IDs.Add("Gossip_WING");
             valuableCharacters_OnlyHidden.Add(false);
+            valuableCharacters_IDs.Add("Paperboy_WING");
+            valuableCharacters_OnlyHidden.Add(true);
             valuableCharacters_IDs.Add("Prince_WING");
             valuableCharacters_OnlyHidden.Add(true);
             valuableCharacters_IDs.Add("Ranger_WING");
@@ -143,6 +145,8 @@ public class w_Carnicarius : Demon
             valuableCharacters_OnlyHidden.Add(true);
             valuableCharacters_IDs.Add("Knave_WING");
             valuableCharacters_OnlyHidden.Add(false);
+            valuableCharacters_IDs.Add("Politician_WING");
+            valuableCharacters_OnlyHidden.Add(true);
             valuableCharacters_IDs.Add("Riddler_scm");
             valuableCharacters_OnlyHidden.Add(true);
             valuableCharacters_IDs.Add("Obsessor_scm");

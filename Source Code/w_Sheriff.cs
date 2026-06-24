@@ -11,31 +11,31 @@ public class w_Sheriff : Role
 {
     public override ActedInfo GetInfo(Character charRef)
     {
-        Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;
-        System.Collections.Generic.List<Character> newList = new System.Collections.Generic.List<Character>();
+        Il2CppSystem.Collections.Generic.List<string> characterDisguises = new Il2CppSystem.Collections.Generic.List<string>();
         Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
-        Characters charInst = Characters.Instance;
-        foreach (Character character in characters)
+        foreach (Character character in Gameplay.CurrentCharacters)
         {
-            bool disguising = false;
-            if (character.statuses != null)
+            if (CharacterHelper.CheckIfDisguisedAppearance(character)) // If the character is Registering as Disguised
             {
-                disguising = character.bluff;
-            }
-            if (disguising)
-            {
-                newList.Add(character);
+                if (character.bluff)
+                {
+                    characterDisguises.Add(character.bluff.characterName);
+                }
+                else
+                {
+                    characterDisguises.Add(character.dataRef.characterName);
+                }
             }
         }
         string line = "info";
-        if (newList.Count == 0)
+        if (characterDisguises.Count == 0)
         {
             line = "Something does not make sense";
         }
         else
         {
-            Character random = newList[UnityEngine.Random.RandomRangeInt(0, newList.Count)];
-            line = string.Format("The {0} is being used as a Disguise", random.bluff.name.ToString());
+            string chosenBluff = characterDisguises[UnityEngine.Random.RandomRangeInt(0, characterDisguises.Count)];
+            line = string.Format($"The {chosenBluff} is being used as a Disguise");
         }
 
         ActedInfo actedInfo = new ActedInfo(line, selection);
@@ -43,48 +43,54 @@ public class w_Sheriff : Role
     }
     public override ActedInfo GetBluffInfo(Character charRef)
     {
-        Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;
-        System.Collections.Generic.List<Character> newList = new System.Collections.Generic.List<Character>();
-        System.Collections.Generic.List<Character> newList2 = new System.Collections.Generic.List<Character>();
-        System.Collections.Generic.List<CharacterData> bluffsList = new System.Collections.Generic.List<CharacterData>();
+        Il2CppSystem.Collections.Generic.List<string> characterDisguises = new Il2CppSystem.Collections.Generic.List<string>();
         Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
-        Characters charInst = Characters.Instance;
-        foreach (Character character in characters)
+        foreach (Character character in Gameplay.CurrentCharacters)
         {
-            bool disguising = false;
-            if (character.statuses != null)
+            if (character.bluff)
             {
-                disguising = character.bluff;
-            }
-            if (disguising)
-            {
-                newList.Add(character);
+                characterDisguises.Add(character.bluff.characterName);
             }
             else
             {
-                newList2.Add(character);
-                if (character.GetRegisterAlignment() == EAlignment.Good) bluffsList.Add(character.GetRegisterAs());
+                characterDisguises.Add(character.dataRef.characterName);
+            }
+        }
+        foreach (Character character in Gameplay.CurrentCharacters)
+        {
+            if (CharacterHelper.CheckIfDisguisedAppearance(character)) // If the character is Registering as Disguised
+            {
+                if (character.bluff)
+                {
+                    if (characterDisguises.Contains(character.bluff.characterName))
+                    {
+                        while (characterDisguises.Contains(character.bluff.characterName))
+                        {
+                            characterDisguises.Remove(character.bluff.characterName);
+                        }
+                    }
+                }
+                else
+                {
+                    if (characterDisguises.Contains(character.dataRef.characterName))
+                    {
+                        while (characterDisguises.Contains(character.dataRef.characterName))
+                        {
+                            characterDisguises.Remove(character.dataRef.characterName);
+                        }
+                    }
+                }
             }
         }
         string line = "info";
-        if (bluffsList.Count == 0)
+        if (characterDisguises.Count == 0)
         {
             line = "Something does not make sense";
         }
         else
         {
-            foreach (Character character in newList)
-            {
-                if (bluffsList.Contains(character.bluff))
-                {
-                    while (bluffsList.Contains(character.bluff))
-                    {
-                        bluffsList.Remove(character.bluff);
-                    }
-                }
-            }
-            CharacterData random = bluffsList[UnityEngine.Random.RandomRangeInt(0, bluffsList.Count)];
-            line = string.Format("The {0} is being used as a Disguise", random.name.ToString());
+            string chosenBluff = characterDisguises[UnityEngine.Random.RandomRangeInt(0, characterDisguises.Count)];
+            line = string.Format($"The {chosenBluff} is being used as a Disguise");
         }
 
         ActedInfo actedInfo = new ActedInfo(line, selection);

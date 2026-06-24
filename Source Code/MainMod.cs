@@ -112,6 +112,7 @@ public class MainMod : MelonMod
         configCategory.CreateEntry("Leviathan_Weight", 2, description: "How likely Leviathan is to be in-play.");
         configCategory.CreateEntry("Iris_Weight", 2, description: "How likely Iris is to be in-play.");
         configCategory.CreateEntry("Carni_Weight", 2, description: "How likely Carnicarius is to be in-play.");
+        configCategory.CreateEntry("Magnere_Weight", 2, description: "How likely Magnere is to be in-play.");
         configCategory.CreateEntry("Misc_Weight", 2, description: "How likely any Demon I've forgotten is to be in-play.");
         configCategory.SetFilePath(Path.Combine(MelonEnvironment.UserDataDirectory, "WingModConfig.cfg"));
         configCategory.SaveToFile();
@@ -124,8 +125,8 @@ public class MainMod : MelonMod
         // Auditor - Learn how many characters fit a particular descriptor (e.g. Good, Evil, Villager, Outcast, Minion, Demon, Corruption, etc)
         // Bounty Hunter - 1 random Good Villager is Evil & Corrupted. Learn 1 Evil character.
         // Investigator - Learn how many Unrevealed characters are Disguised.
-        // Paperboy - Learn how long my chain of Good characters is.
         // Partisan - Good characters adjacent to me can't die.
+        // Politician - I am Corrupted. Learn two sets of random false info.
         // Saint - I am always Good.
         // Writer - Learn a Villager role and its distance to its nearest Outcast.
         // ??? (Visionary?) - Every 4 Reveals, Learn that a random character is either a particular Good role or a particular Evil role.
@@ -133,6 +134,7 @@ public class MainMod : MelonMod
         // Occultist - Has a Minion ability (Make them become a Good Minion that Disguises as Occultist?)
         // Provocateur - Kills a Villager each night, lose if all Villagers die.
 
+        // Cryptid - My ability is random. Two random characters start knowing a hint to what it is.
         // Follower - Created by a Demon. Deals damage when executed if the Demon still lives.
         // Goblin - Each night, swaps the roles of 2 unrevealed characters if possible.
         // Hypnotist - Forces its neighbours to Disguise, but they don't Lie unless they already would.
@@ -155,7 +157,7 @@ public class MainMod : MelonMod
 
         CharacterData w_clairvoyant = newCharacter("Clairvoyant", EAlignment.Good, ECharacterType.Villager, true, false, "\"Sees a friendship in the future. Doesn't always understand why.\"", "Enlightened_62576217");
         w_clairvoyant.role = new w_Clairvoyant();
-        w_clairvoyant.description = "Learn 2 characters that share an alignment.";
+        w_clairvoyant.description = $"Learn 2 characters that share an {formattedKeyText("Alignment")}.";
         w_clairvoyant.gender = EGender.Female;
 
         CharacterData w_forager = newCharacter("Forager", EAlignment.Good, ECharacterType.Villager, true, false, "\"Her instructions are clear, it's just that her assistants don't follow them.\"", "Gossip_85354100");
@@ -315,9 +317,11 @@ public class MainMod : MelonMod
         w_chiromancer.gender = EGender.Female;
 
         CharacterData w_warden = newCharacter("Warden", EAlignment.Good, ECharacterType.Villager, true, false, "\"His interrogation skills are unmatched.\nHis note-taking, on the other hand...\"", "Knight_47970624");
-        w_warden.role = new w_Warden();
-        w_warden.description = "<b>Pick 4 characters:</b>\nLearn which character type is the most common among them.";
-        w_warden.hints = "If multiple types are tied for most common, you Learn this instead.\n\n" + customHint("Ability Refresh Hint", "Once Per Game") + $"\n\nArt by {formattedKeyText("Hiraeth")} ({formattedKeyText("@hiraeth")}) on {formattedKeyText("Discord")}";
+        w_warden.role = new w_WardenNew();
+        //w_warden.description = "<b>Pick 4 characters:</b>\nLearn which character type is the most common among them.";
+        //w_warden.hints = "If multiple types are tied for most common, you Learn this instead.\n\n" + customHint("Ability Refresh Hint", "Once Per Game") + $"\n\nArt by {formattedKeyText("Hiraeth")} ({formattedKeyText("@hiraeth")}) on {formattedKeyText("Discord")}";
+        w_warden.description = "<b>Pick 4 characters:</b>\nLearn the two most Suspicious Types among them.";
+        w_warden.hints = customHint("Ability Refresh Hint", "Once Per Game") + $"\n\nArt by {formattedKeyText("Hiraeth")} ({formattedKeyText("@hiraeth")}) on {formattedKeyText("Discord")}";
         w_warden.picking = true;
         w_warden.abilityUsage = EAbilityUsage.Once;
         w_warden.gender = EGender.Male;
@@ -438,10 +442,33 @@ public class MainMod : MelonMod
 
         CharacterData w_knave = newCharacter("Knave", EAlignment.Good, ECharacterType.Villager, true, false, "\"The people don't trust him.\nThat's probably for the best.\"", "Knight_47970624");
         w_knave.role = new w_Knave();
-        w_knave.description = $"Learn two sets of random info:\nOnly one is true.";
-        w_knave.ifLies = $"Both or neither of my statements are true.";
+        w_knave.description = $"Learn three sets of random info:\nTwo are true, one is false.";
+        w_knave.ifLies = $"None or all of my statements are true.";
         w_knave.hints = $"My incorrect statement does not follow the Lying rules you might expect it to. It can be any wrong statement.";
         w_knave.gender = EGender.Male;
+
+
+        CharacterData w_paperboy = newCharacter("Paperboy", EAlignment.Good, ECharacterType.Villager, true, false, "\"Sees everyone almost every day.\nBarely even knows half of them.\"", "Gossip_85354100");
+        w_paperboy.role = new w_Paperboy();
+        w_paperboy.description = $"Learn how long my chain of Good characters is.";
+        w_paperboy.hints = $"I always consider myself Good, even if Lying or Evil.";
+        w_paperboy.gender = EGender.Male;
+
+
+        CharacterData w_politician = newCharacter("Politician", EAlignment.Good, ECharacterType.Villager, true, false, "\"Nobody knows him. He just showed up one day and started bossing people around.\"", "Baron_04539999");
+        w_politician.role = new w_Politician();
+        w_politician.description = $"<b>If Good:</b>\nLearn two sets of random false info.\nI {formattedKeyText("Bluff")} Lying.\nI am Corrupted and cannot be Cured.\n\n<b>If Evil:</b>\nLearn two sets of random true info.\nI {formattedKeyText("Bluff")} being Truthful.\n\nMy {formattedKeyText("Alignment")} cannot change from my {formattedKeyText("True Role")}'s starting {formattedKeyText("Alignment")}.";
+        w_politician.hints = customHint("Keyword", "Bluff");
+        w_politician.gender = EGender.Male;
+
+
+
+        /* is broken and I can't tell why
+        CharacterData w_balloonist = newCharacter("Balloonist", EAlignment.Good, ECharacterType.Villager, true, false, "\"Higher and higher,\nlower and lower.\nStoke the pyre,\nand off we go.\"", "Alchemist_94446803");
+        w_balloonist.role = new w_Balloonist();
+        w_balloonist.description = $"<b>{formattedKeyText("Cycle 3")}:</b>\nLearn a character of a different Type to the last one I Learned.";
+        w_balloonist.gender = EGender.They;
+        */
 
 
         //CharacterData w_saint = newCharacter("Saint", EAlignment.Good, ECharacterType.Villager, false, false, "\"Wisdom begets peace. Patience begets wisdom. Fear not, for the time shall come when fear too shall pass.\nLet us pray, and may the unity of our vision make saints of us all.\"");
@@ -711,10 +738,18 @@ public class MainMod : MelonMod
 
         CharacterData w_tergiversator = newCharacter("Tergiversator", EAlignment.Good, ECharacterType.Outcast, false, false, "\"Nobody knows her beliefs.\nOr if she even has any.\"", "Witch_25286521");
         w_tergiversator.role = new w_Tergiversator();
-        w_tergiversator.description = $"My starting Alignment is random.\n\n<b>At Night:</b>\nMy Alignment flips.\nIf I am the last Evil and become Good this way, I {formattedKeyText("Die")}.\n\nWhile Good, I {formattedKeyText("Bluff")} being {formattedKeyText("Truthful")} & {formattedKeyText("Honest")}.\nWhile Evil, I {formattedKeyText("Bluff")} Lying & Disguising.\n\nI tell you something really interesting.";
-        w_tergiversator.hints = $"I cannot be Disguised as.\n\n{customHint("Keyword", "Bluff")}";
+        w_tergiversator.description = $"My starting Alignment is random.\n\n<b>{formattedKeyText("Cycle 4")}:</b>\nMy Alignment flips.\nIf I am the last Evil and become Good this way, I {formattedKeyText("Die")}.\n\nWhile Good, I {formattedKeyText("Bluff")} being {formattedKeyText("Truthful")} & {formattedKeyText("Honest")}.\nWhile Evil, I {formattedKeyText("Bluff")} Lying & Disguising.\n\nI tell you something really interesting.";
+        w_tergiversator.hints = $"I cannot be Disguised as.\n\n{customHint("Keyword", "Bluff")}\n\n{customHint("Keyword", "Cycle")}";
         w_tergiversator.gender = EGender.Female;
-        nightPhase.nightCharactersOrder.Add(w_tergiversator);
+
+        CharacterData w_echo = newCharacter("Echo", EAlignment.Good, ECharacterType.Outcast, false, false, "\"This is the truth the Poet was talking about.\"", "Doppleganger_52694042");
+        w_echo.role = new w_Echo();
+        w_echo.description = $"I Register as a random in-play character.\nMy Registration is inconsistent.";
+        w_echo.gender = EGender.They;
+
+
+
+
 
 
         CharacterData w_turncoat = newCharacter("Turncoat", EAlignment.Evil, ECharacterType.Minion, false, true, "\"Hurt me with the truth, but don't comfort me with a lie.\"", "Wretch_80988916");
@@ -772,10 +807,16 @@ public class MainMod : MelonMod
 
         CharacterData w_snakeCharmer = newCharacter("Snake Charmer", EAlignment.Evil, ECharacterType.Minion, false, true, "\"I wouldn't recommend getting bitten. The venom is very deadly.\"", "Poisoner_64796285");
         w_snakeCharmer.role = new w_SnakeCharmer();
-        w_snakeCharmer.description = $"<b>Game Start</b>:\nOne random Good Villager is {formattedKeyText("Poisoned")}.\nAfter five {formattedKeyText("Reveals")}, if they are still Good, they {formattedKeyText("Die")}; deal 2 {formattedKeyText("Damage")} to you.\n\nI Lie and Disguise.";
+        w_snakeCharmer.description = $"<b>Game Start</b>:\nOne random Good Villager is {formattedKeyText("Poisoned")}.\n\n<b>After 5 {formattedKeyText("Reveals")}:</b>\nThe {formattedKeyText("Poisoned")} Villager, if Good, {formattedKeyText("Dies")}.\nIf I am {formattedKeyText("Alive")}, deal 2 {formattedKeyText("Damage")} to you.\n\nI Lie and Disguise.";
         // When this happens, if I am {formattedKeyText("Alive")}, a random {formattedKeyText("Unrevealed")} Good Villager becomes Corrupted, if possible.
         w_snakeCharmer.hints = $"{customHint("Keyword", "Poison")}";
         w_snakeCharmer.gender = EGender.They;
+
+        CharacterData w_cryptid = newCharacter("Cryptid", EAlignment.Evil, ECharacterType.Minion, false, true, "\"Who is it? What is it?\nNobody knows!\"", "Pooka_13445289");
+        w_cryptid.role = new w_Cryptid();
+        w_cryptid.description = $"<b>Game Start</b>:\nI become a random not-in-play Minion role.\nHide it from the {formattedKeyText("Deck")}.";
+        w_cryptid.hints = $"Some characters may mention not-in-{formattedKeyText("Deck")} Minions if I am in-play.";
+        w_cryptid.gender = EGender.They;
 
         /*CharacterData w_toxomancer = new CharacterData();
         w_toxomancer.role = new w_Toxomancer();
@@ -987,33 +1028,19 @@ public class MainMod : MelonMod
         w_minos.gender = EGender.They;
         nightPhase.nightCharactersOrder.Add(w_minos);
 
-        /* Will re-add when I figure out larger villages again
-        CharacterData w_pandemonium = new CharacterData();
+        CharacterData w_pandemonium = newCharacter("Magnere", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Too much information and no idea what to do with it.\"", "Imp_58992273");
         w_pandemonium.role = new w_Pandemonium();
-        w_pandemonium.name = "Magnere"; // Name derived from Latin 'Magna' meaning 'Large', and 'Fallere' meaning 'Deceive'
+        // Name derived from Latin 'Magna' meaning 'Large', and 'Fallere' meaning 'Deceive'
         w_pandemonium.description = $"<b>Setup:</b>\nVillages are much bigger than usual.\n\n<b>Game Start:</b>\nYour {formattedKeyText("Max Health")} is equal to the village size.\n2 Demons are added to the {formattedKeyText("Deck")}; I become one of them.";
-        w_pandemonium.flavorText = "\"Too much information and no idea what to do with it.\"";
-        w_pandemonium.hints = $"{customHint("Keyword", "Setup")}\n\nI put a Night Cycle in-play, even if nothing uses it.\n\nHuge thanks to <color=#FFFF00>WWW Is Not Taken</color> on <color=#9999FF>Discord</color> for helping me get this ability working, I could <i>not</i> have done this without you.";
-        w_pandemonium.ifLies = "";
-        w_pandemonium.picking = false;
-        w_pandemonium.startingAlignment = EAlignment.Evil;
-        w_pandemonium.type = ECharacterType.Demon;
-        w_pandemonium.bluffable = false;
+        w_pandemonium.hints = $"I put a Night Cycle in-play, even if nothing uses it.\n\nHuge thanks to <color=#FFFF00>WWW Is Not Taken</color> on <color=#9999FF>Discord</color> for helping me get this ability working, I could <i>not</i> have done this without you.\nAdditional thanks to {formattedKeyText("Cycler")} ({formattedKeyText("@skillcycler")} for getting 12+ card villages working again.";
         w_pandemonium.characterId = "Pandemonium_WING";
-        w_pandemonium.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
-        w_pandemonium.cardBgColor = new Color(0.0941f, 0.0431f, 0.0431f);
-        w_pandemonium.cardBorderColor = new Color(0.8196f, 0.0f, 0.0275f);
-        w_pandemonium.color = new Color(1f, 0.3804f, 0.3804f);
         w_pandemonium.gender = EGender.They;
-        w_pandemonium.usuallyDisguised = true;
-        w_pandemonium.additionalFlavorTexts = new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppStringArray(1);
-        w_pandemonium.additionalFlavorTexts[0] = w_pandemonium.flavorText;
-        */
 
         CharacterData w_leviathan = newCharacter("Leviathan", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Its arrival sews chaos within any village. Beware of it.\"", "Pooka_13445289");
         w_leviathan.role = new w_Leviathan();
         //w_leviathan.name = "Leviathan"; // Leviathan. Just... Leviathan.
-        w_leviathan.description = $"<b>Setup:</b>\nMost Villagers are replaced with Outcasts.\nThere are additional Outcasts and Minions in the {formattedKeyText("Deck")}.\n\n{formattedKeyText("Lose")} if you Execute a Good Villager.\n\nI Lie and Disguise.";
+        // w_leviathan.description = $"<b>Setup:</b>\nMost Villagers are replaced with Outcasts.\nThere are additional Outcasts and Minions in the {formattedKeyText("Deck")}.\n\n{formattedKeyText("Lose")} if you Execute a Good Villager.\n\nI Lie and Disguise.";
+        w_leviathan.description = $"<b>Setup:</b>\nThere are additional Outcasts and Minions in the {formattedKeyText("Deck")}.\n\n{formattedKeyText("Lose")} if you Execute a Good Villager.\n\nI Lie and Disguise.";
         w_leviathan.hints = $"{customHint("Keyword", "Setup")}\n\nArt by {formattedKeyText("Derpy_Feesh")} ({formattedKeyText("@derpy_feesh")}) on {formattedKeyText("Discord")}";
         w_leviathan.gender = EGender.They;
 
@@ -1092,8 +1119,9 @@ public class MainMod : MelonMod
 
         // Vanilla order: Baa, Chancellor, Pooka, Poisoner, Witch, Puppeteer, Plague Doctor, Shaman, Alchemist, Puppet, Lilis
 
+        Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_cryptid);
         Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_fogDemon);
-        //Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_pandemonium);
+        Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_pandemonium);
 
 
         Characters.Instance.startGameActOrder = InsertAfterAct("Baa", w_minos);
@@ -1117,6 +1145,7 @@ public class MainMod : MelonMod
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_fanatic);
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_zealot);
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_legion);
+        Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_politician);
 
         Characters.Instance.startGameActOrder = InsertAfterAct("Alchemist", w_heretic);
         Characters.Instance.startGameActOrder = InsertAfterAct("Alchemist", w_mezepheles); // This makes it uncurable by Alchemist but it might still have issues with other roles later on.
@@ -1735,7 +1764,7 @@ public class MainMod : MelonMod
 
 
 
-        /*
+        
         CustomScriptData pandemoniumScriptData = new CustomScriptData();
         pandemoniumScriptData.name = "Pandemonium_1";
         ScriptInfo pandemoniumScript = new ScriptInfo();
@@ -1773,7 +1802,7 @@ public class MainMod : MelonMod
 
         pandemoniumScript.characterCounts = pandemoniumCounterList;
         pandemoniumScriptData.scriptInfo = pandemoniumScript;
-        */
+        
 
 
 
@@ -1814,20 +1843,30 @@ public class MainMod : MelonMod
         leviathanScript.startingTownsfolks = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingTownsfolks;
         leviathanScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
         leviathanScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
-        CharactersCount leviathanCounter01 = setCharacterCount(1, 4, 1, 1); // 7
-        leviathanCounter01.dOuts = 6;
+        //CharactersCount leviathanCounter01 = setCharacterCount(1, 4, 1, 1); // 7
+        CharactersCount leviathanCounter01 = setCharacterCount(4, 1, 1, 1); // 7
+        //leviathanCounter01.dOuts = 6;
+        leviathanCounter01.dOuts = 3;
         leviathanCounter01.dMinion = 3;
-        CharactersCount leviathanCounter02 = setCharacterCount(2, 4, 1, 1); // 8
-        leviathanCounter02.dOuts = 6;
+        //CharactersCount leviathanCounter02 = setCharacterCount(2, 4, 1, 1); // 8
+        CharactersCount leviathanCounter02 = setCharacterCount(4, 2, 1, 1); // 8
+        //leviathanCounter02.dOuts = 6;
+        leviathanCounter02.dOuts = 4;
         leviathanCounter02.dMinion = 3;
-        CharactersCount leviathanCounter03 = setCharacterCount(2, 4, 2, 1); // 9
-        leviathanCounter03.dOuts = 6;
+        //CharactersCount leviathanCounter03 = setCharacterCount(2, 4, 2, 1); // 9
+        CharactersCount leviathanCounter03 = setCharacterCount(4, 2, 2, 1); // 9
+        //leviathanCounter03.dOuts = 6;
+        leviathanCounter03.dOuts = 4;
         leviathanCounter03.dMinion = 4;
-        CharactersCount leviathanCounter04 = setCharacterCount(2, 5, 2, 1); // 10
-        leviathanCounter04.dOuts = 7;
+        //CharactersCount leviathanCounter04 = setCharacterCount(2, 5, 2, 1); // 10
+        CharactersCount leviathanCounter04 = setCharacterCount(5, 2, 2, 1); // 10
+        //leviathanCounter04.dOuts = 7;
+        leviathanCounter04.dOuts = 4;
         leviathanCounter04.dMinion = 4;
-        CharactersCount leviathanCounter05 = setCharacterCount(3, 5, 1, 1); // 10
-        leviathanCounter05.dOuts = 7;
+        //CharactersCount leviathanCounter05 = setCharacterCount(3, 5, 1, 1); // 10
+        CharactersCount leviathanCounter05 = setCharacterCount(5, 3, 1, 1); // 10
+        //leviathanCounter05.dOuts = 7;
+        leviathanCounter05.dOuts = 5;
         leviathanCounter05.dMinion = 3;
         Il2CppSystem.Collections.Generic.List<CharactersCount> leviathanCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
 
@@ -2162,8 +2201,7 @@ public class MainMod : MelonMod
         //w_addDemonRole(advancedAscension, w_shard, "Baa_Difficult", "Shard_1", shardScriptData, emptyCharacterDataList);
         //w_addDemonRole(advancedAscension, w_shard, "Baa_Difficult", "Shard_1", shardScriptData, emptyCharacterDataList);
         w_addDemonRole(advancedAscension, w_minos, "Baa_Difficult", "Minos_1", minosScriptData, emptyCharacterDataList, configCategory.GetEntry<int>("Sanguitaurus_Weight").Value);
-        //w_addDemonRole(advancedAscension, w_pandemonium, "Baa_Difficult", "Pandemonium_1", pandemoniumScriptData, emptyCharacterDataList);
-        //w_addDemonRole(advancedAscension, w_pandemonium, "Baa_Difficult", "Pandemonium_1", pandemoniumScriptData, emptyCharacterDataList);
+        w_addDemonRole(advancedAscension, w_pandemonium, "Baa_Difficult", "Pandemonium_1", pandemoniumScriptData, emptyCharacterDataList, configCategory.GetEntry<int>("Magnere_Weight").Value);
         w_addDemonRole(advancedAscension, w_fogDemon, "Baa_Difficult", "Tenecaligo_1", tenecaligoScriptData, emptyCharacterDataList, configCategory.GetEntry<int>("Tenecaligo_Weight").Value);
         w_addDemonRole(advancedAscension, w_leviathan, "Baa_Difficult", "Leviathan_1", leviathanScriptData, emptyCharacterDataList, configCategory.GetEntry<int>("Leviathan_Weight").Value);
         w_addDemonRole(advancedAscension, w_iris, "Baa_Difficult", "Iris_1", irisScriptData, emptyCharacterDataList, configCategory.GetEntry<int>("Iris_Weight").Value);
@@ -2208,6 +2246,7 @@ public class MainMod : MelonMod
             }
             addRole(script.startingTownsfolks, w_arbiter);
             addRole(script.startingTownsfolks, w_arithmetician);
+            // addRole(script.startingTownsfolks, w_balloonist); // Doesn't work
             addRole(script.startingTownsfolks, w_bloodseer);
             addRole(script.startingTownsfolks, w_cardshark);
             addRole(script.startingTownsfolks, w_chiromancer);
@@ -2225,7 +2264,9 @@ public class MainMod : MelonMod
             addRole(script.startingTownsfolks, w_jewelsmith);
             addRole(script.startingTownsfolks, w_knave);
             addRole(script.startingTownsfolks, w_lamb);
+            addRole(script.startingTownsfolks, w_paperboy);
             addRole(script.startingTownsfolks, w_performer);
+            addRole(script.startingTownsfolks, w_politician);
             addRole(script.startingTownsfolks, w_prince);
             addRole(script.startingTownsfolks, w_ranger);
             // addRole(script.startingTownsfolks, w_saint);
@@ -2236,6 +2277,7 @@ public class MainMod : MelonMod
             //addRole(script.startingTownsfolks, w_slayerRework);
             addRole(script.startingTownsfolks, w_warden);
             addRole(script.startingOutsiders, w_chatterbox);
+            addRole(script.startingOutsiders, w_echo);
             addRole(script.startingOutsiders, w_lunatic);
             addRole(script.startingOutsiders, w_marionette);
             addRole(script.startingOutsiders, w_mutant);
@@ -2244,6 +2286,7 @@ public class MainMod : MelonMod
             addRole(script.startingOutsiders, w_renegade);
             addRole(script.startingOutsiders, w_revolutionary);
             addRole(script.startingOutsiders, w_tergiversator);
+            addRole(script.startingMinions, w_cryptid);
             addRole(script.startingMinions, w_heretic);
             addRole(script.startingMinions, w_professional);
             addRole(script.startingMinions, w_ritualist);
@@ -2255,8 +2298,8 @@ public class MainMod : MelonMod
             for (int i = 0; i < 100; i++)
             {
                 //addRoleEvenIfDupe(script.startingTownsfolks, w_knave);
-                //addRoleEvenIfDupe(script.startingOutsiders, w_tergiversator);
-                //addRoleEvenIfDupe(script.startingMinions, w_ritualist);
+                //addRoleEvenIfDupe(script.startingOutsiders, w_echo);
+                //addRoleEvenIfDupe(script.startingMinions, w_cryptid);
                 //addRoleEvenIfDupe(script.startingMinions, w_snakeCharmer);
             }
             for (int i = 0; i < allDatas.Length; i++)
@@ -2581,7 +2624,7 @@ public class MainMod : MelonMod
     public void OnFirstUpdate()
     {
         PatchVanillaCharacterDescriptions();
-        /*
+        
         Transform chars = GameObject.Find("Game/Gameplay/Content/Canvas/Characters").transform;
         for (int i = 12; i < 16; i++)
         {
@@ -2591,7 +2634,7 @@ public class MainMod : MelonMod
         {
             Statics.checkCreateCircle(chars, j);
         }
-        */
+        
     }
 
     public static class HiddenRoleStatus
@@ -3074,10 +3117,12 @@ public class MainMod : MelonMod
             case "Killing": return "<color=#FF0037>Killing</color>";
             case "Dead": return "<color=#B36979>Dead</color>";
             case "Die": return "<color=#B36979>Die</color>";
+            case "Dies": return "<color=#B36979>Dies</color>";
             case "Alive": return "<color=#A4EDB7>Alive</color>";
             case "Living": return "<color=#A4EDB7>Living</color>";
             case "Deck": return "<color=#789AF0>Deck</color>";
             case "Lose": return "<color=#FF0000>Lose</color>";
+            case "Alignment": return "<color=#99FF99>Align</color><color=#FF9999>ment</color>";
             // Cycle is gonna be a long one because of the fancy gradient I'm doing
             case "Cycle": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e</color>";
             case "Cycle 1": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 1</color>";
@@ -3123,6 +3168,8 @@ public class MainMod : MelonMod
             case "@Panda": return "<color=#7289DA>@</color><color=#cadee6>@pandacharly</color>";
             case "Derpy_Feesh": return "<color=#7948d7>Derpy_Feesh</color>"; // Leviathan
             case "@derpy_feesh": return "<color=#7289DA>@</color><color=#7948d7>derpy_feesh</color>"; // Leviathan
+            case "Cycler": return "<color=#45E0F8>Cycler</color>"; // Cycler
+            case "@skillcycler": return "<color=#7289DA>@</color><color=#45E0F8>skillcycler</color>"; // Cycler
 
             // Special thanks
             case "NoLucksGiven": return "<color=#FFC07B>NoLucksGiven</color>"; // Played mod on YouTube, brought attention to it.
@@ -3590,7 +3637,7 @@ public class MainMod : MelonMod
     {
         public static Dictionary<string, CharacterData> roles = new Dictionary<string, CharacterData>();
         public static CharacterData[] charactersArray = Il2CppSystem.Array.Empty<CharacterData>();
-        /*
+        
         public static void checkCreateCircle(Transform parent, int size)
         {
             string name = "Circle_" + size;
@@ -3600,8 +3647,9 @@ public class MainMod : MelonMod
                 MelonLogger.Msg("Object Already exists!: " + name);
                 return;
             }
-            //createCircle(parent, size, name);
+            CreateCircle(size);
         }
+        /*
         public static GameObject createCircle(int size) // I'm just gonna wait for WWW to figure this out
         {
             GameObject circle = new GameObject();
@@ -3698,5 +3746,72 @@ public class MainMod : MelonMod
             }
         }
 
+    }
+
+
+    public static GameObject CreateCircle(int size)
+    {
+        GameObject circle = new GameObject();
+        circle.name = "Circle_" + size;
+        circle.transform.SetParent(Characters.Instance.gameObject.transform);
+        RectTransform rt = circle.AddComponent<RectTransform>();
+        CharactersPool cp = circle.AddComponent<CharactersPool>();
+        GameObject gameObject = Characters.Instance.gameObject.transform.Find("Circle_6").gameObject;
+        CharactersPool component = gameObject.GetComponent<CharactersPool>();
+        cp.characterPrefab = component.characterPrefab;
+        cp.characters = System.Array.Empty<Character>();
+        cp.cardPlaceHolders = new CardPlaceholder[size];
+        for (int i = 0; i < size; i++)
+        {
+            GameObject card = new GameObject();
+            card.transform.SetParent(circle.transform);
+            string text = "CardPlaceholder";
+            if (i > 0)
+            {
+                text = text + " (" + i + ")";
+            }
+            card.name = text;
+            RectTransform card_rt = card.AddComponent<RectTransform>();
+            card_rt.anchoredPosition3D = new Vector3(0f, 0f, 0f);
+            CardPlaceholder cardPlaceholder = card.AddComponent<CardPlaceholder>();
+            int num = i * 360 / size;
+            if (num <= 30)
+            {
+                cardPlaceholder.actedSide = EActedSide.Down;
+            }
+            else if (num <= 149)
+            {
+                cardPlaceholder.actedSide = EActedSide.Left;
+            }
+            else if (num <= 210)
+            {
+                cardPlaceholder.actedSide = EActedSide.Up;
+            }
+            else if (num <= 329)
+            {
+                cardPlaceholder.actedSide = EActedSide.Right;
+            }
+            else
+            {
+                cardPlaceholder.actedSide = EActedSide.Down;
+            }
+            cp.cardPlaceHolders[i] = cardPlaceholder;
+        }
+        circle.transform.position = new Vector3(0f, 1f, 85.9444f);
+        circle.transform.localScale = new Vector3(1f, 1f, 1f);
+        circle.SetActive(false);
+        addToCharsPool(cp);
+        return circle;
+    }
+    public static void addToCharsPool(CharactersPool pool)
+    {
+        CharactersPool[] oldpool = Characters.Instance.characterPool;
+        CharactersPool[] newPool = new CharactersPool[oldpool.Length + 1];
+        for (int i = 0; i < oldpool.Length; i++)
+        {
+            newPool[i] = oldpool[i];
+        }
+        newPool[oldpool.Length] = pool;
+        Characters.Instance.characterPool = newPool;
     }
 }

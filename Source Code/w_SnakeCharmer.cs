@@ -51,8 +51,6 @@ public class w_SnakeCharmer : Role
             poisonTimer++;
             if (poisonTimer == 5)
             {
-                Health health = PlayerController.PlayerInfo.health;
-                health.Damage(2);
                 if (globalPoisonSuccess)
                 {
                     if (globalPoisonTarget.GetState() != ECharacterState.Dead && globalPoisonTarget.alignment == EAlignment.Good && globalPoisonTarget.statuses.Contains(PoisonStatus.w_poisoned))
@@ -67,6 +65,8 @@ public class w_SnakeCharmer : Role
                     }
                 }
                 if (charRef.GetState() == ECharacterState.Dead) return;
+                Health health = PlayerController.PlayerInfo.health;
+                health.Damage(2);
                 /*
                 Il2CppSystem.Collections.Generic.List<Character> goodVillagers = new Il2CppSystem.Collections.Generic.List<Character>();
                 goodVillagers = Characters.Instance.FilterAlignmentCharacters(Gameplay.CurrentCharacters, EAlignment.Good);
@@ -145,8 +145,10 @@ public class w_SnakeCharmer : Role
             {
                 if (__instance.killedByDemon && __instance.statuses.Contains(w_poisoned))
                 {
+                    string colour = "#3F8538";
+                    if (__instance.alignment == EAlignment.Evil) colour = "#FF0000";
                     HintInfo info = new HintInfo();
-                    info.text = "Killed by <color=#3F8538>Poison</color>!\nCannot use abilities.";
+                    info.text = $"Killed by <color={colour}>Poison</color>!\nCannot use abilities.";
                     UIEvents.OnShowHint.Invoke(info, __instance.hintPivot);
                 }
             }

@@ -21,37 +21,10 @@ public class w_Mutant : Role
     {
         if (trigger == ETriggerPhase.Start)
         {
+            wx_SavedScripts sharedScripts = new wx_SavedScripts();
             charRef.statuses.AddStatus(ECharacterStatus.AppearTruthfull, charRef);
             Il2CppSystem.Collections.Generic.List<CharacterData> possibleMinions = new Il2CppSystem.Collections.Generic.List<CharacterData>();
-            Il2CppSystem.Collections.Generic.List<string> possibleMinionIDs = new Il2CppSystem.Collections.Generic.List<string>();
-            // Characters with Game Start who act after Chancellor: Undying, Swarm, Saboteur, Poisoner, Witch, Puppeteer, Shaman, Trickster, Summoner, Florist, Siren, Purifier, Blackmailer, Lycaon.
-            // Characters wihout Game Start: Acolyte, Zealot, Professional, Turncoat, Brewer, Gangster, Strategist, Ambusher, Martyr, Cavalier, Minion, Twin Minion.
-            possibleMinionIDs.Add("Undying_WING"); // Undying
-            possibleMinionIDs.Add("Swarm_Good_WING"); // Swarm
-            possibleMinionIDs.Add("Saboteur_WING"); // Saboteur
-            possibleMinionIDs.Add("Poisoner_64796285"); // Poisoner
-            possibleMinionIDs.Add("Witch_25286521"); // Witch
-            possibleMinionIDs.Add("Mezepheles_09511163"); // Puppeteer
-            possibleMinionIDs.Add("Shaman_26945607"); // Shaman
-            possibleMinionIDs.Add("Trickster_TAVERN"); // Trickster
-            possibleMinionIDs.Add("Summoner_TAVERN"); // Summoner
-            possibleMinionIDs.Add("Florist_TAVERN"); // Florist
-            possibleMinionIDs.Add("Siren_MaHy"); // Siren
-            possibleMinionIDs.Add("Purifier_ER"); // Purifier
-            possibleMinionIDs.Add("Husher_VP"); // Blackmailer
-            possibleMinionIDs.Add("Lycaon_VP"); // Lycaon
-            possibleMinionIDs.Add("Acolyte_WING"); // Acolyte
-            possibleMinionIDs.Add("Zealot_WING"); // Zealot
-            possibleMinionIDs.Add("Professional_WING"); // Professional
-            possibleMinionIDs.Add("Turncoat_WING"); // Turncoat
-            possibleMinionIDs.Add("Brewer_TAVERN"); // Brewer
-            possibleMinionIDs.Add("Gangster_TAVERN"); // Gangster
-            possibleMinionIDs.Add("Strategist_TAVERN"); // Strategist
-            possibleMinionIDs.Add("Ambush_rdm"); // Ambusher
-            possibleMinionIDs.Add("Martyr_rdm"); // Martyr
-            possibleMinionIDs.Add("Cavalier_EP"); // Cavalier
-            possibleMinionIDs.Add("Minion_71804875"); // Minion
-            possibleMinionIDs.Add("Twin Minion_15695218"); // Twin Minion
+            Il2CppSystem.Collections.Generic.List<string> possibleMinionIDs = sharedScripts.GetPossibleCharacterIDsOfRole("Mutant_WING");
             if (allDatas.Length == 0)
             {
                 var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());

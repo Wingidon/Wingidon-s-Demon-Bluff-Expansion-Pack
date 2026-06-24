@@ -144,15 +144,18 @@ public class w_Sentinel : Role
         if (charRef.dataRef.characterId == "Captivator_scm")
         {
             Il2CppSystem.Collections.Generic.List<Character> corruptedChars = new Il2CppSystem.Collections.Generic.List<Character>();
-            corruptedChars = Characters.Instance.FilterCharacterContainsStatus(Gameplay.CurrentCharacters, ECharacterStatus.Corrupted);
+            Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
+            foreach (Character character in Gameplay.CurrentCharacters)
+            {
+                if (character.statuses.Contains(ECharacterStatus.Corrupted)) corruptedChars.Add(character);
+            }
             if (corruptedChars.Count < 2) return new ActedInfo("Something does not make sense");
-            ActedInfo returnInfo = new ActedInfo("");
-            returnInfo.characters.Add(corruptedChars[UnityEngine.Random.RandomRangeInt(0, corruptedChars.Count)]);
-            corruptedChars.Remove(returnInfo.characters[0]);
-            returnInfo.characters.Add(corruptedChars[UnityEngine.Random.RandomRangeInt(0, corruptedChars.Count)]);
+            selection.Add(corruptedChars[UnityEngine.Random.RandomRangeInt(0, corruptedChars.Count)]);
+            corruptedChars.Remove(selection[0]);
+            selection.Add(corruptedChars[UnityEngine.Random.RandomRangeInt(0, corruptedChars.Count)]);
             wx_SavedScripts sharedScripts = new wx_SavedScripts();
-            returnInfo.characters = sharedScripts.SortList(returnInfo.characters);
-            returnInfo.desc = $"One is Corrupted:\n#{returnInfo.characters[0].id}, #{returnInfo.characters[1].id}";
+            selection = sharedScripts.SortList(selection);
+            return new ActedInfo($"One is Corrupted:\n#{selection[0].id}, #{selection[1].id}", selection);
         }
         return new ActedInfo("False");
     }

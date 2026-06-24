@@ -114,9 +114,12 @@ public class w_Tenecaligo : Demon
             returnList.Add("Bombardier_79093372"); // Bombardier
             returnList.Add("Doppleganger_52694042"); // Doppelganger
             returnList.Add("Drunk_15369527"); //  Drunk
+            returnList.Add("Lycanthrope_16077432"); // Lycanthrope
             returnList.Add("Plague Doctor_49312486"); // Plague Doctor
+            returnList.Add("Rambler_13041651"); // Rambler
+            returnList.Add("Rambler_57930131"); // Rambler
             returnList.Add("Wretch_80988916"); // Wretch
-            // Allow, Wingidon's Expansion: Chatterbox, Lunatic, Marionette, Mutant, Pilgrim, Revolutionary, Renegade
+            // Allow, Wingidon's Expansion: Chatterbox, Lunatic, Marionette, Mutant, Pilgrim, Revolutionary, Renegade, Tergiversator
             returnList.Add("Chatterbox_WING"); // Chatterbox
             returnList.Add("Lunatic_WING"); // Lunatic
             returnList.Add("Marionette_WING"); // Marionette
@@ -124,6 +127,7 @@ public class w_Tenecaligo : Demon
             returnList.Add("Pilgrim_WING"); // Pilgrim
             returnList.Add("Revolutionary_WING"); // Revolutionary
             returnList.Add("Renegade_WING"); // Renegade
+            returnList.Add("Tergiversator_WING"); // Tergiversator
             // Allow, Reveal Dilemma: Saboteur
             returnList.Add("sabo_rdm"); // Saboteur
             // Allow, Mass Hysteria: Magician, Pixie
@@ -136,6 +140,14 @@ public class w_Tenecaligo : Demon
             returnList.Add("MoonChild_VP"); // Moonchild
             returnList.Add("Rook_VP"); // Rook
             returnList.Add("Executioner_VP"); // Executioner
+            // Allow, Skill Cycler's Riddles: Captivator, Confectioner, Gambler, Ghost, Hitman, Reflector
+            returnList.Add("Captivator_scm"); // Captivator
+            returnList.Add("Confectioner_scm"); // Confectioner
+            returnList.Add("Gambler_scm"); // Gambler
+            returnList.Add("Ghost_scm"); // Ghost
+            returnList.Add("Hitman_scm"); // Hitman
+            returnList.Add("Reflector_scm"); // Reflector
+
         }
         if (type == ECharacterType.Minion)
         {
@@ -147,10 +159,14 @@ public class w_Tenecaligo : Demon
             returnList.Add("Shaman_26945607"); // Shaman
             returnList.Add("Twin Minion_15695218"); // Twin Minion
             returnList.Add("Witch_25286521"); // Witch
-            // Allow, Wingidon's Expansion: Swarm (Good), Professional, Saboteur, Turncoat, Undying
-            returnList.Add("Swarm_Good_WING"); // Good Swarm
+            // Allow, Wingidon's Expansion: Cryptid, Heretic, Professional, Ritualist, Saboteur, Snake Charmer, Swarm (Good), Turncoat, Undying
+            returnList.Add("Cryptid_WING"); // Cryptid
+            returnList.Add("Heretic_WING"); // Heretic
             returnList.Add("Professional_WING"); // Professional
+            returnList.Add("Ritualist_WING"); // Ritualist
             returnList.Add("Saboteur_WING"); // Saboteur
+            returnList.Add("Snake Charmer_WING"); // Snake Charmer
+            returnList.Add("Swarm_Good_WING"); // Swarm
             returnList.Add("Turncoat_WING"); // Turncoat
             returnList.Add("Undying_WING"); // Undying
             // Allow, Tavern Mod: Florist, Gangster, Strategist, Trickster
@@ -170,6 +186,13 @@ public class w_Tenecaligo : Demon
             returnList.Add("Lycaon_VP"); // Lycaon
             // Allow, CSK's Expansion: Cavalier
             returnList.Add("Cavalier_EP"); // Cavalier
+            // Allow, Skill Cycler's Riddles: Accuser, Baffler, Channeler, Guardian, Hypnotist, Wizard
+            returnList.Add("Accuser_scm"); // Accuser
+            returnList.Add("Baffler_scm"); // Baffler
+            returnList.Add("Channeler_scm"); // Channeler
+            returnList.Add("Guardian_scm"); // Guardian
+            returnList.Add("Hypnotist_scm"); // Hypnotist
+            returnList.Add("Wizard_scm"); // Wizard
         }
         return returnList;
     }

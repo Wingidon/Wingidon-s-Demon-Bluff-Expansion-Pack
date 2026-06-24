@@ -132,16 +132,33 @@ public class w_Chiromancer : Role
     }
     private CharacterData GetFalseDreamerInfo(Character character)
     {
+        bool cryptidPresent = false;
         UnityEngine.Debug.Log(string.Format("Getting false Dreamer info on #{0}", character.id));
         Il2CppSystem.Collections.Generic.List<CharacterData> evilCharacters = new Il2CppSystem.Collections.Generic.List<CharacterData>();
         foreach (CharacterData c in Gameplay.Instance.GetScriptCharactersOfAlignment(EAlignment.Evil))
         {
+            if (c.characterId == "Cryptid_WING") cryptidPresent = true;
             if (character.GetRegisterAs() != c)
             {
                 UnityEngine.Debug.Log(string.Format("Adding {0} to Chiromancer list", c.name.ToString()));
                 evilCharacters.Add(c);
             }
         }
+
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+
+        if (cryptidPresent == true)
+        {
+            foreach (CharacterData possibleChar in Gameplay.Instance.GetAllAscensionCharacters())
+            {
+                if (character.GetRegisterAs() != possibleChar && possibleChar.type == ECharacterType.Minion && sharedScripts.GetPossibleCharacterIDsOfRole("Cryptid_WING").Contains(possibleChar.characterId))
+                {
+                    UnityEngine.Debug.Log(string.Format("Adding {0} to Chiromancer list", possibleChar.name.ToString()));
+                    evilCharacters.Add(possibleChar);
+                }
+            }
+        }
+
         CharacterData chosenCharacter = new CharacterData();
         if (evilCharacters.Count != 0)
         {

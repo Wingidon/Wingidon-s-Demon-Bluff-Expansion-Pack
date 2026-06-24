@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using Il2Cpp;
+using Il2CppInterop.Runtime;
 using Il2CppInterop.Runtime.Injection;
 using Il2CppRewired.Glyphs;
 using Il2CppSystem.Collections.Generic;
@@ -41,6 +42,39 @@ namespace ExpansionPack
                 foreach (Character character in list)
                 {
                     if (character.id == i) newList.Add(character);
+                }
+            }
+            return newList;
+        }
+        public Il2CppSystem.Collections.Generic.List<ECharacterType> SortList(Il2CppSystem.Collections.Generic.List<ECharacterType> list)
+        {
+            Il2CppSystem.Collections.Generic.List<ECharacterType> newList = new Il2CppSystem.Collections.Generic.List<ECharacterType>();
+            foreach (ECharacterType characterType in list)
+            {
+                if (characterType == ECharacterType.Villager)
+                {
+                    newList.Add(characterType);
+                }
+            }
+            foreach (ECharacterType characterType in list)
+            {
+                if (characterType == ECharacterType.Outcast)
+                {
+                    newList.Add(characterType);
+                }
+            }
+            foreach (ECharacterType characterType in list)
+            {
+                if (characterType == ECharacterType.Minion)
+                {
+                    newList.Add(characterType);
+                }
+            }
+            foreach (ECharacterType characterType in list)
+            {
+                if (characterType == ECharacterType.Demon)
+                {
+                    newList.Add(characterType);
                 }
             }
             return newList;
@@ -175,6 +209,90 @@ namespace ExpansionPack
                     else
                     {
                         returnString = $"{returnString}, #{character.id}";
+                    }
+                }
+            }
+            return returnString;
+        }
+
+        public string MentionEveryCharacterInUnsortedList(Il2CppSystem.Collections.Generic.List<Character> characters, string andOr)
+        {
+            string returnString = "Return";
+            int characterCount = characters.Count;
+            int counter = 0;
+            Il2CppSystem.Collections.Generic.List<Character> sortedCharacters = characters;
+            foreach (Character character in sortedCharacters)
+            {
+                if (returnString == "Return")
+                {
+                    counter++;
+                    returnString = $"#{character.id}";
+                }
+                else
+                {
+                    counter++;
+                    if (counter == characterCount)
+                    {
+                        if (andOr == "And" || andOr == "and")
+                        {
+                            returnString = $"{returnString} and #{character.id}";
+                        }
+                        else if (andOr == "Or" || andOr == "or")
+                        {
+                            returnString = $"{returnString} or #{character.id}";
+                        }
+                        else if (andOr == "Then" || andOr == "then")
+                        {
+                            returnString = $"{returnString}, then #{character.id}";
+                        }
+                        else
+                        {
+                            returnString = $"{returnString}, #{character.id}";
+                        }
+                    }
+                    else if (andOr == "Then" || andOr == "then")
+                    {
+                        returnString = $"{returnString}, then #{character.id}";
+                    }
+                }
+            }
+            return returnString;
+        }
+
+        public string MentionEveryTypeInList(Il2CppSystem.Collections.Generic.List<ECharacterType> types, string andOr)
+        {
+            string returnString = "Return";
+            int characterCount = types.Count;
+            int counter = 0;
+            Il2CppSystem.Collections.Generic.List<ECharacterType> sortedTypes = SortList(types);
+            foreach (ECharacterType type in sortedTypes)
+            {
+                if (returnString == "Return")
+                {
+                    counter++;
+                    returnString = type.ToString();
+                }
+                else
+                {
+                    counter++;
+                    if (counter == characterCount)
+                    {
+                        if (andOr == "And" || andOr == "and")
+                        {
+                            returnString = $"{returnString} and {type.ToString()}";
+                        }
+                        else if (andOr == "Or" || andOr == "or")
+                        {
+                            returnString = $"{returnString} or {type.ToString()}";
+                        }
+                        else
+                        {
+                            returnString = $"{returnString}, {type.ToString()}";
+                        }
+                    }
+                    else
+                    {
+                        returnString = $"{returnString}, {type.ToString()}";
                     }
                 }
             }
@@ -358,6 +476,7 @@ namespace ExpansionPack
         {
             Il2CppSystem.Collections.Generic.List<string> alwaysGoodIDs = new Il2CppSystem.Collections.Generic.List<string>();
             alwaysGoodIDs.Add("Saint_61372493");
+            alwaysGoodIDs.Add("Politician_WING");
 
             if (alwaysGoodIDs.Contains(character.dataRef.characterId)) return true;
             return false;
@@ -366,7 +485,7 @@ namespace ExpansionPack
 
         public int GetPairsOfCharactersInList(Il2CppSystem.Collections.Generic.List<Character> list)
         {
-            MelonLogger.Msg("Getting pairs");
+            //MelonLogger.Msg("Getting pairs");
             Il2CppSystem.Collections.Generic.List<Character> allCharactersPlusOne = new Il2CppSystem.Collections.Generic.List<Character>();
             foreach (Character character in Gameplay.CurrentCharacters)
             {
@@ -378,21 +497,21 @@ namespace ExpansionPack
             int pairs = 0;
             foreach (Character character in allCharactersPlusOne)
             {
-                MelonLogger.Msg($"Checking #{character.id}");
+                //MelonLogger.Msg($"Checking #{character.id}");
                 if (list.Contains(character) && prevCount == true)
                 {
                     pairs++;
-                    MelonLogger.Msg($"Found a pair, there are now {pairs} pair(s)");
+                    //MelonLogger.Msg($"Found a pair, there are now {pairs} pair(s)");
                 }
                 if (list.Contains(character))
                 {
                     prevCount = true;
-                    MelonLogger.Msg($"#{character.id} is in the list, so they're ready to be part of the next pair");
+                    //MelonLogger.Msg($"#{character.id} is in the list, so they're ready to be part of the next pair");
                 }
                 else
                 {
                     prevCount = false;
-                    MelonLogger.Msg($"#{character.id} is not in the list, so they will not be part of the next pair");
+                    //MelonLogger.Msg($"#{character.id} is not in the list, so they will not be part of the next pair");
                 }
                 
             }
@@ -413,6 +532,341 @@ namespace ExpansionPack
             else returnVal--;
             return returnVal;
         }
+
+        public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
+        public CharacterData GrabCharacterDataByID(string characterID)
+        {
+            if (allDatas.Length == 0)
+            {
+                var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
+                if (loadedCharList != null)
+                {
+                    allDatas = new CharacterData[loadedCharList.Length];
+                    for (int j = 0; j < loadedCharList.Length; j++)
+                    {
+                        allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
+                    }
+                }
+            }
+
+            for (int j = 0; j < allDatas.Length; j++)
+            {
+                if (characterID == allDatas[j].characterId)
+                {
+                    return allDatas[j];
+                }
+            }
+            return null;
+        }
+
+
+
+        public Il2CppSystem.Collections.Generic.List<string> GetPossibleCharacterIDsOfRole(string roleID)
+        {
+            Il2CppSystem.Collections.Generic.List<string> returnChars = new Il2CppSystem.Collections.Generic.List<string>();
+
+            if (roleID == "Cryptid_WING")
+            {
+                // Vanilla
+                returnChars.Add("Baron_04539999"); // Chancellor
+                returnChars.Add("Poisoner_64796285"); // Poisoner
+                returnChars.Add("Mezepheles_09511163"); // Puppeteer
+                returnChars.Add("Shaman_26945607"); // Shaman
+                returnChars.Add("Witch_25286521"); // Witch
+
+                // Wingidon's Expansion Pack
+                returnChars.Add("Heretic_WING"); // Heretic
+                returnChars.Add("Professional_WING"); // Professional
+                returnChars.Add("Ritualist_WING"); // Ritualist
+                returnChars.Add("Saboteur_WING"); // Saboteur
+                returnChars.Add("Snake Charmer_WING"); // Snake Charmer
+                returnChars.Add("Turncoat_WING"); // Turncoat
+
+                // Skill Cycler's Riddles
+                returnChars.Add("Accuser_scm"); // Accuser
+                returnChars.Add("Baffler_scm"); // Baffler
+                returnChars.Add("Hypnotist_scm"); // Hypnotist
+
+                // LRZH's Circus
+                returnChars.Add("Clown_LRZH"); // Clown
+                returnChars.Add("Wraith_LRZH"); // Wraith
+            }
+            if (roleID == "Mutant_WING")
+            {
+                // Vanilla
+                returnChars.Add("Minion_71804875"); // Minion
+                returnChars.Add("Poisoner_64796285"); // Poisoner
+                returnChars.Add("Mezepheles_09511163"); // Puppeteer
+                returnChars.Add("Shaman_26945607"); // Shaman
+                returnChars.Add("Twin Minion_15695218"); // Twin Minion
+                returnChars.Add("Witch_25286521"); // Witch
+
+                // Wingidon's Expansion Pack
+                returnChars.Add("Acolyte_WING"); // Acolyte
+                returnChars.Add("Heretic_WING"); // Heretic
+                returnChars.Add("Professional_WING"); // Professional
+                returnChars.Add("Ritualist_WING"); // Ritualist
+                returnChars.Add("Saboteur_WING"); // Saboteur
+                returnChars.Add("Snake Charmer_WING"); // Snake Charmer
+                returnChars.Add("Swarm_Good_WING"); // Swarm
+                returnChars.Add("Turncoat_WING"); // Turncoat
+                returnChars.Add("Undying_WING"); // Undying
+                returnChars.Add("Zealot_WING"); // Zealot
+
+                // Skill Cycler's Riddles
+                returnChars.Add("Accuser_scm"); // Accuser
+                returnChars.Add("Baffler_scm"); // Baffler
+                returnChars.Add("Guardian_scm"); // Guardian
+                returnChars.Add("Hypnotist_scm"); // Hypnotist
+
+                // LZRH's Circus
+                returnChars.Add("Clown_LRZH"); // Clown
+
+                // Tavern Mod
+                returnChars.Add("Brewer_TAVERN"); // Brewer
+                returnChars.Add("Florist_TAVERN"); // Florist
+                returnChars.Add("Gangster_TAVERN"); // Gangster
+                returnChars.Add("Strategist_TAVERN"); // Strategist
+                returnChars.Add("Summoner_TAVERN"); // Summoner
+                returnChars.Add("Trickster_TAVERN"); // Trickster
+
+                // Mass Hysteria
+                returnChars.Add("Siren_MaHy"); // Siren
+
+                // ExtraRandomised
+                returnChars.Add("Purifier_ER"); // Purifier
+
+                // CarlzVillagePack
+                returnChars.Add("Husher_VP"); // Blackmailer
+                returnChars.Add("Lycaon_VP"); // Lycaon
+
+                // RevealDilemma
+                returnChars.Add("Ambush_rdm"); // Ambusher
+                returnChars.Add("Martyr_rdm"); // Martyr
+
+                // CSK's Expansion Pack
+                returnChars.Add("Cavalier_EP"); // Cavalier
+            }
+            if (roleID == "Pandemonium_WING")
+            {
+                // Vanilla
+                returnChars.Add("Imp_58992273"); // Baa
+                returnChars.Add("Lillith_90453844"); // Lilis
+                returnChars.Add("Pooka_13445289"); // Pooka
+
+                // Wingidon's Expansion Pack
+                returnChars.Add("Caedoccidere_WING"); // Caedoccidere
+                returnChars.Add("Carnicarius_WING"); // Carnicarius
+                returnChars.Add("Iris_WING"); // Iris
+                returnChars.Add("Leviathan_WING"); // Leviathan
+                returnChars.Add("Mendaverte_WING"); // Mendaverte
+                returnChars.Add("Praesect_WING"); // Praesect
+                returnChars.Add("Mezepheles_WING"); // Venelum
+
+                // Skill Cycler's Riddles
+                returnChars.Add("Escapist_scm"); // Escapist
+                returnChars.Add("Follower_scm"); // Follower
+                returnChars.Add("Infestation_scm"); // Infestation
+                returnChars.Add("Kingmaker_scm"); // Kingmaker
+                returnChars.Add("Mystifier_scm"); // Mystifier
+                returnChars.Add("Veil_scm"); // Veil
+
+                // LRZH's Circus
+                returnChars.Add("Lleech_LRZH"); // Lleech
+                returnChars.Add("Po_LRZH"); // Po
+
+                // Reveal Dilemma
+                returnChars.Add("shroud_rdm"); // Shroud
+
+                // Mass Hysteria
+                returnChars.Add("Cackler_MaHy"); // Cakler
+
+                // ExtraRandomized
+                returnChars.Add("Hypnotist_ER"); // Hypnotist
+
+                // CarlzVillagePack
+                returnChars.Add("Hydra_VP"); // Hydra
+                returnChars.Add("Phantom_VP"); // Phantom
+
+                // CSK's Expansion Pack
+                returnChars.Add("Belias_EP"); // Belias
+            }
+            return returnChars;
+        }
+
+
+        /* Will finish this later
+        public string GetRoleIDByName(string name)
+        {
+            switch (name)
+            {
+                // Vanilla
+                case "Alchemist": return "Alchemist_94446803"; // Alchemist
+                case "Architect": return ""; // Architect
+                case "Baker": return ""; // Baker
+                case "Bard": return ""; // Bard
+                case "Bishop": return ""; // Bishop
+                case "Confessor": return ""; // Confessor
+                case "Dreamer": return ""; // Dreamer
+                case "Druid": return ""; // Druid
+                case "Empress": return ""; // Empress
+                case "Enlightened": return ""; // Enlightened
+                case "Fortune Teller": return ""; // Fortune Teller
+                case "Gemcrafter": return ""; // Gemcrafter
+                case "Hunter": return ""; // Hunter
+                case "Investigator": return ""; // Investigator
+                case "Jester": return ""; // Jester
+                case "Judge": return ""; // Judge
+                case "Knight": return ""; // Knight
+                case "Knitter": return ""; // Knitter
+                case "Lover": return ""; // Lover
+                case "Medium": return ""; // Medium
+                case "Oracle": return ""; // Oracle
+                case "Poet": return ""; // Poet
+                case "Scout": return ""; // Scout
+                case "Slayer": return ""; // Slayer
+                case "Witness": return ""; // Witness
+
+                case "Bombardier": return ""; // Bombardier
+                case "Doppelganger": return ""; // Doppelganger
+                case "Drunk": return ""; // Drunk
+                case "Lycanthrope": return ""; // Lycanthrope
+                case "Plague Doctor": return ""; // Plague Doctor
+                case "Rambler": return ""; // Rambler
+                case "Wretch": return ""; // Wretch
+
+                case "Chancellor": return ""; // Chancellor
+                case "Minion": return ""; // Minion
+                case "Poisoner": return ""; // Poisoner
+                case "Puppet": return ""; // Puppet
+                case "Puppeteer": return ""; // Puppeteer
+                case "Shaman": return ""; // Shaman
+                case "Twin Minion": return ""; // Twin Minion
+                case "": return ""; // Werewolf
+                case "": return ""; // Witch
+
+                case "": return ""; // Baa
+                case "": return ""; // Lilis
+                case "": return ""; // Pooka
+
+
+                
+                // Wingidon's Expansion Pack
+                case "": return ""; // Arbiter
+                case "": return ""; // Arithmetician
+                case "": return ""; // Bloodseer
+                case "": return ""; // Cardshark
+                case "": return ""; // Chiromancer
+                case "": return ""; // Clairvoyant
+                case "": return ""; // Copycat
+                case "": return ""; // Detective
+                case "": return ""; // Devout
+                case "": return ""; // Forager
+                case "": return ""; // Gossip
+                case "": return ""; // Graveakeeper
+                case "": return ""; // Introvert
+                case "": return ""; // Jewelsmith
+                case "": return ""; // Knave
+                case "": return ""; // Lamb
+                case "": return ""; // Performer
+                case "": return ""; // Prince
+                case "": return ""; // Ranger
+                case "": return ""; // Scavenger
+                case "": return ""; // Sentinel
+                case "": return ""; // Sheriff
+                case "": return ""; // Spy
+                case "": return ""; // Warden
+
+                case "": return ""; // Chatterbox
+                case "": return ""; // Lunatic
+                case "": return ""; // Marionette
+                case "": return ""; // Mutant
+                case "": return ""; // Revolutionary
+                case "": return ""; // Renegade
+                case "": return ""; // Tergiversator
+
+                case "": return ""; // Acolyte
+                case "": return ""; // Fanatic
+                case "": return ""; // Zealot
+                case "": return ""; // Heretic
+                case "": return ""; // Professional
+                case "": return ""; // Ritualist
+                case "": return ""; // Snake Charmer
+                case "": return ""; // Swarm (Good)
+                case "": return ""; // Swarm (Evil)
+                case "": return ""; // Turncoat
+                case "": return ""; // Undying
+
+                case "": return ""; // Agmeres
+                case "": return ""; // Caedoccidere
+                case "": return ""; // Carnicarius
+                case "": return ""; // Iris
+                case "": return ""; // Leviathan
+                case "": return ""; // Mendaverte
+                case "": return ""; // Praesect
+                case "": return ""; // Sanguitaurus
+                case "": return ""; // Tenecaligo
+                case "": return ""; // Venelum
+                case "": return ""; // Veniyon
+                case "": return ""; // Vidiyon
+                case "": return ""; // Viciyon
+
+                // Skill Cycler's Riddles
+                case "": return ""; // Coach
+                case "": return ""; // Comedian
+                case "": return ""; // Commander
+                case "": return ""; // Cowboy
+                case "": return ""; // Director
+                case "": return ""; // Engineer
+                case "": return ""; // Governor
+                case "": return ""; // Innkeeper
+                case "": return ""; // Lawyer
+                case "": return ""; // Mathematician
+                case "": return ""; // Necromancer
+                case "": return ""; // Nurse
+                case "": return ""; // Obsessor
+                case "": return ""; // Officer
+                case "": return ""; // Pioneer
+                case "": return ""; // Psychic
+                case "": return ""; // Recruiter
+                case "": return ""; // Riddler
+                case "": return ""; // Scanner
+                case "": return ""; // Stylist
+                case "": return ""; // Surveyor
+                case "": return ""; // Swapper
+                case "": return ""; // Tracker
+                case "": return ""; // Trickster
+                case "": return ""; // Weaver
+
+                case "": return ""; // Captivator
+                case "": return ""; // Confectioner
+                case "": return ""; // Gambler
+                case "": return ""; // Ghost
+                case "": return ""; // Hitman
+                case "": return ""; // Mad Scientist
+                case "": return ""; // Muddler
+                case "": return ""; // Reflector
+
+                case "": return ""; // Accuser
+                case "": return ""; // Baffler
+                case "": return ""; // Channeler
+                case "": return ""; // Guardian
+                case "": return ""; // Hypnotist
+                case "": return ""; // Mastermind
+                case "": return ""; // Sleeper
+                case "": return ""; // Wizard
+
+                case "": return ""; // Escapist
+                case "": return ""; // Follower
+                case "": return ""; // Infestation
+                case "": return ""; // Kingmaker
+                case "": return ""; // Mystifier
+                case "": return ""; // Summoner
+                case "": return ""; // Veil
+            }
+            return "";
+        }
+        */
 
 
 
@@ -534,7 +988,18 @@ namespace ExpansionPack
             infoTypes.Add("Judge"); // Lying cop
             infoTypes.Add("Arbiter"); // Disguising cop
             infoTypes.Add("Forager"); // Villager Cop
-            if (goodCharacters.Count != 0 && evilCharacters.Count != 0) infoTypes.Add("Medium"); // #X is a Good Y
+            if (goodCharacters.Count != 0 && evilCharacters.Count != 0)
+            {
+                infoTypes.Add("Medium"); // #X is a Good Y
+                infoTypes.Add("GoodChainLong"); // The longest chain of Good characters is X cards long
+                infoTypes.Add("GoodChainShort"); // The shortest chain of Good characters is X cards long
+            }
+            if (evilCharacters.Count > 1)
+            {
+                infoTypes.Add("EvilChainLong"); // The longest chain of Evil characters is X cards long
+                infoTypes.Add("EvilDistLong"); // The longest distance between two Evil characters is X cards
+                infoTypes.Add("EvilDistShort"); // The shortest distance between two Evil characters is X cards
+            }
             // if (corruptedCharacters.Count != 0 && pureCharacters.Count != 0) infoTypes.Add("CorruptionChecker"); // #X is Corrupted
 
             // Learn that 1 of 2 characters is...
@@ -825,10 +1290,28 @@ namespace ExpansionPack
                 string claimedRole = "";
                 if (lying)
                 {
+                    bool cryptidPresent = false;
                     Il2CppSystem.Collections.Generic.List<CharacterData> deckMinions = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+                    foreach (Character character in Gameplay.CurrentCharacters)
+                    {
+                        if (character.dataRef.characterId == "Cryptid_WING")
+                        {
+                            cryptidPresent = true;
+                        }
+                    }
                     foreach (CharacterData character in Gameplay.Instance.GetScriptCharactersOfType(ECharacterType.Minion))
                     {
                         deckMinions.Add(character);
+                    }
+                    if (cryptidPresent)
+                    {
+                        foreach (CharacterData character in Gameplay.Instance.GetAllAscensionCharacters())
+                        {
+                            if (GetPossibleCharacterIDsOfRole("Cryptid_WING").Contains(character.characterId))
+                            {
+                                deckMinions.Add(character);
+                            }
+                        }    
                     }
                     foreach (Character character in minionCharacters)
                     {
@@ -1712,7 +2195,261 @@ namespace ExpansionPack
             }
 
 
+            // Longest Good Chain
+            if (chosenInfoType == "GoodChainLong")
+            {
+                if (charRef.GetRegisterAlignment() == EAlignment.Good && !goodCharacters.Contains(charRef)) goodCharacters.Add(charRef);
+                if (charRef.GetRegisterAlignment() == EAlignment.Evil && !evilCharacters.Contains(charRef)) evilCharacters.Add(charRef);
+                Il2CppSystem.Collections.Generic.List<Character> villageTimesThree = new Il2CppSystem.Collections.Generic.List<Character>();
+                for (int i = 0; i < 3; i++)
+                {
+                    foreach (Character character in Gameplay.CurrentCharacters)
+                    {
+                        villageTimesThree.Add(character);
+                    }
+                }
 
+                int truthFinalNum = 0;
+                int truthCheckNum = 0;
+                int lieFinalNum = 0;
+                int lieCheckNum = 0;
+
+                Il2CppSystem.Collections.Generic.List<Character> fakeGroup = GetFakeGroup(goodCharacters);
+
+                foreach (Character character in villageTimesThree)
+                {
+                    if (goodCharacters.Contains(character)) truthCheckNum++;
+                    else
+                    {
+                        if (truthCheckNum > truthFinalNum) truthFinalNum = truthCheckNum;
+                        truthCheckNum = 0;
+                    }
+                    if (fakeGroup.Contains(character)) lieCheckNum++;
+                    else
+                    {
+                        if (lieCheckNum > lieFinalNum) lieFinalNum = lieCheckNum;
+                        lieCheckNum = 0;
+                    }
+                }
+
+                lieFinalNum = MakeNumberWrong(truthFinalNum, lieFinalNum, 1);
+
+                int conjureNumber = truthFinalNum;
+                if (lying) conjureNumber = lieFinalNum;
+
+                if (conjureNumber == 1)
+                {
+                    finalInfo = "All Good characters are isolated";
+                }
+                else
+                {
+                    finalInfo = $"The longest chain of Good characters is:\n{conjureNumber} cards long";
+                }
+            }
+
+            // Longest Evil Chain
+            if (chosenInfoType == "EvilChainLong")
+            {
+                if (charRef.GetRegisterAlignment() == EAlignment.Good && !goodCharacters.Contains(charRef)) goodCharacters.Add(charRef);
+                if (charRef.GetRegisterAlignment() == EAlignment.Evil && !evilCharacters.Contains(charRef)) evilCharacters.Add(charRef);
+                Il2CppSystem.Collections.Generic.List<Character> villageTimesThree = new Il2CppSystem.Collections.Generic.List<Character>();
+                for (int i = 0; i < 3; i++)
+                {
+                    foreach (Character character in Gameplay.CurrentCharacters)
+                    {
+                        villageTimesThree.Add(character);
+                    }
+                }
+
+                int truthFinalNum = 0;
+                int truthCheckNum = 0;
+                int lieFinalNum = 0;
+                int lieCheckNum = 0;
+
+                Il2CppSystem.Collections.Generic.List<Character> fakeGroup = GetFakeGroup(evilCharacters);
+
+                foreach (Character character in villageTimesThree)
+                {
+                    if (evilCharacters.Contains(character)) truthCheckNum++;
+                    else
+                    {
+                        if (truthCheckNum > truthFinalNum) truthFinalNum = truthCheckNum;
+                        truthCheckNum = 0;
+                    }
+                    if (fakeGroup.Contains(character)) lieCheckNum++;
+                    else
+                    {
+                        if (lieCheckNum > lieFinalNum) lieFinalNum = lieCheckNum;
+                        lieCheckNum = 0;
+                    }
+                }
+
+                lieFinalNum = MakeNumberWrong(truthFinalNum, lieFinalNum, 1);
+
+                int conjureNumber = truthFinalNum;
+                if (lying) conjureNumber = lieFinalNum;
+
+                if (conjureNumber == 1)
+                {
+                    finalInfo = "All Evil characters are isolated";
+                }
+                else
+                {
+                    finalInfo = $"The longest chain of Evil characters is:\n{conjureNumber} cards long";
+                }
+            }
+
+            // Shortest Good Chain
+            if (chosenInfoType == "GoodChainShort")
+            {
+                if (charRef.GetRegisterAlignment() == EAlignment.Good && !goodCharacters.Contains(charRef)) goodCharacters.Add(charRef);
+                if (charRef.GetRegisterAlignment() == EAlignment.Evil && !evilCharacters.Contains(charRef)) evilCharacters.Add(charRef);
+                Il2CppSystem.Collections.Generic.List<Character> villageTimesThree = new Il2CppSystem.Collections.Generic.List<Character>();
+                for (int i = 0; i < 3; i++)
+                {
+                    foreach (Character character in Gameplay.CurrentCharacters)
+                    {
+                        villageTimesThree.Add(character);
+                    }
+                }
+
+                int truthFinalNum = 1000;
+                int truthCheckNum = 0;
+                int lieFinalNum = 1000;
+                int lieCheckNum = 0;
+
+                Il2CppSystem.Collections.Generic.List<Character> fakeGroup = GetFakeGroup(goodCharacters);
+
+                foreach (Character character in villageTimesThree)
+                {
+                    if (goodCharacters.Contains(character)) truthCheckNum++;
+                    else
+                    {
+                        if (truthCheckNum < truthFinalNum && truthCheckNum != 0) truthFinalNum = truthCheckNum;
+                        truthCheckNum = 0;
+                    }
+                    if (fakeGroup.Contains(character)) lieCheckNum++;
+                    else
+                    {
+                        if (lieCheckNum < lieFinalNum && lieCheckNum != 0) lieFinalNum = lieCheckNum;
+                        lieCheckNum = 0;
+                    }
+                }
+
+                lieFinalNum = MakeNumberWrong(truthFinalNum, lieFinalNum, 1);
+
+                int conjureNumber = truthFinalNum;
+                if (lying) conjureNumber = lieFinalNum;
+
+                if (conjureNumber == 1)
+                {
+                    finalInfo = "At least one Good character is isolated";
+                }
+                else
+                {
+                    finalInfo = $"The shortest chain of Good characters is:\n{conjureNumber} cards long";
+                }
+            }
+
+            // Shortest Evil Distance
+            if (chosenInfoType == "EvilDistShort")
+            {
+                if (charRef.GetRegisterAlignment() == EAlignment.Good && !goodCharacters.Contains(charRef)) goodCharacters.Add(charRef);
+                if (charRef.GetRegisterAlignment() == EAlignment.Evil && !evilCharacters.Contains(charRef)) evilCharacters.Add(charRef);
+
+                int truthFinalNum = 1000;
+                int truthCheckNum = 0;
+                int lieFinalNum = 1000;
+                int lieCheckNum = 0;
+
+                Il2CppSystem.Collections.Generic.List<Character> fakeGroup = GetFakeGroup(goodCharacters);
+
+                foreach (Character character in evilCharacters)
+                {
+                    foreach (Character character2 in evilCharacters)
+                    {
+                        truthCheckNum = GetDistanceBetweenCharacters(character, character2);
+                        if (truthCheckNum != 0 && truthCheckNum < truthFinalNum)
+                        {
+                            truthFinalNum = truthCheckNum;
+                        }
+                    }
+                }
+                foreach (Character character in fakeGroup)
+                {
+                    foreach (Character character2 in fakeGroup)
+                    {
+                        lieCheckNum = GetDistanceBetweenCharacters(character, character2);
+                        if (lieCheckNum != 0 && lieCheckNum < lieFinalNum)
+                        {
+                            lieFinalNum = lieCheckNum;
+                        }
+                    }
+                }
+
+                lieFinalNum = MakeNumberWrong(truthFinalNum, lieFinalNum, 1);
+
+                int conjureNumber = truthFinalNum;
+                if (lying) conjureNumber = lieFinalNum;
+
+                string cardsPlural = "cards";
+
+                if (conjureNumber == 1)
+                {
+                    cardsPlural = "card";
+                }
+                finalInfo = $"The shortest distance between two Evils is:\n{conjureNumber} {cardsPlural}";
+            }
+
+            // Longest Evil Distance
+            if (chosenInfoType == "EvilDistLong")
+            {
+                if (charRef.GetRegisterAlignment() == EAlignment.Good && !goodCharacters.Contains(charRef)) goodCharacters.Add(charRef);
+                if (charRef.GetRegisterAlignment() == EAlignment.Evil && !evilCharacters.Contains(charRef)) evilCharacters.Add(charRef);
+
+                int truthFinalNum = 0;
+                int truthCheckNum = 0;
+                int lieFinalNum = 0;
+                int lieCheckNum = 0;
+
+                Il2CppSystem.Collections.Generic.List<Character> fakeGroup = GetFakeGroup(goodCharacters);
+
+                foreach (Character character in evilCharacters)
+                {
+                    foreach (Character character2 in evilCharacters)
+                    {
+                        truthCheckNum = GetDistanceBetweenCharacters(character, character2);
+                        if (truthCheckNum != 0 && truthCheckNum > truthFinalNum)
+                        {
+                            truthFinalNum = truthCheckNum;
+                        }
+                    }
+                }
+                foreach (Character character in fakeGroup)
+                {
+                    foreach (Character character2 in fakeGroup)
+                    {
+                        lieCheckNum = GetDistanceBetweenCharacters(character, character2);
+                        if (lieCheckNum != 0 && lieCheckNum > lieFinalNum)
+                        {
+                            lieFinalNum = lieCheckNum;
+                        }
+                    }
+                }
+
+                lieFinalNum = MakeNumberWrong(truthFinalNum, lieFinalNum, 1);
+
+                int conjureNumber = truthFinalNum;
+                if (lying) conjureNumber = lieFinalNum;
+
+                string cardsPlural = "cards";
+
+                if (conjureNumber == 1)
+                {
+                    cardsPlural = "card";
+                }
+                finalInfo = $"The longest distance between two Evils is:\n{conjureNumber} {cardsPlural}";
+            }
 
             returnInfo.desc = finalInfo;
             returnInfo.characters = selection;

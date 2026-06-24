@@ -65,9 +65,9 @@ public class w_Heretic : Minion
             supportDemonIDs.Add("Hypnotist_ER"); // Hypnotist (ExtraRandomized)
             supportDemonIDs.Add("Iris_WING"); // Iris (Wingidon's Expansion Pack)
             supportDemonIDs.Add("Kingmaker_scm"); // Kingmaker (Skill Cycler's Riddles)
+            supportDemonIDs.Add("Leviathan_WING"); // Leviathan (Wingidon's Expansion Pack)
             supportDemonIDs.Add("Mendaverte_WING"); // Mendaverte (Wingidon's Expansion Pack)
             supportDemonIDs.Add("Mezepheles_WING"); // Venelum (Wingidon's Expansion Pack)
-            supportDemonIDs.Add("Mystifier_scm"); // Mystifier (Skill Cycler's Riddles)
             // supportDemonIDs.Add("Mutant_84675843"); // Mutant (Vanilla, Unused)
             supportDemonIDs.Add("Phantom_VP"); // Phantom (CarlzVillagePack)
             supportDemonIDs.Add("Pooka_13445289"); // Pooka (Vanilla)
@@ -84,11 +84,11 @@ public class w_Heretic : Minion
             nightDemonIDs.Add("Follower_scm"); // Follower (Skill Cycler's Riddles) for all of the four seconds its cover is going to last.
             nightDemonIDs.Add("Infestation_scm"); // Infestation (Skill Cycler's Riddles)
             nightDemonIDs.Add("Lillith_90453844"); // Lilis (Vanilla)
+            nightDemonIDs.Add("Mystifier_scm"); // Mystifier (Skill Cycler's Riddles)
 
             setupDemonIDs.Add("Illusionist_WING"); // Emenverax (Wingidon's Expansion Pack)
             setupDemonIDs.Add("Imp_58992273"); // Baa (Vanilla) - Here because it's kind of difficult to miss a card hidden in the deck. Might split into his own category later.
             setupDemonIDs.Add("Legion_WING"); // Agmeres (Wingidon's Expansion Pack)
-            setupDemonIDs.Add("Leviathan_WING"); // Leviathan (Wingidon's Expansion Pack)
             setupDemonIDs.Add("Minos_WING"); // Sanguitaurus (Wingidon's Expansion Pack)
             setupDemonIDs.Add("Pandemonium_WING"); // Magnere (Wingidon's Expansion Pack)
             setupDemonIDs.Add("Pestilence_VP"); // Pestilence (CarlzVillagePack), because it's kind of difficult to miss everyone's abilities refreshing.

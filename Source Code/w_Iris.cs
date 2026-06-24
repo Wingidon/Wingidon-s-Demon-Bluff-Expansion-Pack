@@ -119,7 +119,8 @@ public class w_Iris : Role
         {
             return charRef.GetRegisterAs();
         }
-        CharacterData bluff = GetIrisBluff();
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+        CharacterData bluff = sharedScripts.GetOverrideNotInPlayBluff(charRef, false);
         Gameplay.Instance.AddScriptCharacterIfAble(bluff.type, bluff);
         return bluff;
     }
@@ -129,7 +130,8 @@ public class w_Iris : Role
         {
             return charRef.bluff;
         }
-        CharacterData bluff = GetIrisBluff();
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+        CharacterData bluff = sharedScripts.GetOverrideNotInPlayBluff(charRef, false);
         Gameplay.Instance.AddScriptCharacterIfAble(bluff.type, bluff);
         return bluff;
     }

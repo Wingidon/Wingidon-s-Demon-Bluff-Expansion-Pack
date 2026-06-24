@@ -30,13 +30,13 @@ public class w_Revolutionary : Role
         villagers = Characters.Instance.FilterAliveCharacters(villagers);
         if (villagers.Count == 0)
         {
-            OnActed(ETriggerPhase.OnExecuted, charRef, new ActedInfo("Viva la... revolution?", selection));
+            OnActed(ETriggerPhase.Day, charRef, new ActedInfo("Viva la... revolution?", selection));
         }
         else
         {
             Character targetVillager = villagers[UnityEngine.Random.RandomRangeInt(0, villagers.Count)];
             selection.Add(targetVillager);
-            OnActed(ETriggerPhase.OnExecuted, charRef, new ActedInfo("Viva la revolution!", selection));
+            OnActed(ETriggerPhase.Day, charRef, new ActedInfo("Viva la revolution!", selection));
             targetVillager.ExecuteAndReveal();
         }
     }

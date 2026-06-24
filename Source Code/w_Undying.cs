@@ -161,7 +161,7 @@ public class w_Undying : Minion
         Il2CppSystem.Collections.Generic.List<Character> charactersNotMe = new Il2CppSystem.Collections.Generic.List<Character>();
         foreach (Character character in characters)
         {
-            if (!(character.id == charRef.id))
+            if (character.id != charRef.id && !LastStandCharacterIDs().Contains(character.dataRef.characterId))
             {
                 Debug.Log(string.Format("Added #{0} to charactersNotMe list", character.id));
                 charactersNotMe.Add(character);
@@ -216,6 +216,14 @@ public class w_Undying : Minion
         charRef.statuses.AddStatus(ECharacterStatus.AppearTruthfull, charRef);
         charRef.statuses.AddStatus(ECharacterStatus.HealthyBluff, charRef);
         return null;
+    }
+
+    public Il2CppSystem.Collections.Generic.List<string> LastStandCharacterIDs()
+    {
+        Il2CppSystem.Collections.Generic.List<string> returnList = new Il2CppSystem.Collections.Generic.List<string>();
+        returnList.Add("Undying_WING");
+        returnList.Add("Vizier_LRZH");
+        return returnList;
     }
     public ActedInfo getTaunt(string trigger)
     {

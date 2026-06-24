@@ -33,6 +33,7 @@ public class w_Mezepheles : Role
             possiblePoisonTargets = Characters.Instance.FilterAlignmentCharacters(possiblePoisonTargets, EAlignment.Good);
             possiblePoisonTargets = Characters.Instance.FilterRealCharacterType(possiblePoisonTargets, ECharacterType.Villager);
             possiblePoisonTargets = Characters.Instance.FilterCharacterMissingStatus(possiblePoisonTargets, ECharacterStatus.Corrupted);
+            possiblePoisonTargets = Characters.Instance.FilterCharactersWithoutResistance(possiblePoisonTargets, ECharacterStatus.Corrupted);
             UnityEngine.Debug.Log(string.Format("Found {0} possible poison target(s).", possiblePoisonTargets.Count));
             if (possiblePoisonTargets.Count != 0)
             {

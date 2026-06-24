@@ -21,7 +21,7 @@ public class w_InvertDemon : Demon
         {
             foreach (Character character in Gameplay.CurrentCharacters)
             {
-                if (character.GetRegisterAs().type == ECharacterType.Villager && character.alignment == EAlignment.Good) // Checks if they're a Good Villager
+                if (character.dataRef.type == ECharacterType.Villager && character.alignment == EAlignment.Good) // Checks if they're a Good Villager
                 {
                     character.statuses.AddStatus(ECharacterStatus.Corrupted, charRef); // Corrupts them.
                     character.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef); // Lets Witness see them.

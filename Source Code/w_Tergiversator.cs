@@ -13,12 +13,7 @@ namespace ExpansionPack;
 [RegisterTypeInIl2Cpp]
 public class w_Tergiversator : Role
 {
-    public override Il2CppSystem.Collections.Generic.List<SpecialRule> GetRules()
-    {
-        Il2CppSystem.Collections.Generic.List<SpecialRule> sr = new Il2CppSystem.Collections.Generic.List<SpecialRule>();
-        sr.Add(new NightModeRule(4));
-        return sr;
-    }
+    int alignmentTimer = 0;
     public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
     public w_Tergiversator() : base(ClassInjector.DerivedConstructorPointer<w_Tergiversator>())
     {
@@ -54,9 +49,12 @@ public class w_Tergiversator : Role
                 charRef.statuses.statuses.Remove(TergiStatus.w_tergiEvil);
             }
         }
-        if (trigger == ETriggerPhase.Night)
+        if (trigger == wx_SavedScripts.w_AnyRevealPatch.AnyReveal)
         {
             if (charRef.GetState() == ECharacterState.Dead) return;
+            alignmentTimer++;
+            if (alignmentTimer < 4) return;
+            alignmentTimer -= 4;
             if (charRef.alignment == EAlignment.Good)
             {
                 charRef.ChangeAlignment(EAlignment.Evil);

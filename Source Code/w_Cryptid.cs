@@ -12,7 +12,7 @@ using static ExpansionPack.MainMod;
 namespace ExpansionPack;
 
 [RegisterTypeInIl2Cpp]
-public class w_Pandemonium : Demon
+public class w_Cryptid : Role
 {
     public override Il2CppSystem.Collections.Generic.List<SpecialRule> GetRules()
     {
@@ -26,12 +26,21 @@ public class w_Pandemonium : Demon
         if (trigger == ETriggerPhase.Start)
         {
             wx_SavedScripts sharedScripts = new wx_SavedScripts();
-            Health health = PlayerController.PlayerInfo.health;
-            health.AddMaxHp(Gameplay.CurrentCharacters.Count);
-            health.AddMaxHp(-10);
-            health.Heal(100);
-            Il2CppSystem.Collections.Generic.List<CharacterData> possibleDemons = new Il2CppSystem.Collections.Generic.List<CharacterData>();
-            Il2CppSystem.Collections.Generic.List<string> possibleDemonIDs = sharedScripts.GetPossibleCharacterIDsOfRole("Pandemonium_WING");
+            Il2CppSystem.Collections.Generic.List<CharacterData> whitelistMinions = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            Il2CppSystem.Collections.Generic.List<string> whitelistMinionIDs = sharedScripts.GetPossibleCharacterIDsOfRole("Cryptid_WING");
+
+
+
+            foreach (Character character in Gameplay.CurrentCharacters)
+            {
+                if (whitelistMinionIDs.Contains(character.dataRef.characterId))
+                {
+                    while (whitelistMinionIDs.Contains(character.dataRef.characterId))
+                    {
+                        whitelistMinionIDs.Remove(character.dataRef.characterId);
+                    }
+                }
+            }
             if (allDatas.Length == 0)
             {
                 var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
@@ -47,24 +56,23 @@ public class w_Pandemonium : Demon
 
             for (int j = 0; j < allDatas.Length; j++)
             {
-                if (possibleDemonIDs.Contains(allDatas[j].characterId))
+                if (whitelistMinionIDs.Contains(allDatas[j].characterId))
                 {
-                    possibleDemons.Add(allDatas[j]);
+                    whitelistMinions.Add(allDatas[j]);
                 }
             }
-            CharacterData fakeDemon = possibleDemons[UnityEngine.Random.RandomRangeInt(0, possibleDemons.Count)];
-            Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, fakeDemon);
-            possibleDemons.Remove(fakeDemon);
-            CharacterData realDemon = possibleDemons[UnityEngine.Random.RandomRangeInt(0, possibleDemons.Count)];
-            Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, realDemon);
-            charRef.Init(realDemon);
+            whitelistMinions = Characters.Instance.FilterNotInDeckCharactersUnique(whitelistMinions);
+            CharacterData realMinion = whitelistMinions[UnityEngine.Random.RandomRangeInt(0, whitelistMinions.Count)];
+            Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Minion, realMinion);
+            DeckView.AddToObscuredDeckView(realMinion);
+            charRef.Init(realMinion);
         }
     }
-    public w_Pandemonium() : base(ClassInjector.DerivedConstructorPointer<w_Pandemonium>())
+    public w_Cryptid() : base(ClassInjector.DerivedConstructorPointer<w_Cryptid>())
     {
         ClassInjector.DerivedConstructorBody((Il2CppObjectBase)this);
     }
-    public w_Pandemonium(System.IntPtr ptr) : base(ptr)
+    public w_Cryptid(System.IntPtr ptr) : base(ptr)
     {
 
     }

@@ -112,9 +112,10 @@ public static class LegionLoss
         if (!goodLives && legionInPlay && !noHealth)
         {
             UnityEngine.Debug.Log("No Good characters live. Initiating Agmeres loss.");
-            ch.RevealAllReal();
-            getWinCons();
-            legionLose();
+            health.Damage(999999);
+            //ch.RevealAllReal();
+            //getWinCons();
+            //legionLose();
         }
     }
     public static void legionLose()
