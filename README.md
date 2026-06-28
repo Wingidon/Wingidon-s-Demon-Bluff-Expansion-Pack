@@ -31,6 +31,7 @@ Currently, this mod includes the following roles:
 - Arithmetician - Learns the sum of all Evil characters.
 - Bloodseer - Gathers a lot of info... for a price.
 - Cardshark - Picks 3, and heals or hurts you depending on how many Villagers you picked.
+- Cartomancer - Learns that only one of two roles is in-play.
 - Chiromancer - Learns 3 characters and which Evil role each is, but only one is correct.
 - Clairvoyant - Learns 2 characters that're on the same team.
 - Copycat - Disguises as an in-play Villager, but gives you a health buff.
@@ -43,6 +44,7 @@ Currently, this mod includes the following roles:
 - Jewelsmith - Learns an Honest character.
 - Knave - Learns two sets of info, but only one is true.
 - Lamb - Learns his distance to a particular Outcast.
+- Matchmaker - Picks 2 characters and Learns something they have in common.
 - Paperboy - Learns how long his chain of Good characters is.
 - Performer - Learns an Evil character, but gets bad info if adjacent to Evil.
 - Politician - Corrupted Villager that Learns two sets of false info.
@@ -52,6 +54,7 @@ Currently, this mod includes the following roles:
 - Sentinel - Learns that one of two characters is Corrupted.
 - Sheriff - Learns a character being used as a Disguise.
 - Spy - Learns an Evil role that hasn't been revealed yet.
+- Visionary - Learns what characters could be every few Reveals.
 - Warden - Picks 4 and learns the most common character type among them.
 ### Outcasts
 - Chatterbox - Corrupts an unrevealed character on reveal.
@@ -61,6 +64,7 @@ Currently, this mod includes the following roles:
 - Mutant - Might become Evil. If it remains Good, it creates an additional Minion.
 - Revolutionary - Disguises. If executed, executes another Villager.
 - Renegade - Evil Outcast that Lies and Disguises.
+- Switchblade - Mimics the alignments of her neighbours. Might kill one.
 - Tergiversator - Starts with a random alignment, flips to the opposite each night.
 ### Minions
 - Acolyte - Minion created by another character's ability. Lies and Disguises as a not-in-play character.
