@@ -22,6 +22,10 @@ public class w_Echo : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == wx_SavedScripts.w_AnyRevealPatch.AnyReveal) // When any character is Revealed
         {
             Il2CppSystem.Collections.Generic.List<Character> possibleTargets = new Il2CppSystem.Collections.Generic.List<Character>();
@@ -42,6 +46,39 @@ public class w_Echo : Role
             {
                 MelonLogger.Msg($"Echo at #{charRef.id} found nothing to Register as! This shouldn't be happening, is everyone an Echo or something?");
             }
+            wx_SavedScripts sharedScripts = new wx_SavedScripts();
+            if (sharedScripts.PercentChance(50))
+            {
+                if (charRef.statuses.Contains(ECharacterStatus.AppearLying))
+                {
+                    while (charRef.statuses.Contains(ECharacterStatus.AppearLying)) charRef.statuses.statuses.Remove(ECharacterStatus.AppearLying);
+                }
+                charRef.statuses.AddStatus(ECharacterStatus.AppearTruthfull, charRef);
+            }
+            else
+            {
+                if (charRef.statuses.Contains(ECharacterStatus.AppearTruthfull))
+                {
+                    while (charRef.statuses.Contains(ECharacterStatus.AppearTruthfull)) charRef.statuses.statuses.Remove(ECharacterStatus.AppearTruthfull);
+                }
+                charRef.statuses.AddStatus(ECharacterStatus.AppearLying, charRef);
+            }
+            if (sharedScripts.PercentChance(50))
+            {
+                if (charRef.statuses.Contains(ECharacterStatus.AppearDisguised))
+                {
+                    while (charRef.statuses.Contains(ECharacterStatus.AppearDisguised)) charRef.statuses.statuses.Remove(ECharacterStatus.AppearDisguised);
+                }
+                charRef.statuses.AddStatus(ECharacterStatus.AppearHonest, charRef);
+            }
+            else
+            {
+                if (charRef.statuses.Contains(ECharacterStatus.AppearHonest))
+                {
+                    while (charRef.statuses.Contains(ECharacterStatus.AppearHonest)) charRef.statuses.statuses.Remove(ECharacterStatus.AppearHonest);
+                }
+                charRef.statuses.AddStatus(ECharacterStatus.AppearDisguised, charRef);
+            }
         }    
     }
     public override ActedInfo GetInfo(Character charRef)
@@ -54,6 +91,10 @@ public class w_Echo : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         Act(trigger, charRef);
     }
     public string ConjourInfo()

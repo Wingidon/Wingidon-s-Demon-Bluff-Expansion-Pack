@@ -12,9 +12,21 @@ namespace ExpansionPack;
 [RegisterTypeInIl2Cpp]
 public class w_TwinDemonThree : Demon
 {
+    bool haveActed = false;
     // public bool firstNight = true;
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+            haveActed = false;
+        }
+        if (trigger == ETriggerPhase.Start)
+        {
+            if (haveActed) return;
+            new w_Saboteur().Act(trigger, charRef);
+            charRef.statuses.AddStatus(ECharacterStatus.Corrupted, charRef);
+        }
         /*      if (trigger == ETriggerPhase.Start)
                 {
                     firstNight = true;
@@ -35,8 +47,13 @@ public class w_TwinDemonThree : Demon
                 }
         */
     }
+    public override void BluffAct(ETriggerPhase trigger, Character charRef)
+    {
+        Act(trigger, charRef);
+    }
     public override void ActOnDied(Character charRef)
     {
+        /* Old ability, uncomment if necessary
         Health health = PlayerController.PlayerInfo.health;
         Il2CppSystem.Collections.Generic.List<Character> aliveEvils = new Il2CppSystem.Collections.Generic.List<Character>();
         aliveEvils = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
@@ -53,6 +70,7 @@ public class w_TwinDemonThree : Demon
         }
         health.Damage(aliveEvils.Count);
         if (aliveEvils.Count != 0) health.Damage(1);
+        */
     }
     public w_TwinDemonThree() : base(ClassInjector.DerivedConstructorPointer<w_TwinDemonThree>())
     {

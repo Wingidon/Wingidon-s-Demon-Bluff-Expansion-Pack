@@ -30,6 +30,10 @@ public class w_Scavenger : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger != ETriggerPhase.Day) return;
         Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;
         Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
@@ -55,6 +59,10 @@ public class w_Scavenger : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger != ETriggerPhase.Day) return;
         Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;
         Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
@@ -79,7 +87,7 @@ public class w_Scavenger : Role
             // charRef.statuses.AddStatus(ScavengerText.scavengerKill, charRef);
             //charRef.statuses.AddStatus(MainMod.HiddenRoleStatus.hiddenRole, charRef);
             //charRef.ChangeAlignment(EAlignment.Good);
-            //charRef.KillByDemon(charRef); Don't die anymore.
+            //charRef.KillByDemon(charRef); // Don't die anymore.
             //charRef.ChangeAlignment(myAlignment);
         }
         string info = string.Format("I took {0} damage while scavenging.", healAmount);

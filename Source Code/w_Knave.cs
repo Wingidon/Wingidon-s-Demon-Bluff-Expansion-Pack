@@ -9,18 +9,17 @@ namespace ExpansionPack;
 [RegisterTypeInIl2Cpp]
 public class w_Knave : Role
 {
-    public override ActedInfo GetInfo(Character charRef)
+    public Il2CppSystem.Collections.Generic.List<ActedInfo> GetInfoList(Character charRef)
     {
-        ActedInfo checkedInfo = CheckIfUniqueCharacter(charRef);
-        if (checkedInfo.desc != "False") return checkedInfo;
+        Il2CppSystem.Collections.Generic.List<ActedInfo> returnList = new Il2CppSystem.Collections.Generic.List<ActedInfo>();
         wx_SavedScripts sharedScripts = new wx_SavedScripts();
         ActedInfo trueInfo = sharedScripts.GetRandomInfo(charRef, false, false, false);
         ActedInfo trueInfoTwo = sharedScripts.GetRandomInfo(charRef, false, false, false);
         ActedInfo falseInfo = sharedScripts.GetRandomInfo(charRef, true, false, false);
 
-        if (trueInfo == trueInfoTwo)
+        if (trueInfo.desc == trueInfoTwo.desc)
         {
-            while (trueInfo == trueInfoTwo)
+            while (trueInfo.desc == trueInfoTwo.desc)
             {
                 MelonLogger.Msg("Not good enough, let's try again");
                 trueInfoTwo = sharedScripts.GetRandomInfo(charRef, false, false, false);
@@ -49,14 +48,19 @@ public class w_Knave : Role
              + $"{randomisedOrderInfos[1].desc}\n\n"
              + $"{randomisedOrderInfos[2].desc}";
 
+
+        returnList.Add(randomisedOrderInfos[0]);
+        returnList.Add(randomisedOrderInfos[1]);
+        returnList.Add(randomisedOrderInfos[2]);
         ActedInfo actedInfo = new ActedInfo(line, selection);
-        return actedInfo;
+        returnList.Add(actedInfo);
+
+        return returnList;
     }
-    public override ActedInfo GetBluffInfo(Character charRef)
+    public Il2CppSystem.Collections.Generic.List<ActedInfo> GetBluffInfoList(Character charRef)
     {
-        ActedInfo checkedInfo = CheckIfUniqueCharacter(charRef);
-        if (checkedInfo.desc != "False") return checkedInfo;
         wx_SavedScripts sharedScripts = new wx_SavedScripts();
+        Il2CppSystem.Collections.Generic.List<ActedInfo> returnList = new Il2CppSystem.Collections.Generic.List<ActedInfo>();
         ActedInfo infoOne = new ActedInfo("");
         ActedInfo infoTwo = new ActedInfo("");
         ActedInfo infoThree = new ActedInfo("");
@@ -69,18 +73,18 @@ public class w_Knave : Role
         }
         infoOne = sharedScripts.GetRandomInfo(charRef, infoFalse, false, false);
         infoTwo = sharedScripts.GetRandomInfo(charRef, infoFalse, false, false);
-        if (infoOne == infoTwo)
+        if (infoOne.desc == infoTwo.desc)
         {
-            while (infoOne == infoTwo)
+            while (infoOne.desc == infoTwo.desc)
             {
                 MelonLogger.Msg("Not good enough, let's try again");
                 infoTwo = sharedScripts.GetRandomInfo(charRef, infoFalse, false, false);
             }
         }
         infoThree = sharedScripts.GetRandomInfo(charRef, infoFalse, false, false);
-        if (infoOne == infoThree || infoTwo == infoThree)
+        if (infoOne.desc == infoThree.desc || infoTwo.desc == infoThree.desc)
         {
-            while (infoOne == infoThree || infoTwo == infoThree)
+            while (infoOne.desc == infoThree.desc || infoTwo.desc == infoThree.desc)
             {
                 MelonLogger.Msg("Not good enough, let's try again");
                 infoThree = sharedScripts.GetRandomInfo(charRef, infoFalse, false, false);
@@ -95,8 +99,13 @@ public class w_Knave : Role
         foreach (Character character in infoTwo.characters) selection.Add(character);
         foreach (Character character in infoThree.characters) selection.Add(character);
 
+        returnList.Add(infoOne);
+        returnList.Add(infoTwo);
+        returnList.Add(infoThree);
         ActedInfo actedInfo = new ActedInfo(line, selection);
-        return actedInfo;
+        returnList.Add(actedInfo);
+
+        return returnList;
     }
     public override string Description
     {
@@ -107,16 +116,32 @@ public class w_Knave : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
-            OnActed(ETriggerPhase.Day, charRef, GetInfo(charRef));
+            Il2CppSystem.Collections.Generic.List<ActedInfo> infos = GetInfoList(charRef);
+            OnActed(ETriggerPhase.Day, charRef, infos[0]);
+            OnActed(ETriggerPhase.Day, charRef, infos[1]);
+            OnActed(ETriggerPhase.Day, charRef, infos[2]);
+            OnActed(ETriggerPhase.Day, charRef, infos[3]);
         }
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
-            OnActed(ETriggerPhase.Day, charRef, GetBluffInfo(charRef));
+            Il2CppSystem.Collections.Generic.List<ActedInfo> infos = GetBluffInfoList(charRef);
+            OnActed(ETriggerPhase.Day, charRef, infos[0]);
+            OnActed(ETriggerPhase.Day, charRef, infos[1]);
+            OnActed(ETriggerPhase.Day, charRef, infos[2]);
+            OnActed(ETriggerPhase.Day, charRef, infos[3]);
         }
     }
     public w_Knave() : base(ClassInjector.DerivedConstructorPointer<w_Knave>())

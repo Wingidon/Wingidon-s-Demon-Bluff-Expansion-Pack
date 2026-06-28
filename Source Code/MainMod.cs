@@ -101,6 +101,59 @@ public class MainMod : MelonMod
 
 
         configCategory = MelonPreferences.CreateCategory("WingModSettings");
+        /*
+        // Villagers
+        configCategory.CreateEntry("Arbiter_WING", true, "ArbiterEnabled", "Villager who picks a character & Learns if they're Disguised.");
+        configCategory.CreateEntry("Arithmetician_WING", true, "ArithmeticianEnabled", "Villager who Learns the sum of all Evil characters.");
+        configCategory.CreateEntry("Bloodseer_WING", true, "BloodseerEnabled", "Villager who can sacrifice health for info.");
+        configCategory.CreateEntry("Cardshark_WING", true, "CardsharkEnabled", "Villagaer who picks 3 & hurts/heals depending on how many Villagers were picked.");
+        configCategory.CreateEntry("Chiromancer_WING", true, "ChiromancerEnabled", "Villager who Learns 3 characters and which Evil role each is, but only one is correct.");
+        configCategory.CreateEntry("Clairvoyant_WING", true, "ClairvoyantEnabled", "Villager who Learns 2 characters that're on the same team.");
+        configCategory.CreateEntry("Copycat_WING", true, "CopycatEnabled", "Villager who Disguises, but gives you a health buff.");
+        configCategory.CreateEntry("Detective_WING", true, "DetectiveEnabled", "Villager who Learns how many Unrevealed characters are Lying.");
+        configCategory.CreateEntry("Devout_WING", true, "DevoutEnabled", "Villager who Picks 1 character to refresh their ability.");
+        configCategory.CreateEntry("Forager_WING", true, "ForagerEnabled", "Villager who Picks 1 character & Learns if they're a Villager.");
+        configCategory.CreateEntry("Gossip_WING", true, "GossipEnabled", "Villager who Picks 1 character & Learns random info about them.");
+        configCategory.CreateEntry("Gravekeeper_WING", true, "GravekeeperEnabled", "Villager who Learns info about dead characters when activated.");
+        configCategory.CreateEntry("Introvert_WING", true, "IntrovertEnabled", "Villager who Learns which roles are near her.");
+        configCategory.CreateEntry("Jewelsmith_WING", true, "JewelsmithEnabled", "Villager who Learns an Honest character.");
+        configCategory.CreateEntry("Knave_WING", true, "KnaveEnabled", "Villager who Learns some true info and some false info.");
+        configCategory.CreateEntry("Lamb_WING", true, "LambEnabled", "Villager who Learns his distance to a particular Outcast.");
+        configCategory.CreateEntry("Paperboy_WING", true, "PaperboyEnabled", "Villager who Learns how long his chain of Good is.");
+        configCategory.CreateEntry("Performer_WING", true, "PerformerEnabled", "Villager who Learns an Evil character, but gets bad info if adjacent to Evil.");
+        configCategory.CreateEntry("Politician_WING", true, "PoliticianEnabled", "Corrupted Villager who Learns false info.");
+        configCategory.CreateEntry("Prince_WING", true, "PrinceEnabled", "Villager who Learns that one of two characters is Disguised.");
+        configCategory.CreateEntry("Ranger_WING", true, "RangerEnabled", "Villager who Learns his distance to his furthest Evil character.");
+        configCategory.CreateEntry("Scavenger_WING", true, "ScavengerEnabled", "Villager who heals you based on how many Evil characters are dead.");
+        configCategory.CreateEntry("Sentinel_WING", true, "SentinelEnabled", "Villager who Learns that one of two characters is Corrupted.");
+        configCategory.CreateEntry("Sheriff_WING", true, "SheriffEnabled", "Villager who Learns a role being used as a Disguise.");
+        configCategory.CreateEntry("Spy_WING", true, "SpyEnabled", "Villager who Learns an Evil role that hasn't been Revealed yet.");
+        configCategory.CreateEntry("Warden_WING", true, "WardenEnabled", "Villager who Picks 4 & Learns the most Suspicious two Types among them.");
+
+        // Outcasts
+        configCategory.CreateEntry("Chatterbox_WING", true, "ChatterboxEnabled", "Outcast who Corrupts an unrevealed characters when Revealed.");
+        configCategory.CreateEntry("Echo_WING", true, "EchoEnabled", "Outcast who Registers inconsistently as anything.");
+        configCategory.CreateEntry("Lunatic_WING", true, "LunaticEnabled", "Outcast who Disguises, but only Lies sometimes.");
+        configCategory.CreateEntry("Marionette_WING", true, "MarionetteEnabled", "Outcast who Lies, Disguises, Registers as a Puppet and sits next to the Demon.");
+        configCategory.CreateEntry("Mutant_WING", true, "MutantEnabled", "Outcast whose alignment is random. If Good, it creates an additional Minion.");
+        configCategory.CreateEntry("Revolutionary_WING", true, "RevolutionaryEnabled", "Outcast who Disguises and, if Executed, Executes a random Villager.");
+        configCategory.CreateEntry("Renegade_WING", true, "RenegadeEnabled", "Evil Outcast that Lies and Disguises.");
+        configCategory.CreateEntry("Tergiversator_WING", true, "TergiversatorEnabled", "Outcast whose alignment is random and flips to the opposite every few Reveals.");
+
+        // Minions
+        configCategory.CreateEntry("Cryptid_WING", true, "CryptidEnabled", "Minion who becomes another unknown Minion on Game Start.");
+        configCategory.CreateEntry("Heretic_WING", true, "HereticEnabled", "Minion who adds extra Minions & Demons to the Deck.");
+        configCategory.CreateEntry("Professional_WING", true, "ProfessionalEnabled", "Minion who Registers as Good.");
+        configCategory.CreateEntry("Ritualist_WING", true, "RitualistEnabled", "Minion who deals damage every few reveals.");
+        configCategory.CreateEntry("Saboteur_WING", true, "SaboteurEnabled", "Minion who Corrupts a character far away from itself.");
+        configCategory.CreateEntry("Snake Charmer_WING", true, "SnakeCharmerEnabled", "Minion who performs a delayed kill on a character.");
+        configCategory.CreateEntry("Swarm_Good_WING", true, "SwarmEnabled", "Many Minions, but one is defective.");
+        configCategory.CreateEntry("Turncoat_WING", true, "TurncoatEnabled", "Minion who does not Lie.");
+        configCategory.CreateEntry("Undying_WING", true, "UndyingEnabled", "Minion who doesn't Disguise, but can only be killed if it's the last Evil left.");
+        */
+
+        // Demons
+        configCategory.CreateEntry("DebugMode", false, "Debug Mode", "Whether or not debug mode is enabled. Debug Mode outputs logs to the console about some roles and what they're doing.");
         configCategory.CreateEntry("Agmeres_Weight", 2, description: "How likely Agmeres is to be in-play.");
         configCategory.CreateEntry("Veni-Vidi-Vici_Weight", 2, description: "How likely the Hellspawn Triplets are to be in-play.");
         configCategory.CreateEntry("Caedoccidere_Weight", 2, description: "How likely Caedoccidere is to be in-play.");
@@ -113,6 +166,9 @@ public class MainMod : MelonMod
         configCategory.CreateEntry("Iris_Weight", 2, description: "How likely Iris is to be in-play.");
         configCategory.CreateEntry("Carni_Weight", 2, description: "How likely Carnicarius is to be in-play.");
         configCategory.CreateEntry("Magnere_Weight", 2, description: "How likely Magnere is to be in-play.");
+        configCategory.CreateEntry("Magnere_MinVillageSize", 11, description: "The minimum size of Magnere villages. Minimum 4. Default 11. Note that Magnere likes to hunt its prey in larger villages, so you won't be seeing these ones as often.");
+        configCategory.CreateEntry("Magnere_MaxVillageSize", 15, description: "The maximum size of Magnere villages. Maximum 30. Default 15.");
+        configCategory.CreateEntry("EnableLargeVillages", false, "EnableLargeVillages", "When this setting is enabled, every Demon from this mod (except Tenecaligo) can show up in villages up to 15 cards big. Note that you will not have the extra health Magnere gives you to deal with them, so good luck. If you don't like that, I recommend using https://www.nexusmods.com/demonbluff/mods/5 and setting your health to 15.");
         configCategory.CreateEntry("Misc_Weight", 2, description: "How likely any Demon I've forgotten is to be in-play.");
         configCategory.SetFilePath(Path.Combine(MelonEnvironment.UserDataDirectory, "WingModConfig.cfg"));
         configCategory.SaveToFile();
@@ -444,7 +500,7 @@ public class MainMod : MelonMod
         w_knave.role = new w_Knave();
         w_knave.description = $"Learn three sets of random info:\nTwo are true, one is false.";
         w_knave.ifLies = $"None or all of my statements are true.";
-        w_knave.hints = $"My incorrect statement does not follow the Lying rules you might expect it to. It can be any wrong statement.";
+        w_knave.hints = $"My incorrect statement does not follow the Lying rules you might expect it to. It can be any wrong statement.\n\nIf my statements are for some reason covered up, you can use Oracle Mode to view them individually.";
         w_knave.gender = EGender.Male;
 
 
@@ -462,6 +518,56 @@ public class MainMod : MelonMod
         w_politician.gender = EGender.Male;
 
 
+        CharacterData w_saint = newCharacter("Saint", EAlignment.Good, ECharacterType.Villager, false, false, "\"Wisdom begets peace. Patience begets wisdom. Fear not, for the time shall come when fear too shall pass.\nLet us pray, and may the unity of our vision make saints of us all.\"", "Saint_61372493");
+        w_saint.role = new w_Saint();
+        w_saint.description = $"I am always Good.";
+        w_saint.hints = "Some roles may try to turn me Evil, but they will fail to do so.\nCertain roles, like the Puppeteer, might have their ability fail if they're adjacent to me.";
+        w_saint.gender = EGender.Female;
+
+
+        CharacterData w_matchmaker = newCharacter("Matchmaker", EAlignment.Good, ECharacterType.Villager, true, false, "\"'Aw, twin souls!', she'd always say.\nNobody's quite sure what she means by that.\"", "Fortune Teller_74565681");
+        w_matchmaker.role = new w_Matchmaker();
+        w_matchmaker.description = $"<b>Pick 2 characters:</b>\nLearn something they have in common.";
+        w_matchmaker.hints = $"I can Learn that they share their..."
+                           + $"\n...Role."
+                           + $"\n...{formattedKeyText("Alignment")} (Good/Evil)."
+                           + $"\n...{formattedKeyText("Type")} (Villager/Outcast/Minion/Demon)."
+                           + $"\n...{formattedKeyText("Truthfulness")} ({formattedKeyText("Truthful")}/Lying)."
+                           + $"\n...{formattedKeyText("Honesty")} ({formattedKeyText("Honest")}/Disguised)."
+                           + $"\n...{formattedKeyText("Purity")} ({formattedKeyText("Pure")}/Corrupted)."
+                           + $"\n...ability to Register falsely (Registering as something that's not their {formattedKeyText("True Role")}).";
+        w_matchmaker.gender = EGender.Female;
+        w_matchmaker.picking = true;
+        w_matchmaker.abilityUsage = EAbilityUsage.Once;
+
+
+        CharacterData w_cartomancer = newCharacter("Cartomancer", EAlignment.Good, ECharacterType.Villager, true, false, "\"She recently drew some cards she hasn't seen before.\nEvil is afoot, and she's just found out.\"", "Fortune Teller_74565681");
+        w_cartomancer.role = new w_Cartomancer();
+        w_cartomancer.description = $"Learn two roles.\nOnly one is in-play.";
+        w_cartomancer.ifLies = "Neither or both are in-play.";
+        w_cartomancer.gender = EGender.Female;
+
+
+        CharacterData w_visionary = newCharacter("Visionary", EAlignment.Good, ECharacterType.Villager, true, false, "\"Last night, she saw the Lamb.\nThen, in the moonlight, his face shifted into something new:\nThe face of Baa.\"", "Enlightened_62576217");
+        w_visionary.role = new w_Visionary();
+        w_visionary.description = $"<b>{formattedKeyText("Cycle 3")}:</b>\nLearn that a character is either a particular Good role or a particular Evil role.";
+        w_visionary.ifLies = "My first vision is false. The rest are randomly true or false.";
+        w_visionary.hints = $"I still gather info while {formattedKeyText("Unrevealed")}, you just don't Learn it until you {formattedKeyText("Reveal")} me.\n\nI see the {roleColour("EvilOutcast")}Mutant</color>, {roleColour("EvilOutcast")}Switchblade</color> and {roleColour("EvilOutcast")}Tergiversator</color> as Good.\nOther characters with an abnormal {formattedKeyText("Alignment")} count as their Role's starting {formattedKeyText("Alignment")} to me.";
+        w_visionary.gender = EGender.Female;
+
+
+
+        /* Apparently ETriggerPhase.OnReveal doesn't work for Pick characters :(
+        CharacterData w_bountyhunter = newCharacter("Bounty Hunter", EAlignment.Good, ECharacterType.Villager, false, false, "\"Alone, she walks these streets, paved with the sick stench of corruption. Its thickness worms its way into her nostrils, unbidden, burning with revulsion. And anticipation. The illness of this wretched place grows each night. And she... she is the cure.\"", "Bounty Hunter_39284184");
+        w_bountyhunter.role = new w_BountyHunter();
+        w_bountyhunter.description = $"Learn an in-play Evil Minion or Demon role.\n\n<b>Activate Me:</b>\nDeal 2 {formattedKeyText("Damage")} to you.\nLearn who it is.";
+        w_bountyhunter.ifLies = $"The role I mention can be in-play or not-in-play.\nThe character I Learn will be wrong.\nI still deal {formattedKeyText("Damage")} to you when Activated.";
+        w_bountyhunter.gender = EGender.Female;
+        w_bountyhunter.picking = true;
+        w_bountyhunter.abilityUsage = EAbilityUsage.Once;
+        */
+
+
 
         /* is broken and I can't tell why
         CharacterData w_balloonist = newCharacter("Balloonist", EAlignment.Good, ECharacterType.Villager, true, false, "\"Higher and higher,\nlower and lower.\nStoke the pyre,\nand off we go.\"", "Alchemist_94446803");
@@ -469,12 +575,6 @@ public class MainMod : MelonMod
         w_balloonist.description = $"<b>{formattedKeyText("Cycle 3")}:</b>\nLearn a character of a different Type to the last one I Learned.";
         w_balloonist.gender = EGender.They;
         */
-
-
-        //CharacterData w_saint = newCharacter("Saint", EAlignment.Good, ECharacterType.Villager, false, false, "\"Wisdom begets peace. Patience begets wisdom. Fear not, for the time shall come when fear too shall pass.\nLet us pray, and may the unity of our vision make saints of us all.\"");
-        //w_saint.role = new SaintVillager();
-        //w_saint.description = $"I am always Good.";
-        //w_saint.gender = EGender.Female;
 
         /*
         CharacterData w_greeter = new CharacterData();
@@ -672,7 +772,7 @@ public class MainMod : MelonMod
 
         CharacterData w_marionette = newCharacter("Marionette", EAlignment.Good, ECharacterType.Outcast, false, true, "\"You ever feel like you're losing control over your life?\"", "Puppet_15989619");
         w_marionette.role = new w_Marionette();
-        w_marionette.description = "<b>Game Start:</b>\nI sit next to the Demon, if possible.\n\nI Register as a <color=#FF9999>Puppet</color>.\nI Lie and Disguise.";
+        w_marionette.description = "<b>Game Start:</b>\nI sit next to the Demon, if possible.\n\nI Register as Evil, as a Minion & as the <color=#FF9999>Puppet</color>.\nI Lie and Disguise.";
         w_marionette.hints = $"You take 2 less {formattedKeyText("Damage")} if you Execute me.\n\nIf the {roleColour("Minion")}Chancellor</color> creates me, I immediately move to be next to the Demon.\nThis can result in a {roleColour("Minion")}Chancellor</color> with no Outcast neighbours.\n\n" + customHint("Outcast Disguise Hint", "Simple");
         w_marionette.gender = EGender.They;
 
@@ -708,26 +808,17 @@ public class MainMod : MelonMod
         w_revolutionary.hints = $"You take 3 {formattedKeyText("Damage")} instead of 5 when you Execute me.\nI may attempt to Execute a <color=#C080FF>Knight</color>, but I cannot {formattedKeyText("Kill")} him.\n\n" + customHint("Outcast Disguise Hint", "Advanced");
         w_revolutionary.gender = EGender.Male;
 
-        /*                                                                                         DISABLED FOR NOW DUE TO ISSUES
-        CharacterData w_pilgrim = new CharacterData();
-        w_pilgrim.role = new w_Pilgrim();
-        w_pilgrim.name = "Pilgrim";
-        w_pilgrim.description = $"<b>Game Start:</b>\n1 random character Disguises as the {roleColour("Outcast")}Pilgrim</color>.";
-        w_pilgrim.flavorText = "\"Their religion makes them suspects, but they don't have any useful abilities or information.\"";
-        w_pilgrim.hints = "I cannot be Disguised as naturally.\nThe only way for a character to Disguise as me is to be forced by me to do so.";
-        w_pilgrim.ifLies = "";
-        w_pilgrim.picking = false;
-        w_pilgrim.startingAlignment = EAlignment.Good;
-        w_pilgrim.type = ECharacterType.Outcast;
-        w_pilgrim.bluffable = false;
-        w_pilgrim.characterId = "Pilgrim_WING";
-        w_pilgrim.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
-        w_pilgrim.cardBgColor = new Color(0.1020f, 0.0667f, 0.0392f);
-        w_pilgrim.cardBorderColor = new Color(0.7843f, 0.6471f, 0.0f);
-        w_pilgrim.color = new Color(0.9647f, 1f, 0.4471f);
-        w_pilgrim.gender = EGender.They;
-        w_pilgrim.usuallyDisguised = false;
-        */
+
+
+
+        //CharacterData w_pilgrim = newCharacter("Pilgrim", EAlignment.Good, ECharacterType.Outcast, false, false, "\"Their religion makes them suspects, but they don't have any useful abilities or information.\"", "Wretch_80988916");
+        //w_pilgrim.role = new w_Pilgrim();
+        //w_pilgrim.description = $"<b>Game Start:</b>\n1 random character Disguises as the {roleColour("Outcast")}Pilgrim</color>.";
+        //w_pilgrim.hints = $"I cannot be Disguised as naturally.\nThe only way for a character to Disguise as me is to be forced by me to do so.";
+        //w_pilgrim.gender = EGender.They;
+        // Thought I could get this working again with the Silenced status. Pick characters are still bugged.
+
+
 
         CharacterData w_mutant = newCharacter("Mutant", EAlignment.Good, ECharacterType.Outcast, false, false, "\"It seems volatile.\nNo, not he, <b>it</b> seems volatile.\"", "Mutant_84675843");
         w_mutant.role = new w_Mutant();
@@ -738,14 +829,21 @@ public class MainMod : MelonMod
 
         CharacterData w_tergiversator = newCharacter("Tergiversator", EAlignment.Good, ECharacterType.Outcast, false, false, "\"Nobody knows her beliefs.\nOr if she even has any.\"", "Witch_25286521");
         w_tergiversator.role = new w_Tergiversator();
-        w_tergiversator.description = $"My starting Alignment is random.\n\n<b>{formattedKeyText("Cycle 4")}:</b>\nMy Alignment flips.\nIf I am the last Evil and become Good this way, I {formattedKeyText("Die")}.\n\nWhile Good, I {formattedKeyText("Bluff")} being {formattedKeyText("Truthful")} & {formattedKeyText("Honest")}.\nWhile Evil, I {formattedKeyText("Bluff")} Lying & Disguising.\n\nI tell you something really interesting.";
+        w_tergiversator.description = $"My starting {formattedKeyText("Alignment")} is random.\n\n<b>{formattedKeyText("Cycle 4")}:</b>\nMy Alignment flips.\nIf I am the last Evil and become Good this way, I {formattedKeyText("Die")}.\n\nWhile Good, I {formattedKeyText("Bluff")} being {formattedKeyText("Truthful")} & {formattedKeyText("Honest")}.\nWhile Evil, I {formattedKeyText("Bluff")} Lying & Disguising.\n\nI tell you something really interesting.";
         w_tergiversator.hints = $"I cannot be Disguised as.\n\n{customHint("Keyword", "Bluff")}\n\n{customHint("Keyword", "Cycle")}";
         w_tergiversator.gender = EGender.Female;
 
         CharacterData w_echo = newCharacter("Echo", EAlignment.Good, ECharacterType.Outcast, false, false, "\"This is the truth the Poet was talking about.\"", "Doppleganger_52694042");
         w_echo.role = new w_Echo();
-        w_echo.description = $"I Register as a random in-play character.\nMy Registration is inconsistent.";
+        w_echo.description = $"I Register as a random in-play character.\nI might {formattedKeyText("Bluff")} being {formattedKeyText("Truthful")}/Lying & {formattedKeyText("Honest")}/Disguised.\nMy Registration & {formattedKeyText("Bluff")} might change at any time.";
+        w_echo.hints = "I cannot be Disguised as.\n\n" + customHint("Keyword", "Bluff");
         w_echo.gender = EGender.They;
+
+        CharacterData w_switchblade = newCharacter("Switchblade", EAlignment.Good, ECharacterType.Outcast, false, false, "\"A killer who can't decide whose side they're on.\"", "Gambler_42592744");
+        w_switchblade.role = new w_Switchblade();
+        w_switchblade.description = $"<b>{formattedKeyText("Cycle 3")}:</b>\nI become the {formattedKeyText("Alignment")} of an {formattedKeyText("Alive")} neighbour.\nThen, 1 Good character near me might {formattedKeyText("Die")}.\nIf they do, deal 1 {formattedKeyText("Damage")} to you.";
+        w_switchblade.hints = $"I cannot be Disguised as.\n\nI can only {formattedKeyText("Kill")} once per game.\n\n{formattedKeyText("Cycle")} abilities resolve starting from the top, going counter-clockwise.";
+        w_switchblade.gender = EGender.Female;
 
 
 
@@ -929,7 +1027,7 @@ public class MainMod : MelonMod
         w_twindemon.role = new w_TwinDemon();
         w_twindemon.description = $"<b>Game Start:</b>\n1 Good Villager closest to me becomes Corrupted.\n\nI Lie and Disguise like a Minion.";
         // w_twindemon.hints = "TRIVIA:\nUsed to be called 'Twin Demon'.\nThen, she and her brother were renamed to Hellspawn and Twin Hellspawn, before eventually being renamed again.";
-        w_twindemon.hints = $"When going up against us, try to work out which of us are in-play and which of us is which. The order of your operations will be especially important here...";
+        w_twindemon.hints = $"When going up against us, try to work out which of us are in-play and which of us is which.";
         w_twindemon.characterId = "TwinDemon_WING";
         //nightPhase.nightCharactersOrder.Add(w_twindemon);
         w_twindemon.gender = EGender.Female;
@@ -945,9 +1043,11 @@ public class MainMod : MelonMod
         CharacterData w_twindemontriplet = newCharacter("Viciyon", EAlignment.Evil, ECharacterType.Demon, false, true, "\"The eldest of the Hellspawn.\nShe doesn't like to associate with her siblings.\"", "Lillith_90453844");
         w_twindemontriplet.role = new w_TwinDemonThree();
         // w_twindemontriplet.description = $"<b>At Night:</b>\nDeal 1 {formattedKeyText("Damage")} to you.\nIf it's my first night, deal 2 instead.\n\nWe Lie and Disguise.";
-        w_twindemontriplet.description = $"<b>On Death:</b>\nTake 1 {formattedKeyText("Damage")}, then 1 extra per {formattedKeyText("Living")} Evil character.\n\nI Lie and Disguise.";
+        //w_twindemontriplet.description = $"<b>On Death:</b>\nTake 1 {formattedKeyText("Damage")}, then 1 extra per {formattedKeyText("Living")} Evil character.\n\nI Lie and Disguise.";
+        w_twindemontriplet.description = $"<b>Game Start:</b>\n1 Good Villager furthest away from me is Corrupted.\n\nI Lie and Disguise.\nI am Corrupted.";
         //w_twindemontriplet.hints = "I can only be in-play if both <color=#FF9999>Veniyon</color> and <color=#FF9999>Viciyon</color> are too.\n\nTRIVIA:\nUsed to be called 'Triplet Hellspawn' before being renamed alongside the other two.\nWas created when <color=#C080FF>Wingidon</color> saw <color=#FF9999>Summoner</color> (a character from a different mod) copy <color=#FF9999>Veniyon</color>'s ability, creating two instances of <color=#d88c8b>Vidiyon</color>.";
-        w_twindemontriplet.hints = $"My ability ignores misregistration.\nThe {roleColour("Minion")}Undying</color> does not count for my ability.\n\n{roleColour("Demon")}Veniyon</color>, {roleColour("Demon")}Vidiyon</color> and {roleColour("Demon")}I</color> are the Hellspawn Triplets. We are all in the {formattedKeyText("Deck")}, but some of us might not be in-play.";
+        // w_twindemontriplet.hints = $"My ability ignores misregistration.\nThe {roleColour("Minion")}Undying</color> does not count for my ability.\n\n{roleColour("Demon")}Veniyon</color>, {roleColour("Demon")}Vidiyon</color> and {roleColour("Demon")}I</color> are the Hellspawn Triplets. We are all in the {formattedKeyText("Deck")}, but some of us might not be in-play.";
+        w_twindemontriplet.hints = $"{roleColour("Demon")}Veniyon</color>, {roleColour("Demon")}Vidiyon</color> and {roleColour("Demon")}I</color> are the Hellspawn Triplets. We are all in the {formattedKeyText("Deck")}, but some of us might not be in-play.";
         w_twindemontriplet.characterId = "TwinDemonTriplet_WING";
         //var w_twinDemonTwinCharacter2 = ProjectContext.Instance.gameData.GetCharacterDataOfId("TwinDemonTriplet_WING");
         //nightPhase.nightCharactersOrder.Add(w_twindemontriplet);
@@ -976,7 +1076,7 @@ public class MainMod : MelonMod
 
         CharacterData w_caedoc = newCharacter("Caedoccidere", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Most demons wait until they have enough power to destroy the entire town at once.\nThis one doesn't.\"", "Lillith_90453844");
         w_caedoc.role = new w_Caedoccidere();
-        //w_caedoc.name = "Caedoccidere"; // Name derived from Latin 'caedes' (meaning "slaughter) and 'occidere' (meaning "to kill")
+        //w_caedoc.name = "Caedoccidere"; // Name derived from Latin 'caedes' (meaning "slaughter") and 'occidere' (meaning "to kill")
         w_caedoc.description = $"<b>At Night:</b>\n{formattedKeyText("Kill")} 1 {formattedKeyText("Revealed")} character.\nDeal 3 {formattedKeyText("Damage")} to you.\n\nI Lie and Disguise.";
         w_caedoc.hints = $"I do not {formattedKeyText("Kill")} Evil characters, even if they are my only valid targets.";
         w_caedoc.gender = EGender.They;
@@ -1100,7 +1200,9 @@ public class MainMod : MelonMod
 
 
 
-
+        string visionaryFlavour = new wx_SavedScripts().GetVisionaryFlavour();
+        w_visionary.additionalFlavorTexts[0] = visionaryFlavour;
+        w_visionary.flavorText = visionaryFlavour;
 
 
 
@@ -1139,6 +1241,7 @@ public class MainMod : MelonMod
         //Characters.Instance.startGameActOrder = insertBeforeAct("Pooka", w_saboteur);
         Characters.Instance.startGameActOrder = InsertAfterAct("Pooka", w_snakeCharmer);
         Characters.Instance.startGameActOrder = InsertAfterAct("Pooka", w_saboteur);
+        Characters.Instance.startGameActOrder = InsertAfterAct("Pooka", w_twindemontriplet);
         Characters.Instance.startGameActOrder = InsertAfterAct("Pooka", w_twindemon);
 
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_acolyte);
@@ -1154,8 +1257,8 @@ public class MainMod : MelonMod
 
         //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_illusionist);
         //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_shard);
-        //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_pilgrim);
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_invertDemon);
+        // Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_pilgrim);
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_tergiversator);
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_copycat);
         //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_devout);
@@ -1198,6 +1301,7 @@ public class MainMod : MelonMod
 
 
 
+        bool largerVillages = configCategory.GetEntry<bool>("EnableLargeVillages").Value;
 
 
 
@@ -1220,20 +1324,20 @@ public class MainMod : MelonMod
         legionCounter1.dTown = legionCounter1.town + 3;
         legionCounter1.dOuts = legionCounter1.outs + 1;
         CharactersCount legionCounter2 = new CharactersCount(6, 1, 1, 1, 3);
-        legionCounter1.dTown = legionCounter2.town + 3;
+        legionCounter2.dTown = legionCounter2.town + 3;
         legionCounter2.dOuts = legionCounter2.outs + 1;
         CharactersCount legionCounter3 = new CharactersCount(7, 2, 1, 1, 3);
-        legionCounter1.dTown = legionCounter3.town + 4;
+        legionCounter3.dTown = legionCounter3.town + 4;
         legionCounter3.dOuts = legionCounter3.outs + 1;
         CharactersCount legionCounter4 = new CharactersCount(8, 2, 1, 1, 4);
-        legionCounter1.dTown = legionCounter4.town + 4;
+        legionCounter4.dTown = legionCounter4.town + 4;
         legionCounter4.dOuts = legionCounter4.outs + 1;
         CharactersCount legionCounter5 = new CharactersCount(9, 2, 1, 1, 5);
-        legionCounter1.dTown = legionCounter5.town + 5;
-        legionCounter4.dOuts = legionCounter5.outs + 1;
+        legionCounter5.dTown = legionCounter5.town + 5;
+        legionCounter5.dOuts = legionCounter5.outs + 1;
         CharactersCount legionCounter6 = new CharactersCount(10, 2, 1, 1, 6);
-        legionCounter1.dTown = legionCounter6.town + 5;
-        legionCounter4.dOuts = legionCounter6.outs + 1;
+        legionCounter6.dTown = legionCounter6.town + 5;
+        legionCounter6.dOuts = legionCounter6.outs + 1;
         Il2CppSystem.Collections.Generic.List<CharactersCount> legionCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
         legionCounterList.Add(legionCounter1);
         legionCounterList.Add(legionCounter2);
@@ -1256,6 +1360,34 @@ public class MainMod : MelonMod
         legionCounterList.Add(legionCounter6);
         legionCounterList.Add(legionCounter6);
         legionCounterList.Add(legionCounter6);
+        if (largerVillages)
+        {
+            CharactersCount legionCounter7 = setCharacterCount(2, 1, 7, 1);
+            CharactersCount legionCounter8 = setCharacterCount(2, 2, 7, 1);
+            CharactersCount legionCounter9 = setCharacterCount(3, 1, 8, 1);
+            CharactersCount legionCounter10 = setCharacterCount(3, 1, 9, 1);
+            CharactersCount legionCounter11 = setCharacterCount(3, 2, 9, 1);
+            legionCounter7.dTown = legionCounter7.town + 5;
+            legionCounter8.dTown = legionCounter8.town + 5;
+            legionCounter9.dTown = legionCounter9.town + 5;
+            legionCounter10.dTown = legionCounter10.town + 5;
+            legionCounter11.dTown = legionCounter11.town + 5;
+            legionCounterList.Add(legionCounter7);
+            legionCounterList.Add(legionCounter7);
+            legionCounterList.Add(legionCounter7);
+            legionCounterList.Add(legionCounter7);
+            legionCounterList.Add(legionCounter7);
+            legionCounterList.Add(legionCounter8);
+            legionCounterList.Add(legionCounter8);
+            legionCounterList.Add(legionCounter8);
+            legionCounterList.Add(legionCounter8);
+            legionCounterList.Add(legionCounter9);
+            legionCounterList.Add(legionCounter9);
+            legionCounterList.Add(legionCounter9);
+            legionCounterList.Add(legionCounter10);
+            legionCounterList.Add(legionCounter10);
+            legionCounterList.Add(legionCounter11);
+        }
         legionScript.characterCounts = legionCounterList;
         legionScriptData.scriptInfo = legionScript;
 
@@ -1423,6 +1555,107 @@ public class MainMod : MelonMod
         caedoccidereCounterList.Add(caedoccidereCounter11); // 5/3/1/1
         caedoccidereCounterList.Add(caedoccidereCounter11); // 5/3/1/1
         caedoccidereCounterList.Add(caedoccidereCounter12); // 5/4/0/1
+
+        if (largerVillages)
+        {
+            CharactersCount caedoccidereCounter_Large_11a = setCharacterCount(7, 0, 3, 1);
+            CharactersCount caedoccidereCounter_Large_11b = setCharacterCount(7, 1, 2, 1);
+            CharactersCount caedoccidereCounter_Large_11c = setCharacterCount(7, 2, 1, 1);
+            CharactersCount caedoccidereCounter_Large_11d = setCharacterCount(6, 4, 0, 1);
+
+            CharactersCount caedoccidereCounter_Large_12a = setCharacterCount(8, 0, 3, 1);
+            CharactersCount caedoccidereCounter_Large_12b = setCharacterCount(7, 2, 2, 1);
+            CharactersCount caedoccidereCounter_Large_12c = setCharacterCount(7, 3, 1, 1);
+            CharactersCount caedoccidereCounter_Large_12d = setCharacterCount(6, 5, 0, 1);
+
+            CharactersCount caedoccidereCounter_Large_13a = setCharacterCount(9, 0, 3, 1);
+            CharactersCount caedoccidereCounter_Large_13b = setCharacterCount(9, 1, 2, 1);
+            CharactersCount caedoccidereCounter_Large_13c = setCharacterCount(8, 3, 1, 1);
+            CharactersCount caedoccidereCounter_Large_13d = setCharacterCount(7, 5, 0, 1);
+
+            CharactersCount caedoccidereCounter_Large_14a = setCharacterCount(9, 0, 4, 1);
+            CharactersCount caedoccidereCounter_Large_14b = setCharacterCount(9, 1, 3, 1);
+            CharactersCount caedoccidereCounter_Large_14c = setCharacterCount(9, 2, 2, 1);
+            CharactersCount caedoccidereCounter_Large_14d = setCharacterCount(8, 4, 1, 1);
+            CharactersCount caedoccidereCounter_Large_14e = setCharacterCount(7, 6, 0, 1); // "It is good day to be dead" -Heavyccidere
+
+            CharactersCount caedoccidereCounter_Large_15a = setCharacterCount(9, 0, 5, 1);
+            CharactersCount caedoccidereCounter_Large_15b = setCharacterCount(9, 1, 4, 1);
+            CharactersCount caedoccidereCounter_Large_15c = setCharacterCount(8, 3, 3, 1);
+            CharactersCount caedoccidereCounter_Large_15d = setCharacterCount(7, 5, 2, 1);
+            CharactersCount caedoccidereCounter_Large_15e = setCharacterCount(7, 6, 1, 1);
+            CharactersCount caedoccidereCounter_Large_15f = setCharacterCount(7, 7, 0, 1); // lmao
+
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_11a); // 7/0/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_11a); // 7/0/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_11b); // 7/1/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_11b); // 7/1/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_11b); // 7/1/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_11b); // 7/1/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_11c); // 7/2/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_11c); // 7/2/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_11c); // 7/2/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_11d); // 6/4/0/1
+
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_12a); // 8/0/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_12a); // 8/0/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_12a); // 8/0/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_12b); // 7/2/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_12b); // 7/2/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_12b); // 7/2/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_12b); // 7/2/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_12c); // 7/3/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_12c); // 7/3/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_12d); // 6/5/0/1
+
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_13a); // 9/0/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_13a); // 9/0/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_13b); // 9/1/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_13b); // 9/1/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_13b); // 9/1/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_13b); // 9/1/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_13c); // 8/3/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_13c); // 8/3/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_13d); // 7/5/0/1
+
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14a); // 9/0/4/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14a); // 9/0/4/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14b); // 9/1/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14b); // 9/1/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14b); // 9/1/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14b); // 9/1/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14c); // 9/2/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14c); // 9/2/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14c); // 9/2/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14c); // 9/2/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14c); // 9/2/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14d); // 8/4/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14d); // 8/4/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14d); // 8/4/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_14e); // 7/6/0/1
+
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15a); // 9/0/5/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15a); // 9/0/5/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15b); // 9/1/4/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15b); // 9/1/4/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15b); // 9/1/4/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15b); // 9/1/4/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15c); // 8/3/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15c); // 8/3/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15c); // 8/3/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15c); // 8/3/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15c); // 8/3/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15c); // 8/3/3/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15d); // 7/5/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15d); // 7/5/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15d); // 7/5/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15d); // 7/5/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15d); // 7/5/2/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15e); // 7/6/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15e); // 7/6/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15e); // 7/6/1/1
+            caedoccidereCounterList.Add(caedoccidereCounter_Large_15f); // 7/7/0/1
+        }
         caedoccidereScript.characterCounts = caedoccidereCounterList;
         caedoccidereScriptData.scriptInfo = caedoccidereScript;
 
@@ -1451,6 +1684,21 @@ public class MainMod : MelonMod
         praesectCounterList.Add(praesectCounter2);
         praesectCounterList.Add(praesectCounter3);
         praesectCounterList.Add(praesectCounter4);
+
+        if (largerVillages)
+        {
+            CharactersCount praesectCounter_Large_11 = setCharacterCount(6, 2, 2, 1);
+            CharactersCount praesectCounter_Large_12 = setCharacterCount(6, 3, 2, 1);
+            CharactersCount praesectCounter_Large_13 = setCharacterCount(7, 2, 3, 1);
+            CharactersCount praesectCounter_Large_14 = setCharacterCount(7, 3, 3, 1);
+            CharactersCount praesectCounter_Large_15 = setCharacterCount(8, 3, 3, 1);
+
+            praesectCounterList.Add(praesectCounter_Large_11);
+            praesectCounterList.Add(praesectCounter_Large_12);
+            praesectCounterList.Add(praesectCounter_Large_13);
+            praesectCounterList.Add(praesectCounter_Large_14);
+            praesectCounterList.Add(praesectCounter_Large_15);
+        }
         praesectScript.characterCounts = praesectCounterList;
         praesectScriptData.scriptInfo = praesectScript;
 
@@ -1482,6 +1730,20 @@ public class MainMod : MelonMod
         mendaverteCounterList.Add(mendaverteCounter3);
         mendaverteCounterList.Add(mendaverteCounter4);
         mendaverteCounterList.Add(mendaverteCounter5);
+
+        if (largerVillages)
+        {
+            CharactersCount mendaverteCounter_Large_11 = setCharacterCount(6, 2, 2, 1);
+            CharactersCount mendaverteCounter_Large_12 = setCharacterCount(6, 3, 2, 1);
+            CharactersCount mendaverteCounter_Large_13 = setCharacterCount(7, 2, 3, 1);
+            CharactersCount mendaverteCounter_Large_14 = setCharacterCount(7, 3, 3, 1);
+            CharactersCount mendaverteCounter_Large_15 = setCharacterCount(8, 2, 4, 1);
+            mendaverteCounterList.Add(mendaverteCounter_Large_11);
+            mendaverteCounterList.Add(mendaverteCounter_Large_12);
+            mendaverteCounterList.Add(mendaverteCounter_Large_13);
+            mendaverteCounterList.Add(mendaverteCounter_Large_14);
+            mendaverteCounterList.Add(mendaverteCounter_Large_15);
+        }
         mendaverteScript.characterCounts = mendaverteCounterList;
         mendaverteScriptData.scriptInfo = mendaverteScript;
 
@@ -1514,6 +1776,20 @@ public class MainMod : MelonMod
         venelumCounterList.Add(venelumCounter3);
         venelumCounterList.Add(venelumCounter4);
         venelumCounterList.Add(venelumCounter5);
+
+        if (largerVillages)
+        {
+            CharactersCount venelumCounter_Large_11 = setCharacterCount(6, 2, 2, 1);
+            CharactersCount venelumCounter_Large_12 = setCharacterCount(6, 3, 2, 1);
+            CharactersCount venelumCounter_Large_13 = setCharacterCount(7, 2, 3, 1);
+            CharactersCount venelumCounter_Large_14 = setCharacterCount(7, 3, 3, 1);
+            CharactersCount venelumCounter_Large_15 = setCharacterCount(8, 2, 4, 1);
+            venelumCounterList.Add(venelumCounter_Large_11);
+            venelumCounterList.Add(venelumCounter_Large_12);
+            venelumCounterList.Add(venelumCounter_Large_13);
+            venelumCounterList.Add(venelumCounter_Large_14);
+            venelumCounterList.Add(venelumCounter_Large_15);
+        }
         venelumScript.characterCounts = venelumCounterList;
         venelumScriptData.scriptInfo = venelumScript;
 
@@ -1731,7 +2007,7 @@ public class MainMod : MelonMod
         minosCounterList.Add(minosCounter18); // 5/1/3/1
         minosCounterList.Add(minosCounter18); // 5/1/3/1
         minosCounterList.Add(minosCounter18); // 5/1/3/1
-
+                                              // 45 jesus fuck
 
 
         /*
@@ -1757,6 +2033,61 @@ public class MainMod : MelonMod
         */
 
 
+        if (largerVillages)
+        {
+            CharactersCount minosCounter_Large_11a = setCharacterCount(6, 1, 3, 1);
+            CharactersCount minosCounter_Large_11b = setCharacterCount(6, 2, 2, 1);
+            CharactersCount minosCounter_Large_11c = setCharacterCount(6, 3, 1, 1);
+            CharactersCount minosCounter_Large_12a = setCharacterCount(6, 2, 3, 1);
+            CharactersCount minosCounter_Large_12b = setCharacterCount(6, 3, 2, 1);
+            CharactersCount minosCounter_Large_12c = setCharacterCount(6, 4, 1, 1);
+            CharactersCount minosCounter_Large_13a = setCharacterCount(7, 1, 4, 1);
+            CharactersCount minosCounter_Large_13b = setCharacterCount(7, 2, 3, 1);
+            CharactersCount minosCounter_Large_13c = setCharacterCount(7, 3, 2, 1);
+            CharactersCount minosCounter_Large_14a = setCharacterCount(7, 2, 4, 1);
+            CharactersCount minosCounter_Large_14b = setCharacterCount(7, 3, 3, 1);
+            CharactersCount minosCounter_Large_14c = setCharacterCount(7, 4, 2, 1);
+            CharactersCount minosCounter_Large_15a = setCharacterCount(8, 3, 3, 1);
+            CharactersCount minosCounter_Large_15b = setCharacterCount(8, 2, 4, 1);
+            CharactersCount minosCounter_Large_15c = setCharacterCount(8, 1, 5, 1); // Yikes
+
+            for (int i = 0; i < 5; i++)
+            {
+                minosCounterList.Add(minosCounter_Large_11a);
+                minosCounterList.Add(minosCounter_Large_11b);
+                minosCounterList.Add(minosCounter_Large_11c);
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                minosCounterList.Add(minosCounter_Large_12a);
+                minosCounterList.Add(minosCounter_Large_12b);
+                minosCounterList.Add(minosCounter_Large_12c);
+            }
+
+            for (int i = 0; i < 8; i++)
+            {
+                minosCounterList.Add(minosCounter_Large_13a);
+                minosCounterList.Add(minosCounter_Large_13b);
+                minosCounterList.Add(minosCounter_Large_13c);
+            }
+
+            for (int i = 0; i < 11; i++)
+            {
+                minosCounterList.Add(minosCounter_Large_14a);
+                minosCounterList.Add(minosCounter_Large_14b);
+                minosCounterList.Add(minosCounter_Large_14c);
+            }
+
+            for (int i = 0; i < 15; i++)
+            {
+                minosCounterList.Add(minosCounter_Large_15a);
+                minosCounterList.Add(minosCounter_Large_15b);
+                minosCounterList.Add(minosCounter_Large_15c);
+            }
+        }
+
+
         minosScript.characterCounts = minosCounterList;
         minosScriptData.scriptInfo = minosScript;
 
@@ -1764,45 +2095,101 @@ public class MainMod : MelonMod
 
 
 
-        
+
         CustomScriptData pandemoniumScriptData = new CustomScriptData();
         pandemoniumScriptData.name = "Pandemonium_1";
         ScriptInfo pandemoniumScript = new ScriptInfo();
         Il2CppSystem.Collections.Generic.List<CharacterData> pandemoniumList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+        pandemoniumList.Add(w_pandemonium);
         pandemoniumList.Add(w_pandemonium);
         pandemoniumScript.mustInclude = pandemoniumList;
         pandemoniumScript.startingDemons = pandemoniumList;
         pandemoniumScript.startingTownsfolks = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingTownsfolks;
         pandemoniumScript.startingOutsiders = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingOutsiders;
         pandemoniumScript.startingMinions = ProjectContext.Instance.gameData.advancedAscension.possibleScriptsData[0].scriptInfo.startingMinions;
-        CharactersCount pandemoniumCounter01 = setCharacterCount(7, 1, 2, 1); // 11
-        CharactersCount pandemoniumCounter02 = setCharacterCount(7, 2, 2, 1); // 12
-        CharactersCount pandemoniumCounter03 = setCharacterCount(9, 0, 3, 1); // 13
-        CharactersCount pandemoniumCounter04 = setCharacterCount(9, 1, 3, 1); // 14
-        CharactersCount pandemoniumCounter05 = setCharacterCount(9, 2, 3, 1); // 15
+        CharactersCount pandemoniumCounter04 = setCharacterCount(2, 1, 0, 1);
+        CharactersCount pandemoniumCounter05 = setCharacterCount(2, 1, 1, 1);
+        CharactersCount pandemoniumCounter06 = setCharacterCount(3, 1, 1, 1);
+        CharactersCount pandemoniumCounter07 = setCharacterCount(4, 1, 1, 1);
+        CharactersCount pandemoniumCounter08 = setCharacterCount(5, 1, 1, 1);
+        CharactersCount pandemoniumCounter09 = setCharacterCount(5, 2, 1, 1);
+        CharactersCount pandemoniumCounter10 = setCharacterCount(7, 0, 2, 1);
+        CharactersCount pandemoniumCounter11 = setCharacterCount(7, 1, 2, 1);
+        CharactersCount pandemoniumCounter12 = setCharacterCount(7, 2, 2, 1);
+        CharactersCount pandemoniumCounter13 = setCharacterCount(9, 0, 3, 1);
+        CharactersCount pandemoniumCounter14 = setCharacterCount(9, 1, 3, 1);
+        CharactersCount pandemoniumCounter15 = setCharacterCount(9, 2, 3, 1);
+        CharactersCount pandemoniumCounter16 = setCharacterCount(10, 1, 4, 1);
+        CharactersCount pandemoniumCounter17 = setCharacterCount(10, 2, 4, 1);
+        CharactersCount pandemoniumCounter18 = setCharacterCount(10, 3, 4, 1);
+        CharactersCount pandemoniumCounter19 = setCharacterCount(10, 4, 4, 1);
+        CharactersCount pandemoniumCounter20 = setCharacterCountByVillageSize(20, 2, 5, 2);
+        CharactersCount pandemoniumCounter21 = setCharacterCountByVillageSize(21, 3, 5, 2);
+        CharactersCount pandemoniumCounter22 = setCharacterCountByVillageSize(22, 4, 5, 2);
+        CharactersCount pandemoniumCounter23 = setCharacterCountByVillageSize(23, 2, 6, 2);
+        CharactersCount pandemoniumCounter24 = setCharacterCountByVillageSize(24, 3, 6, 2);
+        CharactersCount pandemoniumCounter25 = setCharacterCountByVillageSize(25, 4, 6, 2);
+        CharactersCount pandemoniumCounter26 = setCharacterCountByVillageSize(26, 5, 6, 2);
+        CharactersCount pandemoniumCounter27 = setCharacterCountByVillageSize(27, 3, 7, 2);
+        CharactersCount pandemoniumCounter28 = setCharacterCountByVillageSize(28, 4, 7, 2);
+        CharactersCount pandemoniumCounter29 = setCharacterCountByVillageSize(29, 5, 7, 2);
+        CharactersCount pandemoniumCounter30 = setCharacterCountByVillageSize(30, 6, 7, 2);
         Il2CppSystem.Collections.Generic.List<CharactersCount> pandemoniumCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
 
 
-        pandemoniumCounterList.Add(pandemoniumCounter01);
-        pandemoniumCounterList.Add(pandemoniumCounter02);
-        pandemoniumCounterList.Add(pandemoniumCounter02);
-        pandemoniumCounterList.Add(pandemoniumCounter03);
-        pandemoniumCounterList.Add(pandemoniumCounter03);
-        pandemoniumCounterList.Add(pandemoniumCounter03);
-        pandemoniumCounterList.Add(pandemoniumCounter04);
-        pandemoniumCounterList.Add(pandemoniumCounter04);
-        pandemoniumCounterList.Add(pandemoniumCounter04);
-        pandemoniumCounterList.Add(pandemoniumCounter04);
-        pandemoniumCounterList.Add(pandemoniumCounter05);
-        pandemoniumCounterList.Add(pandemoniumCounter05);
-        pandemoniumCounterList.Add(pandemoniumCounter05);
-        pandemoniumCounterList.Add(pandemoniumCounter05);
-        pandemoniumCounterList.Add(pandemoniumCounter05);
+        int magMinSize = configCategory.GetEntry<int>("Magnere_MinVillageSize").Value;
+        int magMaxSize = configCategory.GetEntry<int>("Magnere_MaxVillageSize").Value;
+        if (magMinSize <= 4) for (int i = 0; i < 4; i++) pandemoniumCounterList.Add(pandemoniumCounter04);
+        if (magMaxSize >= 5 && magMinSize <= 5) for (int i = 0; i < 5; i++) pandemoniumCounterList.Add(pandemoniumCounter05);
+        if (magMaxSize >= 6 && magMinSize <= 6) for (int i = 0; i < 6; i++) pandemoniumCounterList.Add(pandemoniumCounter06);
+        if (magMaxSize >= 7 && magMinSize <= 7) for (int i = 0; i < 7; i++) pandemoniumCounterList.Add(pandemoniumCounter07);
+        if (magMaxSize >= 8 && magMinSize <= 8) for (int i = 0; i < 8; i++) pandemoniumCounterList.Add(pandemoniumCounter08);
+        if (magMaxSize >= 9 && magMinSize <= 9) for (int i = 0; i < 9; i++) pandemoniumCounterList.Add(pandemoniumCounter09);
+        if (magMaxSize >= 10 && magMinSize <= 10) for (int i = 0; i < 10; i++) pandemoniumCounterList.Add(pandemoniumCounter10);
+        if (magMaxSize >= 11 && magMinSize <= 11) for (int i = 0; i < 11; i++) pandemoniumCounterList.Add(pandemoniumCounter11);
+        if (magMaxSize >= 12 && magMinSize <= 12) for (int i = 0; i < 12; i++) pandemoniumCounterList.Add(pandemoniumCounter12);
+        if (magMaxSize >= 13 && magMinSize <= 13) for (int i = 0; i < 13; i++) pandemoniumCounterList.Add(pandemoniumCounter13);
+        if (magMaxSize >= 14 && magMinSize <= 14) for (int i = 0; i < 14; i++) pandemoniumCounterList.Add(pandemoniumCounter14);
+        if (magMaxSize >= 15 && magMinSize <= 15) for (int i = 0; i < 15; i++) pandemoniumCounterList.Add(pandemoniumCounter15);
+        if (magMaxSize >= 16 && magMinSize <= 16) for (int i = 0; i < 16; i++) pandemoniumCounterList.Add(pandemoniumCounter16);
+        if (magMaxSize >= 17 && magMinSize <= 17) for (int i = 0; i < 17; i++) pandemoniumCounterList.Add(pandemoniumCounter17);
+        if (magMaxSize >= 18 && magMinSize <= 18) for (int i = 0; i < 18; i++) pandemoniumCounterList.Add(pandemoniumCounter18);
+        if (magMaxSize >= 19 && magMinSize <= 19) for (int i = 0; i < 19; i++) pandemoniumCounterList.Add(pandemoniumCounter19);
+        if (magMaxSize >= 20 && magMinSize <= 20) for (int i = 0; i < 20; i++) pandemoniumCounterList.Add(pandemoniumCounter20);
+        if (magMaxSize >= 21 && magMinSize <= 21) for (int i = 0; i < 21; i++) pandemoniumCounterList.Add(pandemoniumCounter21);
+        if (magMaxSize >= 22 && magMinSize <= 22) for (int i = 0; i < 22; i++) pandemoniumCounterList.Add(pandemoniumCounter22);
+        if (magMaxSize >= 23 && magMinSize <= 23) for (int i = 0; i < 23; i++) pandemoniumCounterList.Add(pandemoniumCounter23);
+        if (magMaxSize >= 24 && magMinSize <= 24) for (int i = 0; i < 24; i++) pandemoniumCounterList.Add(pandemoniumCounter24);
+        if (magMaxSize >= 25 && magMinSize <= 25) for (int i = 0; i < 25; i++) pandemoniumCounterList.Add(pandemoniumCounter25);
+        if (magMaxSize >= 26 && magMinSize <= 26) for (int i = 0; i < 26; i++) pandemoniumCounterList.Add(pandemoniumCounter26);
+        if (magMaxSize >= 27 && magMinSize <= 27) for (int i = 0; i < 27; i++) pandemoniumCounterList.Add(pandemoniumCounter27);
+        if (magMaxSize >= 28 && magMinSize <= 28) for (int i = 0; i < 28; i++) pandemoniumCounterList.Add(pandemoniumCounter28);
+        if (magMaxSize >= 29 && magMinSize <= 29) for (int i = 0; i < 29; i++) pandemoniumCounterList.Add(pandemoniumCounter29);
+        if (magMaxSize >= 30) for (int i = 0; i < 30; i++) pandemoniumCounterList.Add(pandemoniumCounter30);
+
+        if (pandemoniumCounterList.Count == 0)
+        {
+            pandemoniumCounterList.Add(pandemoniumCounter11);
+            pandemoniumCounterList.Add(pandemoniumCounter12);
+            pandemoniumCounterList.Add(pandemoniumCounter12);
+            pandemoniumCounterList.Add(pandemoniumCounter13);
+            pandemoniumCounterList.Add(pandemoniumCounter13);
+            pandemoniumCounterList.Add(pandemoniumCounter13);
+            pandemoniumCounterList.Add(pandemoniumCounter14);
+            pandemoniumCounterList.Add(pandemoniumCounter14);
+            pandemoniumCounterList.Add(pandemoniumCounter14);
+            pandemoniumCounterList.Add(pandemoniumCounter14);
+            pandemoniumCounterList.Add(pandemoniumCounter15);
+            pandemoniumCounterList.Add(pandemoniumCounter15);
+            pandemoniumCounterList.Add(pandemoniumCounter15);
+            pandemoniumCounterList.Add(pandemoniumCounter15);
+            pandemoniumCounterList.Add(pandemoniumCounter15);
+        }
 
 
         pandemoniumScript.characterCounts = pandemoniumCounterList;
         pandemoniumScriptData.scriptInfo = pandemoniumScript;
-        
+
 
 
 
@@ -1884,6 +2271,20 @@ public class MainMod : MelonMod
         {
             leviathanCounterList.Add(leviathanCounter04);
             leviathanCounterList.Add(leviathanCounter05);
+        }
+
+        if (largerVillages)
+        {
+            CharactersCount leviathanCounter_Large_11 = setCharacterCount(6, 2, 2, 1);
+            CharactersCount leviathanCounter_Large_12 = setCharacterCount(6, 3, 2, 1);
+            CharactersCount leviathanCounter_Large_13 = setCharacterCount(7, 2, 3, 1);
+            CharactersCount leviathanCounter_Large_14 = setCharacterCount(7, 3, 3, 1);
+            CharactersCount leviathanCounter_Large_15 = setCharacterCount(8, 2, 4, 1);
+            leviathanCounterList.Add(leviathanCounter_Large_11);
+            leviathanCounterList.Add(leviathanCounter_Large_12);
+            leviathanCounterList.Add(leviathanCounter_Large_13);
+            leviathanCounterList.Add(leviathanCounter_Large_14);
+            leviathanCounterList.Add(leviathanCounter_Large_15);
         }
 
 
@@ -1981,6 +2382,57 @@ public class MainMod : MelonMod
         twinDemonCounterList = addCharacterCount(twinDemonCounter_10_5122, twinDemonCounterList, 10); // 40%
         twinDemonCounterList = addCharacterCount(twinDemonCounter_10_5113, twinDemonCounterList, 5);  // 20%
 
+        if (largerVillages)
+        {
+            CharactersCount twinDemonCounter_11_4322 = setCharacterCount(4, 3, 2, 2);
+            CharactersCount twinDemonCounter_11_4232 = setCharacterCount(4, 2, 3, 2);
+            CharactersCount twinDemonCounter_11_4223 = setCharacterCount(4, 2, 2, 3);
+
+            CharactersCount twinDemonCounter_12_5232 = setCharacterCount(5, 2, 3, 2);
+            CharactersCount twinDemonCounter_12_6132 = setCharacterCount(6, 1, 3, 2);
+            CharactersCount twinDemonCounter_12_5223 = setCharacterCount(5, 2, 2, 3);
+            CharactersCount twinDemonCounter_12_5133 = setCharacterCount(5, 1, 3, 3);
+
+            CharactersCount twinDemonCounter_13_5332 = setCharacterCount(5, 3, 3, 2);
+            CharactersCount twinDemonCounter_13_5242 = setCharacterCount(5, 2, 4, 2);
+            CharactersCount twinDemonCounter_13_5233 = setCharacterCount(5, 2, 3, 3);
+            CharactersCount twinDemonCounter_13_5323 = setCharacterCount(5, 3, 2, 3);
+
+            CharactersCount twinDemonCounter_14_6242 = setCharacterCount(6, 2, 4, 2);
+            CharactersCount twinDemonCounter_14_7142 = setCharacterCount(7, 1, 4, 2);
+            CharactersCount twinDemonCounter_14_7133 = setCharacterCount(7, 1, 3, 3);
+            CharactersCount twinDemonCounter_14_6233 = setCharacterCount(6, 2, 3, 3);
+
+            CharactersCount twinDemonCounter_15_6342 = setCharacterCount(6, 3, 4, 2);
+            CharactersCount twinDemonCounter_15_6252 = setCharacterCount(6, 2, 5, 2);
+            CharactersCount twinDemonCounter_15_6243 = setCharacterCount(6, 2, 4, 3);
+            CharactersCount twinDemonCounter_15_6333 = setCharacterCount(6, 3, 3, 3);
+
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_11_4322, twinDemonCounterList, 1);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_11_4232, twinDemonCounterList, 1);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_11_4223, twinDemonCounterList, 3);
+
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_12_5232, twinDemonCounterList, 3);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_12_6132, twinDemonCounterList, 2);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_12_5223, twinDemonCounterList, 3);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_12_5133, twinDemonCounterList, 2);
+
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_13_5332, twinDemonCounterList, 4);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_13_5242, twinDemonCounterList, 3);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_13_5233, twinDemonCounterList, 4);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_13_5323, twinDemonCounterList, 4);
+
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_14_6242, twinDemonCounterList, 5);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_14_7142, twinDemonCounterList, 3);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_14_7133, twinDemonCounterList, 5);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_14_6233, twinDemonCounterList, 7);
+
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_15_6342, twinDemonCounterList, 6);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_15_6252, twinDemonCounterList, 3);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_15_6243, twinDemonCounterList, 7);
+            twinDemonCounterList = addCharacterCount(twinDemonCounter_15_6333, twinDemonCounterList, 9);
+        }
+
         twinDemonScript.characterCounts = twinDemonCounterList;
         twinDemonScriptData.scriptInfo = twinDemonScript;
 
@@ -2015,6 +2467,26 @@ public class MainMod : MelonMod
         irisCounterList.Add(irisCounter05);
         irisCounterList.Add(irisCounter06);
         irisCounterList.Add(irisCounter06);
+
+        if (largerVillages)
+        {
+            CharactersCount irisCounter_11 = setCharacterCount(6, 2, 2, 1);
+            CharactersCount irisCounter_12 = setCharacterCount(6, 3, 2, 1);
+            CharactersCount irisCounter_13 = setCharacterCount(7, 2, 3, 1);
+            CharactersCount irisCounter_14 = setCharacterCount(7, 3, 3, 1);
+            CharactersCount irisCounter_15 = setCharacterCount(8, 2, 4, 1);
+
+            irisCounterList.Add(irisCounter_11);
+            irisCounterList.Add(irisCounter_11);
+            irisCounterList.Add(irisCounter_12);
+            irisCounterList.Add(irisCounter_12);
+            irisCounterList.Add(irisCounter_13);
+            irisCounterList.Add(irisCounter_13);
+            irisCounterList.Add(irisCounter_14);
+            irisCounterList.Add(irisCounter_14);
+            irisCounterList.Add(irisCounter_15);
+            irisCounterList.Add(irisCounter_15);
+        }
 
 
         irisScript.characterCounts = irisCounterList;
@@ -2085,13 +2557,59 @@ public class MainMod : MelonMod
         carniCounterList.Add(carniCounter08);
         carniCounterList.Add(carniCounter08);
 
-        // 11 characters
-        carniCounterList.Add(carniCounter09);
-        carniCounterList.Add(carniCounter10);
-        carniCounterList.Add(carniCounter10);
-        carniCounterList.Add(carniCounter11);
-        carniCounterList.Add(carniCounter11);
-        carniCounterList.Add(carniCounter12);
+        if (largerVillages)
+        {
+
+            // 11 characters
+            carniCounterList.Add(carniCounter09);
+            carniCounterList.Add(carniCounter10);
+            carniCounterList.Add(carniCounter10);
+            carniCounterList.Add(carniCounter11);
+            carniCounterList.Add(carniCounter11);
+            carniCounterList.Add(carniCounter12);
+
+
+
+            CharactersCount carniCounter_Large_11a = setCharacterCount(6, 1, 3, 1);
+            CharactersCount carniCounter_Large_11b = setCharacterCount(6, 2, 2, 1);
+            CharactersCount carniCounter_Large_11c = setCharacterCount(6, 3, 1, 1);
+
+            CharactersCount carniCounter_Large_12a = setCharacterCount(6, 2, 3, 1);
+            CharactersCount carniCounter_Large_12b = setCharacterCount(6, 3, 2, 1);
+            CharactersCount carniCounter_Large_12c = setCharacterCount(6, 4, 1, 1);
+
+            CharactersCount carniCounter_Large_13a = setCharacterCount(7, 1, 4, 1);
+            CharactersCount carniCounter_Large_13b = setCharacterCount(7, 2, 3, 1);
+            CharactersCount carniCounter_Large_13c = setCharacterCount(7, 3, 2, 1);
+
+            CharactersCount carniCounter_Large_14a = setCharacterCount(7, 2, 4, 1);
+            CharactersCount carniCounter_Large_14b = setCharacterCount(7, 3, 3, 1);
+            CharactersCount carniCounter_Large_14c = setCharacterCount(7, 4, 2, 1);
+
+            CharactersCount carniCounter_Large_15a = setCharacterCount(8, 1, 5, 1); // Yikes x2
+            CharactersCount carniCounter_Large_15b = setCharacterCount(8, 2, 4, 1);
+            CharactersCount carniCounter_Large_15c = setCharacterCount(8, 3, 3, 1);
+
+            carniCounterList = addCharacterCount(carniCounter_Large_11a, carniCounterList, 1);
+            carniCounterList = addCharacterCount(carniCounter_Large_11b, carniCounterList, 1);
+            carniCounterList = addCharacterCount(carniCounter_Large_11c, carniCounterList, 1);
+
+            carniCounterList = addCharacterCount(carniCounter_Large_12a, carniCounterList, 2);
+            carniCounterList = addCharacterCount(carniCounter_Large_12b, carniCounterList, 6);
+            carniCounterList = addCharacterCount(carniCounter_Large_12c, carniCounterList, 2);
+
+            carniCounterList = addCharacterCount(carniCounter_Large_13a, carniCounterList, 2);
+            carniCounterList = addCharacterCount(carniCounter_Large_13b, carniCounterList, 7);
+            carniCounterList = addCharacterCount(carniCounter_Large_13c, carniCounterList, 3);
+
+            carniCounterList = addCharacterCount(carniCounter_Large_14a, carniCounterList, 2);
+            carniCounterList = addCharacterCount(carniCounter_Large_14b, carniCounterList, 8);
+            carniCounterList = addCharacterCount(carniCounter_Large_14c, carniCounterList, 3);
+
+            carniCounterList = addCharacterCount(carniCounter_Large_15a, carniCounterList, 2);
+            carniCounterList = addCharacterCount(carniCounter_Large_15b, carniCounterList, 6);
+            carniCounterList = addCharacterCount(carniCounter_Large_15c, carniCounterList, 4);
+        }
 
 
         carniScript.characterCounts = carniCounterList;
@@ -2248,7 +2766,9 @@ public class MainMod : MelonMod
             addRole(script.startingTownsfolks, w_arithmetician);
             // addRole(script.startingTownsfolks, w_balloonist); // Doesn't work
             addRole(script.startingTownsfolks, w_bloodseer);
+            // addRole(script.startingTownsfolks, w_bountyhunter);
             addRole(script.startingTownsfolks, w_cardshark);
+            addRole(script.startingTownsfolks, w_cartomancer);
             addRole(script.startingTownsfolks, w_chiromancer);
             addRole(script.startingTownsfolks, w_clairvoyant);
             addRole(script.startingTownsfolks, w_copycat);
@@ -2264,17 +2784,19 @@ public class MainMod : MelonMod
             addRole(script.startingTownsfolks, w_jewelsmith);
             addRole(script.startingTownsfolks, w_knave);
             addRole(script.startingTownsfolks, w_lamb);
+            addRole(script.startingTownsfolks, w_matchmaker);
             addRole(script.startingTownsfolks, w_paperboy);
             addRole(script.startingTownsfolks, w_performer);
             addRole(script.startingTownsfolks, w_politician);
             addRole(script.startingTownsfolks, w_prince);
             addRole(script.startingTownsfolks, w_ranger);
-            // addRole(script.startingTownsfolks, w_saint);
+            addRole(script.startingTownsfolks, w_saint);
             addRole(script.startingTownsfolks, w_scavenger);
             addRole(script.startingTownsfolks, w_sentinel);
             addRole(script.startingTownsfolks, w_sheriff);
             addRole(script.startingTownsfolks, w_spy);
             //addRole(script.startingTownsfolks, w_slayerRework);
+            addRole(script.startingTownsfolks, w_visionary);
             addRole(script.startingTownsfolks, w_warden);
             addRole(script.startingOutsiders, w_chatterbox);
             addRole(script.startingOutsiders, w_echo);
@@ -2285,6 +2807,7 @@ public class MainMod : MelonMod
             //addRoleIfNotJinxed(script.startingOutsiders, w_pilgrim, pilgrimJinxes, script.startingDemons);
             addRole(script.startingOutsiders, w_renegade);
             addRole(script.startingOutsiders, w_revolutionary);
+            addRole(script.startingOutsiders, w_switchblade);
             addRole(script.startingOutsiders, w_tergiversator);
             addRole(script.startingMinions, w_cryptid);
             addRole(script.startingMinions, w_heretic);
@@ -2297,8 +2820,9 @@ public class MainMod : MelonMod
             addRoleIfNotJinxed(script.startingMinions, w_undying, undyingJinxes, script.startingDemons);
             for (int i = 0; i < 100; i++)
             {
-                //addRoleEvenIfDupe(script.startingTownsfolks, w_knave);
-                //addRoleEvenIfDupe(script.startingOutsiders, w_echo);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_cartomancer);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_visionary);
+                //addRoleEvenIfDupe(script.startingOutsiders, w_switchblade);
                 //addRoleEvenIfDupe(script.startingMinions, w_cryptid);
                 //addRoleEvenIfDupe(script.startingMinions, w_snakeCharmer);
             }
@@ -2310,49 +2834,6 @@ public class MainMod : MelonMod
                 //}
             }
         }
-        /*MelonLogger.Msg($"Trying to jinx roles...");
-        foreach (CustomScriptData scriptData in advancedAscension.possibleScriptsData)
-        {
-            Il2CppSystem.Collections.Generic.List<string> JinxList = new Il2CppSystem.Collections.Generic.List<string>();
-            JinxList.Add("Bishop_58855542");
-            JinxList.Add("Empress_13782227");
-            JinxList.Add("Oracle_07039445");
-            JinxList.Add("Prince_WING");
-            JinxList.Add("Doppleganger_52694042");
-            JinxList.Add("Baron_04539999");
-            JinxList.Add("Mezepheles_09511163");
-            JinxList.Add("Shaman_26945607");
-            JinxList.Add("Swarm_Good_WING");
-            JinxList.Add("Toxomancer_WING");
-            if (scriptData.name.ToString() == "Legion_1")
-            {
-                for (int i = 0; i < legionScript.startingTownsfolks.Count; i++)
-                {
-                    if (JinxList.Contains(legionScript.startingTownsfolks[i].characterId))
-                    {
-                        i -= 1;
-                        legionScript.startingTownsfolks.RemoveAt(i);
-                    }
-                }
-                for (int i = 0; i < legionScript.startingOutsiders.Count; i++)
-                {
-                    if (JinxList.Contains(legionScript.startingOutsiders[i].characterId))
-                    {
-                        i -= 1;
-                        legionScript.startingOutsiders.RemoveAt(i);
-                    }
-                }
-                for (int i = 0; i < legionScript.startingMinions.Count; i++)
-                {
-                    if (JinxList.Contains(legionScript.startingMinions[i].characterId))
-                    {
-                        i -= 1;
-                        legionScript.startingMinions.RemoveAt(i);
-                    }
-                }
-            }
-        }
-        */
 
 
         for (int j = 0; j < advancedAscension.possibleScriptsData.Length; j++)
@@ -2360,7 +2841,156 @@ public class MainMod : MelonMod
             Debug.LogWarning(advancedAscension.possibleScriptsData[j].name);
             MelonLogger.Msg($"Script: {advancedAscension.possibleScriptsData[j].name.ToString()}");
         }
-        //w_addDemonRole(advancedAscension, w_switchDemon, "Baa_Difficult", "Furtamu_1", furtamuScriptData);
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+
+
+        /*
+        sharedScripts.DebugMessage("Trying to do jinx list");
+        Il2CppSystem.Collections.Generic.List<string> jinxedScripts_TooFewVillagers = new Il2CppSystem.Collections.Generic.List<string>(); // Scripts that don't tend to have enough Villagers for some roles to work.
+        Il2CppSystem.Collections.Generic.List<string> jinxedRoles_TooFewVillagers = new Il2CppSystem.Collections.Generic.List<string>(); // Roles that're jinxed with the above scripts, by ID.
+        Il2CppSystem.Collections.Generic.List<string> jinxedScripts_TooMuchPoison = new Il2CppSystem.Collections.Generic.List<string>(); // Scripts that tend to have an obnoxious amount of Corruption, so a lot of Corruption characters are redundant.
+        Il2CppSystem.Collections.Generic.List<string> jinxedRoles_TooMuchPoison = new Il2CppSystem.Collections.Generic.List<string>(); // Roles that're jinxed with the above scripts, by ID.
+        jinxedScripts_TooFewVillagers.Add("Dominion_Small");
+        jinxedScripts_TooFewVillagers.Add("Dominion_Large");
+        jinxedScripts_TooFewVillagers.Add("Legion_1");
+        jinxedRoles_TooFewVillagers.Add("Bishop_58855542"); // Will frequently just stay silent, especially when Lying
+        jinxedRoles_TooFewVillagers.Add("Empress_13782227"); // Will frequently just stay silent, especially when Lying
+        jinxedRoles_TooFewVillagers.Add("Chatterbox_WING"); // Your info is already bad enough, it doesn't need to be worse.
+        jinxedRoles_TooFewVillagers.Add("Marionette_WING"); // Marionette's not really fun in these kinds of villages.
+        jinxedRoles_TooFewVillagers.Add("Mutant_WING"); // Same goes for Mutant.
+        jinxedRoles_TooFewVillagers.Add("Switchblade_WING"); // There is every possibility that the Switchblade kills the last remaining Good character, triggering a loss.
+        jinxedRoles_TooFewVillagers.Add("Wretch_80988916"); // Wretch kind of defeats Agmeres' win condition on its own.
+        jinxedRoles_TooFewVillagers.Add("Baron_04539999"); // Already few enough Villagers, we don't need less.
+        jinxedRoles_TooFewVillagers.Add("Mezepheles_09511163"); // Already few enough Villagers, we don't need a Puppet.
+        // jinxedRoles_TooFewVillagers.Add("Poisoner_64796285"); // Poisoner is a special case, he only poisons his neighbours. I'm *okay* with his presence.
+        jinxedRoles_TooFewVillagers.Add("Cryptid_WING"); // Will probably bring in jinxed Minions.
+        jinxedRoles_TooFewVillagers.Add("Ritualist_WING"); // You just do not have enough health to reasonably tank a Ritualist.
+        jinxedRoles_TooFewVillagers.Add("Saboteur_WING"); // Your info is already bad enough, it doesn't need to be worse.
+        jinxedRoles_TooFewVillagers.Add("Snake Charmer_WING"); // Already brutal enough without SC.
+        jinxedRoles_TooFewVillagers.Add("Swarm_Good_WING"); // "Hi I'd like all my Villagers replaced with Swarm please"
+        // I'm gonna stop now, we only barely have enough Minions for a full-sized Agmeres village (Witch, Minion, Twinion, Poisoner, Shaman, Cryptid, Heretic, Professional)
+
+        jinxedScripts_TooMuchPoison.Add("Mendaverte_1"); // All the Villagers are already Corrupted, further Corruption is pointless. I'm also hoping I can disable Alch this way.
+        jinxedRoles_TooMuchPoison.Add("Alchemist_94446803"); // If I'm lucky, this will stop characters from Disguising as the Alchemist and curing everything. Hopefully.
+        jinxedRoles_TooMuchPoison.Add("Chatterbox_WING"); // Pointless
+        jinxedRoles_TooMuchPoison.Add("Plague Doctor_49312486"); // Special case on this one, since he can actually *help*.
+        jinxedRoles_TooMuchPoison.Add("Poisoner_64796285"); // Pointless
+        jinxedRoles_TooMuchPoison.Add("Saboteur_WING"); // Pointless
+
+
+
+        Il2CppSystem.Collections.Generic.List<string> specificJinxes_Mendaverte = new Il2CppSystem.Collections.Generic.List<string>(); // Roles that're jinxed with Mendaverte specifically.
+        specificJinxes_Mendaverte.Add("Lycanthrope_16077432"); // I don't know how to fix this and I don't care to fix it if I can help it.
+        specificJinxes_Mendaverte.Add("Mezepheles_09511163"); // Puppet's kinda pointless ngl
+        specificJinxes_Mendaverte.Add("Turncoat_WING"); // Pointless
+        for (int j = 0; j < advancedAscension.possibleScriptsData.Length; j++)
+        {
+            if (jinxedScripts_TooFewVillagers.Contains(advancedAscension.possibleScriptsData[j].name))
+            {
+                sharedScripts.DebugMessage($"Found jinxed script: {advancedAscension.possibleScriptsData[j].name}. Reason: Too few Villagers");
+                for (int k = 0; k < advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks.Count; k++)
+                {
+                    if (jinxedRoles_TooFewVillagers.Contains(advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks[k].characterId))
+                    {
+                        sharedScripts.DebugMessage($"Removing found jinxed Villager: {advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks[k].characterName}");
+                        advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks.RemoveAt(k);
+                        k--;
+                    }
+                }
+                sharedScripts.DebugMessage($"Finished jinxing Villagers. New list: {sharedScripts.MentionEveryRoleInList(advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks, "")}");
+                for (int k = 0; k < advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders.Count; k++)
+                {
+                    if (jinxedRoles_TooFewVillagers.Contains(advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders[k].characterId))
+                    {
+                        sharedScripts.DebugMessage($"Removing found jinxed Outcast: {advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders[k].characterName}");
+                        advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders.RemoveAt(k);
+                        k--;
+                    }
+                }
+                sharedScripts.DebugMessage($"Finished jinxing Outcasts. New list: {sharedScripts.MentionEveryRoleInList(advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders, "")}");
+                for (int k = 0; k < advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions.Count; k++)
+                {
+                    if (jinxedRoles_TooFewVillagers.Contains(advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions[k].characterId))
+                    {
+                        sharedScripts.DebugMessage($"Removing found jinxed Minion: {advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions[k].characterName}");
+                        advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions.RemoveAt(k);
+                        k--;
+                    }
+                }
+                sharedScripts.DebugMessage($"Finished jinxing Minions. New list: {sharedScripts.MentionEveryRoleInList(advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions, "")}");
+            }
+            if (jinxedScripts_TooMuchPoison.Contains(advancedAscension.possibleScriptsData[j].name))
+            {
+                sharedScripts.DebugMessage($"Found jinxed script: {advancedAscension.possibleScriptsData[j].name}. Reason: Too much Corruption");
+                for (int k = 0; k < advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks.Count; k++)
+                {
+                    if (jinxedRoles_TooMuchPoison.Contains(advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks[k].characterId))
+                    {
+                        sharedScripts.DebugMessage($"Removing found jinxed Villager: {advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks[k].characterName}");
+                        advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks.RemoveAt(k);
+                        k--;
+                    }
+                }
+                sharedScripts.DebugMessage($"Finished jinxing Villagers. New list: {sharedScripts.MentionEveryRoleInList(advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks, "")}");
+                for (int k = 0; k < advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders.Count; k++)
+                {
+                    if (jinxedRoles_TooMuchPoison.Contains(advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders[k].characterId))
+                    {
+                        sharedScripts.DebugMessage($"Removing found jinxed Outcast: {advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders[k].characterName}");
+                        advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders.RemoveAt(k);
+                        k--;
+                    }
+                }
+                sharedScripts.DebugMessage($"Finished jinxing Outcasts. New list: {sharedScripts.MentionEveryRoleInList(advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders, "")}");
+                for (int k = 0; k < advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions.Count; k++)
+                {
+                    if (jinxedRoles_TooMuchPoison.Contains(advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions[k].characterId))
+                    {
+                        sharedScripts.DebugMessage($"Removing found jinxed Minion: {advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions[k].characterName}");
+                        advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions.RemoveAt(k);
+                        k--;
+                    }
+                }
+                sharedScripts.DebugMessage($"Finished jinxing Minions. New list: {sharedScripts.MentionEveryRoleInList(advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions, "")}");
+            }
+            if (advancedAscension.possibleScriptsData[j].name == "Mendaverte_1")
+            {
+                sharedScripts.DebugMessage($"Found jinxed script: {advancedAscension.possibleScriptsData[j].name}. Reason: Mendaverte");
+                for (int k = 0; k < advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks.Count; k++)
+                {
+                    if (specificJinxes_Mendaverte.Contains(advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks[k].characterId))
+                    {
+                        sharedScripts.DebugMessage($"Removing found jinxed Villager: {advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks[k].characterName}");
+                        advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks.RemoveAt(k);
+                        k--;
+                    }
+                }
+                sharedScripts.DebugMessage($"Finished jinxing Villagers. New list: {sharedScripts.MentionEveryRoleInList(advancedAscension.possibleScriptsData[j].scriptInfo.startingTownsfolks, "")}");
+                for (int k = 0; k < advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders.Count; k++)
+                {
+                    if (specificJinxes_Mendaverte.Contains(advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders[k].characterId))
+                    {
+                        sharedScripts.DebugMessage($"Removing found jinxed Outcast: {advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders[k].characterName}");
+                        advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders.RemoveAt(k);
+                        k--;
+                    }
+                }
+                sharedScripts.DebugMessage($"Finished jinxing Outcasts. New list: {sharedScripts.MentionEveryRoleInList(advancedAscension.possibleScriptsData[j].scriptInfo.startingOutsiders, "")}");
+                for (int k = 0; k < advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions.Count; k++)
+                {
+                    if (specificJinxes_Mendaverte.Contains(advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions[k].characterId))
+                    {
+                        sharedScripts.DebugMessage($"Removing found jinxed Minion: {advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions[k].characterName}");
+                        advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions.RemoveAt(k);
+                        k--;
+                    }
+                }
+                sharedScripts.DebugMessage($"Finished jinxing Minions. New list: {sharedScripts.MentionEveryRoleInList(advancedAscension.possibleScriptsData[j].scriptInfo.startingMinions, "")}");
+            }
+        }
+        sharedScripts.DebugMessage("Finished jinxing scripts");
+        */
+        // Thought I was doing something, but this seems to be removing the relevant roles from *every* script.
     }
     // By the vanilla rule of one demon per village.
 
@@ -2372,6 +3002,14 @@ public class MainMod : MelonMod
         return myCharacterCount;
     }
 
+
+    public CharactersCount setCharacterCountByVillageSize(int size, int Outcasts, int Minions, int Demons)
+    {
+        int villagers = (size - Outcasts - Minions - Demons);
+        CharactersCount myCharacterCount = new CharactersCount(size, villagers, Demons, Outcasts, Minions);
+        myCharacterCount.dOuts = Outcasts + 1;
+        return myCharacterCount;
+    }
     public Il2CppSystem.Collections.Generic.List<CharactersCount> addCharacterCount(CharactersCount characterCount, Il2CppSystem.Collections.Generic.List<CharactersCount> addList, int weight)
     {
         Il2CppSystem.Collections.Generic.List<CharactersCount> returnList = addList;
@@ -2409,9 +3047,12 @@ public class MainMod : MelonMod
                 //newScript.startingDemons = new Il2CppSystem.Collections.Generic.List<CharacterData>();
                 //newScript.startingDemons.Add(data);
                 var newPSD = advancedAscension.possibleScriptsData.Append(newScriptData);
-                for (int i = 0; i < configAmount; i++)
+                if (configAmount != 1)
                 {
-                    newPSD = newPSD.Append(newScriptData);
+                    for (int i = 0; i < configAmount - 1; i++)
+                    {
+                        newPSD = newPSD.Append(newScriptData);
+                    }
                 }
                 advancedAscension.possibleScriptsData = newPSD.ToArray();
                 return;
@@ -2624,9 +3265,19 @@ public class MainMod : MelonMod
     public void OnFirstUpdate()
     {
         PatchVanillaCharacterDescriptions();
-        
-        Transform chars = GameObject.Find("Game/Gameplay/Content/Canvas/Characters").transform;
-        for (int i = 12; i < 16; i++)
+
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+        sharedScripts.DebugMessage("Description patcher finished, looking for chars transform");
+        Transform chars = GameObject.Find("Game/Gameplay/Content/Canvas/Panel/Characters").transform;
+        if (chars)
+        {
+            sharedScripts.DebugMessage("Found chars transform");
+        }
+        else
+        {
+            sharedScripts.DebugMessage("Didn't find chars transform, expect an error");
+        }
+        for (int i = 12; i < 50; i++)
         {
             Statics.checkCreateCircle(chars, i);
         }
@@ -2634,7 +3285,7 @@ public class MainMod : MelonMod
         {
             Statics.checkCreateCircle(chars, j);
         }
-        
+
     }
 
     public static class HiddenRoleStatus
@@ -2709,7 +3360,7 @@ public class MainMod : MelonMod
     {
 
 
-        
+
         Il2CppSystem.Collections.Generic.List<string> refIDs = new Il2CppSystem.Collections.Generic.List<string>();
         refIDs = GetRolePlaceholderArt(type, alignment);
         MelonLogger.Msg($"refIDs[0] = {refIDs[0]}");
@@ -2729,7 +3380,7 @@ public class MainMod : MelonMod
         }
         MelonLogger.Msg($"backgroundRef = {backgroundRef.characterName}");
         MelonLogger.Msg($"artRef = {artRef.characterName}");
-        
+
 
 
 
@@ -3122,7 +3773,8 @@ public class MainMod : MelonMod
             case "Living": return "<color=#A4EDB7>Living</color>";
             case "Deck": return "<color=#789AF0>Deck</color>";
             case "Lose": return "<color=#FF0000>Lose</color>";
-            case "Alignment": return "<color=#99FF99>Align</color><color=#FF9999>ment</color>";
+            // case "Alignment": return "<color=#99FF99>Align</color><color=#FF9999>ment</color>"; // Making an alternate one for Alignment
+
             // Cycle is gonna be a long one because of the fancy gradient I'm doing
             case "Cycle": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e</color>";
             case "Cycle 1": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 1</color>";
@@ -3131,6 +3783,13 @@ public class MainMod : MelonMod
             case "Cycle 4": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 4</color>";
             case "Cycle 5": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 5</color>";
             case "Cycle 6": return "<color=#99ff99>C</color><color=#99e6b3>y</color><color=#99cccc>c</color><color=#99b3e6>l</color><color=#9999ff>e 6</color>"; // Cycles beyond 6 are pointless
+
+            // I'm doing gradients or multicolours for these, so they'll end up being fairly long.
+            case "Alignment": return "<color=#99ff99>A</color><color=#b7f382>l</color><color=#cfe573>i</color><color=#e3d76c>g</color><color=#f2c96d>n</color><color=#fdba73>m</color><color=#ffad7e>e</color><color=#ffa28b>n</color><color=#ff9999>t</color>";
+            case "Type": return "<color=#B656DD>T</color><color=#C8A500>y</color><color=#D97400>p</color><color=#FF6161>e</color>";
+            case "Truthfulness": return "<color=#3a95d6>T</color><color=#0ca3da>r</color><color=#00b1da>u</color><color=#00bdd5>t</color><color=#00c9ce>h</color><color=#25d4c4>f</color><color=#51deb8>u</color><color=#76e7ad>l</color><color=#98efa3>n</color><color=#bbf69b>e</color><color=#ddfb98>s</color><color=#ffff99>s</color>";
+            case "Honesty": return "<color=#7ac6ff>H</color><color=#5cd3f2>o</color><color=#5fddd9>n</color><color=#7fe2bc>e</color><color=#aae4a3>s</color><color=#d6e296>t</color><color=#ffdd99>y</color>";
+            case "Purity": return "<color=#7afbff>P</color><color=#61ecff>u</color><color=#71daff>r</color><color=#80c8ff>i</color><color=#94b2ff>t</color><color=#b199ff>y</color>";
 
             // Custom role keywords
             case "Poison": return "<color=#3F8538>Poison</color>"; // For unused Toxomancer role.
@@ -3637,7 +4296,7 @@ public class MainMod : MelonMod
     {
         public static Dictionary<string, CharacterData> roles = new Dictionary<string, CharacterData>();
         public static CharacterData[] charactersArray = Il2CppSystem.Array.Empty<CharacterData>();
-        
+
         public static void checkCreateCircle(Transform parent, int size)
         {
             string name = "Circle_" + size;
@@ -3814,4 +4473,15 @@ public class MainMod : MelonMod
         newPool[oldpool.Length] = pool;
         Characters.Instance.characterPool = newPool;
     }
+    /*
+    public MelonPreferences_Category randomInfoConfigCategory = null!;
+    public void CreateRandomInfoConfigFile()
+    {
+
+        randomInfoConfigCategory = MelonPreferences.CreateCategory("WingModSettings_RandomInfo");
+        randomInfoConfigCategory.CreateEntry("", 2, description: "");
+        randomInfoConfigCategory.SetFilePath(Path.Combine(MelonEnvironment.UserDataDirectory, "WingModSettings_RandomInfo.cfg"));
+        randomInfoConfigCategory.SaveToFile();
+    }
+    */
 }

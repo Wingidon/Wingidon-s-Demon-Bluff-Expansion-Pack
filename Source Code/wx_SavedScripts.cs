@@ -32,6 +32,7 @@ namespace ExpansionPack
 
 
 
+
         // This is where I store my miscellaneous scripts and some various things that aren't tied to any particular character.
 
     public Il2CppSystem.Collections.Generic.List<Character> SortList(Il2CppSystem.Collections.Generic.List<Character> list)
@@ -209,6 +210,87 @@ namespace ExpansionPack
                     else
                     {
                         returnString = $"{returnString}, #{character.id}";
+                    }
+                }
+            }
+            return returnString;
+        }
+
+
+        public string MentionEveryRoleInList(Il2CppSystem.Collections.Generic.List<CharacterData> characters, string andOr)
+        {
+            string returnString = "Return";
+            int characterCount = characters.Count;
+            int counter = 0;
+            Il2CppSystem.Collections.Generic.List<CharacterData> sortedCharacters = characters;
+            foreach (CharacterData character in sortedCharacters)
+            {
+                if (returnString == "Return")
+                {
+                    counter++;
+                    returnString = $"{character.characterName}";
+                }
+                else
+                {
+                    counter++;
+                    if (counter == characterCount)
+                    {
+                        if (andOr == "And" || andOr == "and")
+                        {
+                            returnString = $"{returnString} and {character.characterName}";
+                        }
+                        else if (andOr == "Or" || andOr == "or")
+                        {
+                            returnString = $"{returnString} or {character.characterName}";
+                        }
+                        else
+                        {
+                            returnString = $"{returnString}, {character.characterName}";
+                        }
+                    }
+                    else
+                    {
+                        returnString = $"{returnString}, {character.characterName}";
+                    }
+                }
+            }
+            return returnString;
+        }
+
+        public string MentionEveryStringInList(Il2CppSystem.Collections.Generic.List<string> characters, string andOr)
+        {
+            string returnString = "Return";
+            int characterCount = characters.Count;
+            int counter = 0;
+            Il2CppSystem.Collections.Generic.List<string> sortedCharacters = characters;
+            foreach (CharacterData character in sortedCharacters)
+            {
+                if (returnString == "Return")
+                {
+                    counter++;
+                    returnString = $"{character}";
+                }
+                else
+                {
+                    counter++;
+                    if (counter == characterCount)
+                    {
+                        if (andOr == "And" || andOr == "and")
+                        {
+                            returnString = $"{returnString} and {character}";
+                        }
+                        else if (andOr == "Or" || andOr == "or")
+                        {
+                            returnString = $"{returnString} or {character}";
+                        }
+                        else
+                        {
+                            returnString = $"{returnString}, {character}";
+                        }
+                    }
+                    else
+                    {
+                        returnString = $"{returnString}, {character}";
                     }
                 }
             }
@@ -415,6 +497,7 @@ namespace ExpansionPack
             CharacterData bluff = Characters.Instance.GetRandomUniqueBluff();
             Il2CppSystem.Collections.Generic.List<string> blacklistBluffs = new Il2CppSystem.Collections.Generic.List<string>();
             blacklistBluffs.Add("Bounty Hunter_39284184");
+            if (charRef.dataRef.characterId == "Iris_WING") blacklistBluffs.Add("Baker_22847064");
             Il2CppSystem.Collections.Generic.List<CharacterData> possibleBluffs = Characters.Instance.FilterAlignmentCharacters(Gameplay.Instance.GetAllAscensionCharacters(), EAlignment.Good);
             Il2CppSystem.Collections.Generic.List<CharacterData> removeBluffs = new Il2CppSystem.Collections.Generic.List<CharacterData>();
             possibleBluffs = Characters.Instance.FilterBluffableCharacters(possibleBluffs);
@@ -447,6 +530,10 @@ namespace ExpansionPack
             return bluff;
         }
 
+        public static int RoundValToInt(decimal val)
+        {
+            return (int)Math.Round(val);
+        }
 
         public CharacterData GetOverrideDuplicateBluff(Character charRef)
         {
@@ -477,6 +564,7 @@ namespace ExpansionPack
             Il2CppSystem.Collections.Generic.List<string> alwaysGoodIDs = new Il2CppSystem.Collections.Generic.List<string>();
             alwaysGoodIDs.Add("Saint_61372493");
             alwaysGoodIDs.Add("Politician_WING");
+            alwaysGoodIDs.Add("Saint_WING");
 
             if (alwaysGoodIDs.Contains(character.dataRef.characterId)) return true;
             return false;
@@ -519,6 +607,16 @@ namespace ExpansionPack
         }
 
 
+        public void DebugMessage(string message)
+        {
+            string debugVal = MelonPreferences.GetCategory("WingModSettings").GetEntry("DebugMode").GetValueAsString();
+            if (debugVal == "True" || debugVal == "true" || debugVal == "t")
+            {
+                MelonLogger.Msg("DEBUG: " + message);
+            }
+        }
+
+
 
         public int MakeNumberWrong(int trueNumber, int falseNumber, int minimum)
         {
@@ -530,6 +628,31 @@ namespace ExpansionPack
             if (trueNumber != falseNumber) return falseNumber;
             if (falseNumber == minimum) returnVal++;
             else returnVal--;
+            return returnVal;
+        }
+
+        public int MakeNumberWrongByRange(int trueNumber, int falseNumber, int minimum, int maximum, int maxSubtract, int maxAdd)
+        {
+            int returnVal = falseNumber;
+            if (returnVal < minimum)
+            {
+                while (returnVal < minimum) returnVal++;
+            }
+            if (returnVal > maximum)
+            {
+                while (returnVal > maximum) returnVal--;
+            }
+            if (trueNumber != falseNumber) return falseNumber;
+            Il2CppSystem.Collections.Generic.List<int> possibleModifiers = new Il2CppSystem.Collections.Generic.List<int>();
+            for (int i = (maxSubtract*-1); i < (maxAdd+1); i++)
+            {
+                if (i != 0 && (returnVal+i <= maximum) && (returnVal + i >= minimum))
+                {
+                    possibleModifiers.Add(i);
+                }
+            }
+            if (possibleModifiers.Count == 0) return MakeNumberWrong(trueNumber, falseNumber, minimum);
+            returnVal += possibleModifiers[UnityEngine.Random.RandomRangeInt(0, possibleModifiers.Count)];
             return returnVal;
         }
 
@@ -558,6 +681,121 @@ namespace ExpansionPack
             }
             return null;
         }
+
+
+
+
+
+        public Il2CppSystem.Collections.Generic.List<CharacterData> GetScriptRoles(EAlignment alignment)
+        {
+            Il2CppSystem.Collections.Generic.List<CharacterData> returnList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            foreach (CharacterData character in Gameplay.Instance.GetAllAscensionCharacters())
+            {
+                if (character.startingAlignment == alignment)
+                {
+                    returnList.Add(character);
+                }
+            }
+            return returnList;
+        }
+
+        public Il2CppSystem.Collections.Generic.List<CharacterData> GetScriptRoles(ECharacterType type)
+        {
+            Il2CppSystem.Collections.Generic.List<CharacterData> returnList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            foreach (CharacterData character in Gameplay.Instance.GetAllAscensionCharacters())
+            {
+                if (character.type == type)
+                {
+                    returnList.Add(character);
+                }
+            }
+            if (type == ECharacterType.Demon)
+            {
+                foreach (CharacterData character in GetAllDemons())
+                {
+                    returnList.Add(character);
+                }
+            }
+            return returnList;
+        }
+
+        public Il2CppSystem.Collections.Generic.List<CharacterData> GetScriptRoles(EAlignment alignment, ECharacterType type)
+        {
+            Il2CppSystem.Collections.Generic.List<CharacterData> returnList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            foreach (CharacterData character in Gameplay.Instance.GetAllAscensionCharacters())
+            {
+                if (character.startingAlignment == alignment && character.type == type)
+                {
+                    returnList.Add(character);
+                }
+            }
+            if (type == ECharacterType.Demon)
+            {
+                foreach (CharacterData character in GetAllDemons())
+                {
+                    if (character.startingAlignment == alignment) returnList.Add(character);
+                }
+            }
+            return returnList;
+        }
+
+        public Il2CppSystem.Collections.Generic.List<CharacterData> GetScriptRoles()
+        {
+            Il2CppSystem.Collections.Generic.List<CharacterData> returnList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            foreach (CharacterData character in GetScriptRoles(EAlignment.Good)) returnList.Add(character);
+            foreach (CharacterData character in GetScriptRoles(EAlignment.Evil)) returnList.Add(character);
+            return returnList;
+        }
+
+        public Il2CppSystem.Collections.Generic.List<CharacterData> GetAllDemons()
+        {
+            if (allDatas.Length == 0)
+            {
+                var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
+                if (loadedCharList != null)
+                {
+                    allDatas = new CharacterData[loadedCharList.Length];
+                    for (int j = 0; j < loadedCharList.Length; j++)
+                    {
+                        allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
+                    }
+                }
+            }
+
+            Il2CppSystem.Collections.Generic.List<CharacterData> returnList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            for (int j = 0; j < allDatas.Length; j++)
+            {
+                if (allDatas[j].type == ECharacterType.Demon) returnList.Add(allDatas[j]);
+            }
+            return returnList;
+        }
+
+        public Il2CppSystem.Collections.Generic.List<CharacterData> GetPossibleHiddenRoles()
+        {
+            Il2CppSystem.Collections.Generic.List<CharacterData> returnList = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            foreach (CharacterData character in Gameplay.Instance.GetScriptCharacters())
+            {
+                if (character.characterId == "Cryptid_WING")
+                {
+                    foreach (CharacterData character2 in GetScriptRoles(EAlignment.Evil, ECharacterType.Minion))
+                    {
+                        if (GetPossibleCharacterIDsOfRole("Cryptid_WING").Contains(character2.characterId))
+                        {
+                            returnList.Add(character2);
+                        }
+                    }
+                }
+                if (character.characterId == "Clown_LRZH") // This role hides the Demon
+                {
+                    foreach (CharacterData character2 in GetAllDemons())
+                    {
+                        returnList.Add(character2);
+                    }
+                }
+            }
+            return returnList;
+        }
+
 
 
 
@@ -872,6 +1110,63 @@ namespace ExpansionPack
 
 
 
+        public string GetVisionaryFlavour() // Just a fun little detail, Visionary's flavour is different every time you open the game.
+        {
+            var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
+            if (loadedCharList != null)
+            {
+                allDatas = new CharacterData[loadedCharList.Length];
+                for (int j = 0; j < loadedCharList.Length; j++)
+                {
+                    allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
+                }
+            }
+
+            Il2CppSystem.Collections.Generic.List<CharacterData> goodCharacters = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            Il2CppSystem.Collections.Generic.List<CharacterData> evilCharacters = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            for (int i = 0; i < allDatas.Length; i++)
+            {
+                if (allDatas[i].type == ECharacterType.Villager && allDatas[i].startingAlignment == EAlignment.Good && allDatas[i].characterId != "Visionary_WING")
+                {
+                    goodCharacters.Add(allDatas[i]);
+                }
+                if ((allDatas[i].type == ECharacterType.Minion || allDatas[i].type == ECharacterType.Demon) && allDatas[i].startingAlignment == EAlignment.Evil)
+                {
+                    evilCharacters.Add(allDatas[i]);
+                }
+            }
+            if (goodCharacters.Count != 0 && evilCharacters.Count != 0)
+            {
+                CharacterData chosenGoodChar = goodCharacters[UnityEngine.Random.RandomRangeInt(0, goodCharacters.Count)];
+                CharacterData chosenEvilChar = evilCharacters[UnityEngine.Random.RandomRangeInt(0, evilCharacters.Count)];
+
+                string goodPronoun = "its";
+                string evilPronoun = "its";
+                if (chosenGoodChar.gender == EGender.Male) goodPronoun = "his";
+                if (chosenGoodChar.gender == EGender.Female) goodPronoun = "her";
+                if (chosenGoodChar.gender == EGender.They) goodPronoun = "their";
+                if (chosenEvilChar.gender == EGender.Male) evilPronoun = "his";
+                if (chosenEvilChar.gender == EGender.Female) evilPronoun = "her";
+                if (chosenEvilChar.gender == EGender.They) evilPronoun = "their";
+
+                string goodCharTheName = CheckIfThe(chosenGoodChar.characterName) + chosenGoodChar.characterName;
+                string evilCharTheName = CheckIfThe(chosenEvilChar.characterName) + chosenEvilChar.characterName;
+
+                if (goodPronoun == evilPronoun || evilPronoun == "their" || goodPronoun == "their")
+                {
+                    return $"\"Last night, in her vision, she saw {goodCharTheName}.\nThen, in the moonlight, {evilPronoun} face shifted into something new:\nThe face of {evilCharTheName}.\"";
+                }
+                else
+                {
+                    return $"\"Last night, in her vision, she saw {goodCharTheName}.\nThen, in the moonlight, {goodPronoun}- No, <b>{evilPronoun}</b> face shifted into something new:\nThe face of {evilCharTheName}\"";
+                }
+            }
+            return "\"Last night, she saw the Lamb.\nThen, in the moonlight, his face shifted into something new:\nThe face of Baa.\"";
+        }
+
+
+
+
 
         public ActedInfo GetRandomInfo(Character charRef, bool lying, bool dizzyAllowed, bool selfAllowed)
         {
@@ -1102,7 +1397,7 @@ namespace ExpansionPack
 
             string chosenInfoType = infoTypes[UnityEngine.Random.RandomRangeInt(0, infoTypes.Count)];
             finalInfo = $"Info of type {chosenInfoType} is bugged";
-            MelonLogger.Msg($"Chose info type of {chosenInfoType}");
+            DebugMessage($"Chose info type of {chosenInfoType}. Lying?: {lying}");
             // Confessor
             if (chosenInfoType == "Confessor")
             {
@@ -2476,6 +2771,27 @@ namespace ExpansionPack
                 return true;
             }
         }
+        public static class w_StatusLog
+        {
+            [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+            public static class pvt
+            {
+                public static void Postfix(Character __instance)
+                {
+                    if (__instance.statuses.statuses.Count != 0)
+                    {
+                        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+                        foreach (ECharacterStatus status in __instance.statuses.statuses)
+                        {
+                            sharedScripts.DebugMessage($"Found status on #{__instance.id}: {status.ToString()}");
+                        }
+                    }
+                }
+            }
+        }
+
+
+
 
         /* Doesn't fucking work :(
         [HarmonyPatch(typeof(Gossip), nameof(Gossip.infoRoles))]

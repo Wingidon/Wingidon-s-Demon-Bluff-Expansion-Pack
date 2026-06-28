@@ -25,6 +25,10 @@ public class w_Tergiversator : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             wx_SavedScripts sharedScripts = new wx_SavedScripts();
@@ -106,6 +110,10 @@ public class w_Tergiversator : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         Act(trigger, charRef);
     }
     public string ConjourInfo()
@@ -167,7 +175,7 @@ public class w_Tergiversator : Role
         randomNonsense.Add("Leviathan is feared by even the rest of the Demons. Ever heard the Undying ask you to reason with them?");
         //randomNonsense.Add("She's not a temptress, but most think she's Good.\nShe's truly Evil, but her teammates betray her.\nWhen she arrives in town, mass hysteria ensues.\n\nWho is she?\nMendaverte!");
         randomNonsense.Add("I feel bad for Praesect's Zealot. The Acolyte knows what's going on, but the Zealot is just a clueless kid");
-        randomNonsense.Add("When that dense mist rolls in, I worry that Tenecaligo is soon to follow");
+        randomNonsense.Add("When that dense mist rolls in, I worry Tenecaligo is soon to follow");
         randomNonsense.Add("Venelum sometimes randomly asks the villagers questions. Recently, it asked me \"What's a mezepheles?\"");
         randomNonsense.Add("Veniyon is the second-oldest of her generation in her family. She gets really worried when Vidiyon goes anywhere without her");
         randomNonsense.Add("Vidiyon is the third-oldest of his generation in his family. He has five other siblings!");

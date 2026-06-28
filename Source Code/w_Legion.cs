@@ -30,17 +30,29 @@ public class w_Legion : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
-            if (charRef.state == ECharacterState.Dead) return;
+            Il2CppSystem.Collections.Generic.List<Character> aliveGoods = new Il2CppSystem.Collections.Generic.List<Character>();
+            aliveGoods = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
+            aliveGoods = Characters.Instance.FilterRealAlignmentCharacters(aliveGoods, EAlignment.Good);
             Health health = PlayerController.PlayerInfo.health;
+            if (aliveGoods.Count == 0) health.Damage(999);
+            if (charRef.state == ECharacterState.Dead) return;
             //health.Damage(2);
             health.AddMaxHp(-2);
         }
         if (trigger == ETriggerPhase.Night)
         {
-            if (charRef.state == ECharacterState.Dead) return;
+            Il2CppSystem.Collections.Generic.List<Character> aliveGoods = new Il2CppSystem.Collections.Generic.List<Character>();
+            aliveGoods = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
+            aliveGoods = Characters.Instance.FilterRealAlignmentCharacters(aliveGoods, EAlignment.Good);
             Health health = PlayerController.PlayerInfo.health;
+            if (aliveGoods.Count == 0) health.Damage(999);
+            if (charRef.state == ECharacterState.Dead) return;
             //health.Damage(2);
             health.AddMaxHp(-2);
         }

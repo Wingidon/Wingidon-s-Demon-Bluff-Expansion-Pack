@@ -24,6 +24,10 @@ public class w_Minos : Demon
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             Health health = PlayerController.PlayerInfo.health;
@@ -34,6 +38,11 @@ public class w_Minos : Demon
         }
         if (trigger == ETriggerPhase.Night)
         {
+            Il2CppSystem.Collections.Generic.List<Character> aliveGoods = new Il2CppSystem.Collections.Generic.List<Character>();
+            aliveGoods = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
+            aliveGoods = Characters.Instance.FilterRealAlignmentCharacters(aliveGoods, EAlignment.Good);
+            Health health = PlayerController.PlayerInfo.health;
+            if (aliveGoods.Count == 0) health.Damage(999);
             if (charRef.state == ECharacterState.Dead) return;
             Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;
             Il2CppSystem.Collections.Generic.List<Character> newList = new Il2CppSystem.Collections.Generic.List<Character>();
@@ -48,7 +57,6 @@ public class w_Minos : Demon
             newList = Characters.Instance.FilterAlignmentCharacters(newList, EAlignment.Good);
             newList = Characters.Instance.FilterCharacterMissingStatus(newList, ECharacterStatus.KilledByEvil);
             revealedChars = Characters.Instance.FilterRevealedCharacters(Gameplay.CurrentCharacters);
-            Health health = PlayerController.PlayerInfo.health;
             health.Damage(2);
             if (!(newList.Count == 0))
             {

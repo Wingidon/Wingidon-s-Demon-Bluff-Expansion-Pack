@@ -27,6 +27,10 @@ public class w_SnakeCharmer : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         //MelonLogger.Msg($"Ritualist has been called to act! The trigger is {trigger}");
         if (trigger == ETriggerPhase.Start)
         {
@@ -93,6 +97,10 @@ public class w_SnakeCharmer : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         Act(trigger, charRef);
     }
     public string ConjourInfo()
@@ -120,7 +128,6 @@ public class w_SnakeCharmer : Role
 
 
         Gameplay.Instance.AddScriptCharacterIfAble(bluff.type, bluff);
-        charRef.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
         return bluff;
     }
     public static class PoisonStatus
