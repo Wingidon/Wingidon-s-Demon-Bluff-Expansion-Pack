@@ -6,6 +6,7 @@ There is an ArtSwap folder attached containing the art I use for each role.
 Almost none of the art was made by me. Most are either by Normandia, or edits of Normandia's work. Here are the ones that aren't:
 - Arithmetician: Blue Cheesed (https://discord.com/channels/1148903384968089640/1399932582723846144/1439413413645254800)
 - Copycat: HydeTheFish (https://discord.com/channels/1148903384968089640/1399932582723846144/1406986591599071293)
+- Empath: LimeOn (https://discord.com/channels/1148903384968089640/1427769361707569153/1521537343046291507)
 - Forager: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1409917727770021898)
 - Gravekeeper: LostIllustrator (https://discord.com/channels/1148903384968089640/1427769361707569153/1489444052175687801)
 - Jewelsmith: Astery (https://discord.com/channels/1148903384968089640/1399932582723846144/1433225282143129702)
@@ -29,6 +30,7 @@ Currently, this mod includes the following roles:
 ### Villagers
 - Arbiter - Picks a character & Learns if they're Disguised.
 - Arithmetician - Learns the sum of all Evil characters.
+- Bartender - Learns which roles neighbour a Corrupted character.
 - Bloodseer - Gathers a lot of info... for a price.
 - Cardshark - Picks 3, and heals or hurts you depending on how many Villagers you picked.
 - Cartomancer - Learns that only one of two roles is in-play.
@@ -37,6 +39,7 @@ Currently, this mod includes the following roles:
 - Copycat - Disguises as an in-play Villager, but gives you a health buff.
 - Detective - Learns how many unrevealed characters are Lying.
 - Devout - Picks 1 character and refreshes their ability.
+- Empath - Picks 2 characters and Learns which is more Trustworthy.
 - Forager - Picks 1 character and Learns if they're a Villager.
 - Gossip - Picks 1 character and Learns random info about them.
 - Gravekeeper - Learns random info about every dead character when activated.
