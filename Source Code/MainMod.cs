@@ -154,7 +154,7 @@ public class MainMod : MelonMod
 
         // Demons
         configCategory.CreateEntry("DebugMode", false, "Debug Mode", "Whether or not debug mode is enabled. Debug Mode outputs logs to the console about some roles and what they're doing.");
-        configCategory.CreateEntry("Agmeres_Weight", 2, description: "How likely Agmeres is to be in-play.");
+        configCategory.CreateEntry("Agmeres_Weight", 2, description: "How likely Agmeres is to be in-play. Any of these roles may be disabled by setting their weight to \"0\".");
         configCategory.CreateEntry("Veni-Vidi-Vici_Weight", 2, description: "How likely the Hellspawn Triplets are to be in-play.");
         configCategory.CreateEntry("Caedoccidere_Weight", 2, description: "How likely Caedoccidere is to be in-play.");
         configCategory.CreateEntry("Praesect_Weight", 2, description: "How likely Praesect is to be in-play.");
@@ -182,15 +182,11 @@ public class MainMod : MelonMod
         // Bounty Hunter - 1 random Good Villager is Evil & Corrupted. Learn 1 Evil character.
         // Investigator - Learn how many Unrevealed characters are Disguised.
         // Partisan - Good characters adjacent to me can't die.
-        // Politician - I am Corrupted. Learn two sets of random false info.
-        // Saint - I am always Good.
         // Writer - Learn a Villager role and its distance to its nearest Outcast.
-        // ??? (Visionary?) - Every 4 Reveals, Learn that a random character is either a particular Good role or a particular Evil role.
 
         // Occultist - Has a Minion ability (Make them become a Good Minion that Disguises as Occultist?)
         // Provocateur - Kills a Villager each night, lose if all Villagers die.
 
-        // Cryptid - My ability is random. Two random characters start knowing a hint to what it is.
         // Follower - Created by a Demon. Deals damage when executed if the Demon still lives.
         // Goblin - Each night, swaps the roles of 2 unrevealed characters if possible.
         // Hypnotist - Forces its neighbours to Disguise, but they don't Lie unless they already would.
@@ -556,6 +552,40 @@ public class MainMod : MelonMod
         w_visionary.gender = EGender.Female;
 
 
+        CharacterData w_empath = newCharacter("Empath", EAlignment.Good, ECharacterType.Villager, true, false, "\"She can always tell when something's wrong.\nAnd when someone's hiding something.\"", "Lover_91302708");
+        w_empath.role = new w_Empath();
+        w_empath.description = $"<b>Pick 2 characters:</b>\nLearn which is more {formattedKeyText("Trustworthy")}";
+        w_empath.hints = customHint("Keyword", "TrustLong") + $"\n\nArt by {formattedKeyText("LimeOn")} ({formattedKeyText("@limeon")}) on {formattedKeyText("Discord")}";
+        w_empath.gender = EGender.Female;
+        w_empath.picking = true;
+        w_empath.abilityUsage = EAbilityUsage.Once;
+
+
+        CharacterData w_scholar = newCharacter("Overseer", EAlignment.Good, ECharacterType.Villager, true, false, "\"His most commonly used phrase is\n\'Do I gotta do everything myself around here?\'\"", "Scout_88081716");
+        w_scholar.role = new w_Scholar();
+        w_scholar.description = $"<b>Pick 1 character:</b>\nIf they're {formattedKeyText("Honest")}, I Disguise as their role.\nOtherwise, I copy their Disguise.";
+        w_scholar.ifLies = "I still copy my target's claim, but I also Lie.";
+        w_scholar.hints = $"My ability bypasses characters who Register as something else or characters who {formattedKeyText("Bluff")} being {formattedKeyText("Honest")} or Disguised.\nWhen I use my ability, I also declare that \"I am the {roleColour("Villager")}Overseer</color>\" so that you can see who I am in Oracle Mode.";
+        w_scholar.gender = EGender.Male;
+        w_scholar.picking = true;
+        w_scholar.abilityUsage = EAbilityUsage.Once;
+
+        /*
+        CharacterData w_wannabe = newCharacter("Wannabe", EAlignment.Good, ECharacterType.Villager, false, false, "\"Genuinely Good at heart.\nJust thinks the Evil team is super cool.\"", "Scout_88081716");
+        w_wannabe.role = new w_Wannabe();
+        w_wannabe.description = $"<b>Game Start:</b>\n1 Evil character Disguises as the {roleColour("Villager")}Wannabe</color>.\nThey are {formattedKeyText("Truthful")}.\n\nLearn my Role.\nI Lie.";
+        w_wannabe.hints = $"My ability bypasses misregistration.\nMy ability works even if I am Corrupted.\nMy ability doesn't work on characters who don't usually Disguise.";
+        w_wannabe.gender = EGender.Male;
+        */
+
+
+
+        CharacterData w_bartender = newCharacter("Bartender", EAlignment.Good, ECharacterType.Villager, true, false, "\"Beginning to grow concerned about his most frequent customer.\"", "Alchemist_94446803");
+        w_bartender.role = new w_Bartender();
+        w_bartender.description = "Learn the roles that neighbour a random Corrupted character.";
+        w_bartender.gender = EGender.Male;
+
+
 
         /* Apparently ETriggerPhase.OnReveal doesn't work for Pick characters :(
         CharacterData w_bountyhunter = newCharacter("Bounty Hunter", EAlignment.Good, ECharacterType.Villager, false, false, "\"Alone, she walks these streets, paved with the sick stench of corruption. Its thickness worms its way into her nostrils, unbidden, burning with revulsion. And anticipation. The illness of this wretched place grows each night. And she... she is the cure.\"", "Bounty Hunter_39284184");
@@ -610,23 +640,6 @@ public class MainMod : MelonMod
         w_guardsman.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
         w_guardsman.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
         w_guardsman.color = new Color(1f, 0.935f, 0.7302f);
-
-        CharacterData w_bartender = new CharacterData();
-        w_bartender.role = new w_Bartender();
-        w_bartender.name = "Bartender";
-        w_bartender.description = $"Learn which roles sit adjacent to a random Corrupted character.";
-        w_bartender.flavorText = "\"Beginning to grow concerned about his most frequent customer.\"";
-        w_bartender.hints = $"";
-        w_bartender.ifLies = "";
-        w_bartender.picking = false;
-        w_bartender.startingAlignment = EAlignment.Good;
-        w_bartender.type = ECharacterType.Villager;
-        w_bartender.bluffable = true;
-        w_bartender.characterId = "Bartender_WING";
-        w_bartender.artBgColor = new Color(0.111f, 0.0833f, 0.1415f);
-        w_bartender.cardBgColor = new Color(0.26f, 0.1519f, 0.3396f);
-        w_bartender.cardBorderColor = new Color(0.7133f, 0.339f, 0.8679f);
-        w_bartender.color = new Color(1f, 0.935f, 0.7302f);
         */
 
         // WILL IMPLEMENT THESE LATER
@@ -1166,7 +1179,7 @@ public class MainMod : MelonMod
         CharacterData w_carnicarius = newCharacter("Carnicarius", EAlignment.Evil, ECharacterType.Demon, false, true, "\"The village idiot has nothing to worry about.\nThe Bishop, on the other hand...\"", "Hunter_93427887");
         // Derived from Latin "Sicarius" meaning "Assassin" and "Carnifex" meaning "Executioner"
         w_carnicarius.role = new w_Carnicarius();
-        w_carnicarius.description = $"<b>At Night:</b>\nDeal 2 {formattedKeyText("Damage")} to you.\n{formattedKeyText("Kill")} a Good character.\nOn my first night, {formattedKeyText("Kill")} two.\nI pick my targets wisely.\n\nI Lie and Disguise.";
+        w_carnicarius.description = $"<b>At Night:</b>\nDeal 1 {formattedKeyText("Damage")} to you.\n{formattedKeyText("Kill")} a Good character.\nOn my first night, I act twice.\nI pick my targets wisely.\n\nI Lie and Disguise.";
         w_carnicarius.hints = $"I am more likely to kill higher-priority targets, but not guaranteed. It may be true that the {roleColour("Villager")}Bishop</color> didn't die before you revealed her, but I might've just chosen to spare her.";
         w_carnicarius.characterId = "Carnicarius_WING";
         w_carnicarius.gender = EGender.Male;
@@ -1260,6 +1273,7 @@ public class MainMod : MelonMod
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_invertDemon);
         // Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_pilgrim);
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_tergiversator);
+        //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_wannabe);
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_copycat);
         //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_devout);
 
@@ -1377,15 +1391,26 @@ public class MainMod : MelonMod
             legionCounterList.Add(legionCounter7);
             legionCounterList.Add(legionCounter7);
             legionCounterList.Add(legionCounter7);
+            legionCounterList.Add(legionCounter7);
             legionCounterList.Add(legionCounter8);
             legionCounterList.Add(legionCounter8);
             legionCounterList.Add(legionCounter8);
             legionCounterList.Add(legionCounter8);
+            legionCounterList.Add(legionCounter8);
+            legionCounterList.Add(legionCounter8);
+            legionCounterList.Add(legionCounter9);
+            legionCounterList.Add(legionCounter9);
             legionCounterList.Add(legionCounter9);
             legionCounterList.Add(legionCounter9);
             legionCounterList.Add(legionCounter9);
             legionCounterList.Add(legionCounter10);
             legionCounterList.Add(legionCounter10);
+            legionCounterList.Add(legionCounter10);
+            legionCounterList.Add(legionCounter10);
+            legionCounterList.Add(legionCounter10);
+            legionCounterList.Add(legionCounter11);
+            legionCounterList.Add(legionCounter11);
+            legionCounterList.Add(legionCounter11);
             legionCounterList.Add(legionCounter11);
         }
         legionScript.characterCounts = legionCounterList;
@@ -2331,25 +2356,6 @@ public class MainMod : MelonMod
         CharactersCount twinDemonCounter_10_5122 = setCharacterCount(5, 1, 2, 2);
         CharactersCount twinDemonCounter_10_5113 = setCharacterCount(5, 1, 1, 3);
 
-        twinDemonCounter_06_4101.dDemon = 3;
-        twinDemonCounter_06_4011.dDemon = 3;
-        twinDemonCounter_06_4002.dDemon = 3;
-        twinDemonCounter_07_4111.dDemon = 3;
-        twinDemonCounter_07_4201.dDemon = 3;
-        twinDemonCounter_07_4021.dDemon = 3;
-        twinDemonCounter_07_4102.dDemon = 3;
-        twinDemonCounter_07_4012.dDemon = 3;
-        twinDemonCounter_08_4202.dDemon = 3;
-        twinDemonCounter_08_4112.dDemon = 3;
-        twinDemonCounter_08_4103.dDemon = 3;
-        twinDemonCounter_09_4212.dDemon = 3;
-        twinDemonCounter_09_5022.dDemon = 3;
-        twinDemonCounter_09_4203.dDemon = 3;
-        twinDemonCounter_09_5013.dDemon = 3;
-        twinDemonCounter_10_4312.dDemon = 3;
-        twinDemonCounter_10_5122.dDemon = 3;
-        twinDemonCounter_10_5113.dDemon = 3;
-
 
 
         Il2CppSystem.Collections.Generic.List<CharactersCount> twinDemonCounterList = new Il2CppSystem.Collections.Generic.List<CharactersCount>();
@@ -2431,6 +2437,11 @@ public class MainMod : MelonMod
             twinDemonCounterList = addCharacterCount(twinDemonCounter_15_6252, twinDemonCounterList, 3);
             twinDemonCounterList = addCharacterCount(twinDemonCounter_15_6243, twinDemonCounterList, 7);
             twinDemonCounterList = addCharacterCount(twinDemonCounter_15_6333, twinDemonCounterList, 9);
+        }
+
+        foreach (CharactersCount characterCount in twinDemonCounterList)
+        {
+            characterCount.dDemon = 3;
         }
 
         twinDemonScript.characterCounts = twinDemonCounterList;
@@ -2765,6 +2776,7 @@ public class MainMod : MelonMod
             addRole(script.startingTownsfolks, w_arbiter);
             addRole(script.startingTownsfolks, w_arithmetician);
             // addRole(script.startingTownsfolks, w_balloonist); // Doesn't work
+            addRole(script.startingTownsfolks, w_bartender);
             addRole(script.startingTownsfolks, w_bloodseer);
             // addRole(script.startingTownsfolks, w_bountyhunter);
             addRole(script.startingTownsfolks, w_cardshark);
@@ -2774,6 +2786,7 @@ public class MainMod : MelonMod
             addRole(script.startingTownsfolks, w_copycat);
             addRole(script.startingTownsfolks, w_detective);
             addRole(script.startingTownsfolks, w_devoutNew);
+            addRole(script.startingTownsfolks, w_empath);
             //addRole(script.startingTownsfolks, w_fiDragonfly); // Disabled until Uzabi fixes Good Disguises
             addRole(script.startingTownsfolks, w_forager);
             //addRole(script.startingTownsfolks, w_gambler);
@@ -2792,11 +2805,13 @@ public class MainMod : MelonMod
             addRole(script.startingTownsfolks, w_ranger);
             addRole(script.startingTownsfolks, w_saint);
             addRole(script.startingTownsfolks, w_scavenger);
+            addRole(script.startingTownsfolks, w_scholar);
             addRole(script.startingTownsfolks, w_sentinel);
             addRole(script.startingTownsfolks, w_sheriff);
             addRole(script.startingTownsfolks, w_spy);
             //addRole(script.startingTownsfolks, w_slayerRework);
             addRole(script.startingTownsfolks, w_visionary);
+            //addRole(script.startingTownsfolks, w_wannabe);
             addRole(script.startingTownsfolks, w_warden);
             addRole(script.startingOutsiders, w_chatterbox);
             addRole(script.startingOutsiders, w_echo);
@@ -2820,7 +2835,7 @@ public class MainMod : MelonMod
             addRoleIfNotJinxed(script.startingMinions, w_undying, undyingJinxes, script.startingDemons);
             for (int i = 0; i < 100; i++)
             {
-                //addRoleEvenIfDupe(script.startingTownsfolks, w_cartomancer);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_bartender);
                 //addRoleEvenIfDupe(script.startingTownsfolks, w_visionary);
                 //addRoleEvenIfDupe(script.startingOutsiders, w_switchblade);
                 //addRoleEvenIfDupe(script.startingMinions, w_cryptid);
@@ -2842,6 +2857,7 @@ public class MainMod : MelonMod
             MelonLogger.Msg($"Script: {advancedAscension.possibleScriptsData[j].name.ToString()}");
         }
         wx_SavedScripts sharedScripts = new wx_SavedScripts();
+
 
 
         /*
@@ -3351,6 +3367,14 @@ public class MainMod : MelonMod
             {
                 hint = $"<b>Cycle X</b>:\nThis ability happens every X times any character is {formattedKeyText("Revealed")}.";
             }
+            if (parameter == "TrustLong")
+            {
+                hint = $"<b>Trust</b>:\nA measure of how much you can {formattedKeyText("Trust")} a character.\nVillagers, Outcasts, Minions and Demons are 5x, 3x, 3x and 1x as {formattedKeyText("Trustworthy")} respectively.\nGood characters are 3x as {formattedKeyText("Trustworthy")}.\n{formattedKeyText("Truthful")} characters are 3x as {formattedKeyText("Trustworthy")}.\n{formattedKeyText("Honest")} characters are 2.5x as {formattedKeyText("Trustworthy")}.";
+            }
+            if (parameter == "TrustShort")
+            {
+                hint = $"<b>Trust</b>:\nA measure of how much you can {formattedKeyText("Trust")} a character.\nGenerally speaking, the more innocent traits a character exhibits, the more {formattedKeyText("Trustworthy")} they are.";
+            }
         }
         return hint;
     }
@@ -3761,6 +3785,7 @@ public class MainMod : MelonMod
             case "Hidden": return "<color=#697D91>Hidden</color>";
             case "Unrevealed": return "<color=#697D91>Unrevealed</color>";
             case "Bluff": return "<color=#D96EDB>Bluff</color>";
+            case "Bluffs": return "<color=#D96EDB>Bluffs</color>";
             case "Bluffing": return "<color=#D96EDB>Bluffing</color>";
             case "Attack": return "<color=#FF0037>Attack</color>";
             case "Kill": return "<color=#FF0037>Kill</color>";
@@ -3798,6 +3823,9 @@ public class MainMod : MelonMod
             case "Tricked": return "<color=#70E8FF>Tricked</color>";
             case "Bewildered": return "<color=#70E8FF>Bewil</color><color=#FF00DD>dered</color>"; // Also used by Faerie.
             case "Misled": return "<color=#FF00AE>Misled</color>"; // Used by Venelum and Vidiyon.
+            case "Trustworthy": return "<color=#9999FF>Trustworthy</color>"; // Used by Empath
+            case "Trustworthiness": return "<color=#9999FF>Trustworthiness</color>";
+            case "Trust": return "<color=#9999FF>Trust</color>";
 
 
             // Devs
@@ -3829,6 +3857,8 @@ public class MainMod : MelonMod
             case "@derpy_feesh": return "<color=#7289DA>@</color><color=#7948d7>derpy_feesh</color>"; // Leviathan
             case "Cycler": return "<color=#45E0F8>Cycler</color>"; // Cycler
             case "@skillcycler": return "<color=#7289DA>@</color><color=#45E0F8>skillcycler</color>"; // Cycler
+            case "LimeOn": return "<color=#7289DA>@</color><color=#94EECC>LimeOn</color>"; // Empath
+            case "@limeon": return "<color=#7289DA>@</color><color=#94EECC>lime_0n1337</color>"; // Empath
 
             // Special thanks
             case "NoLucksGiven": return "<color=#FFC07B>NoLucksGiven</color>"; // Played mod on YouTube, brought attention to it.

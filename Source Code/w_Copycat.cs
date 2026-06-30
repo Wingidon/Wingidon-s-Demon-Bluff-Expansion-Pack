@@ -32,6 +32,10 @@ public class w_Copycat : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start && !CharacterHelper.CheckLying(charRef))
         {
             Health health = PlayerController.PlayerInfo.health;
@@ -46,6 +50,10 @@ public class w_Copycat : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day && charRef.bluff == null)
         {
             onActed.Invoke(this.GetBluffInfo(charRef));
@@ -113,7 +121,7 @@ public class w_Copycat : Role
     }
     public override bool CheckIfCanBeKilled(Character charRef)
     {
-        if (charRef.statuses.statuses.Contains(ECharacterStatus.HealthyBluff))
+        if (charRef.statuses.statuses.Contains(ECharacterStatus.HealthyBluff) && charRef.bluff)
         {
             return charRef.bluff.role.CheckIfCanBeKilled(charRef);
         }

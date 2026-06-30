@@ -176,6 +176,18 @@ namespace ExpansionPack
         }
 
 
+        public float GetTrustworthiness(Character target)
+        {
+            float trust = 1f;
+            if (target.GetRegisterAs().type == ECharacterType.Villager) trust *= 5;
+            if (target.GetRegisterAs().type == ECharacterType.Outcast) trust *= 3;
+            if (target.GetRegisterAs().type == ECharacterType.Minion) trust *= 3;
+            if (target.GetRegisterAlignment() == EAlignment.Good) trust *= 3;
+            if (!CharacterHelper.CheckLyingAppearance(target)) trust *= 3;
+            if (!CharacterHelper.CheckIfDisguisedAppearance(target)) trust *= 2.5f;
+            return trust;
+        }
+
         public string MentionEveryCharacterInList(Il2CppSystem.Collections.Generic.List<Character> characters, string andOr)
         {
             string returnString = "Return";
@@ -618,6 +630,41 @@ namespace ExpansionPack
 
 
 
+        public Character GetRandomItemOfList(Il2CppSystem.Collections.Generic.List<Character> list)
+        {
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            return list[UnityEngine.Random.RandomRangeInt(0, list.Count)];
+        }
+        public CharacterData GetRandomItemOfList(Il2CppSystem.Collections.Generic.List<CharacterData> list)
+        {
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            return list[UnityEngine.Random.RandomRangeInt(0, list.Count)];
+        }
+        public string GetRandomItemOfList(Il2CppSystem.Collections.Generic.List<string> list)
+        {
+            if (list.Count == 0)
+            {
+                return null;
+            }
+            return list[UnityEngine.Random.RandomRangeInt(0, list.Count)];
+        }
+        public int GetRandomItemOfList(Il2CppSystem.Collections.Generic.List<int> list)
+        {
+            if (list.Count == 0)
+            {
+                return -1;
+            }
+            return list[UnityEngine.Random.RandomRangeInt(0, list.Count)];
+        }
+
+
+
         public int MakeNumberWrong(int trueNumber, int falseNumber, int minimum)
         {
             int returnVal = falseNumber;
@@ -828,6 +875,44 @@ namespace ExpansionPack
                 // LRZH's Circus
                 returnChars.Add("Clown_LRZH"); // Clown
                 returnChars.Add("Wraith_LRZH"); // Wraith
+            }
+            if (roleID == "Occultist_WING")
+            {
+                /*
+                Acts after Chancellor:
+                - Accuser
+                - Baffler
+                - Heretic
+                - Poisoner
+                - Puppeteer
+                - Saboteur
+                - Shaman
+                - Snake Charmer
+                - Slanderer
+                - Swarm
+                - Witch
+
+                Doesn't act on start:
+                - Ritualist
+                */
+
+                // Vanilla
+                returnChars.Add("Poisoner_64796285"); // Poisoner
+                returnChars.Add("Mezepheles_09511163"); // Puppeteer
+                returnChars.Add("Shaman_26945607"); // Shaman
+                returnChars.Add("Witch_25286521"); // Witch
+
+                // Wingidon's Expansion Pack
+                returnChars.Add("Heretic_WING"); // Heretic
+                returnChars.Add("Ritualist_WING"); // Ritualist
+                returnChars.Add("Saboteur_WING"); // Saboteur
+                returnChars.Add("Snake Charmer_WING"); // Snake Charmer 
+                returnChars.Add("Swarm_Good_WING"); // Good Swarm 
+
+                // Skill Cycler's Riddles
+                returnChars.Add("Accuser_scm"); // Accuser
+                returnChars.Add("Baffler_scm"); // Baffler
+                returnChars.Add("Slanderer_scm"); // Slanderer
             }
             if (roleID == "Mutant_WING")
             {
@@ -1283,6 +1368,9 @@ namespace ExpansionPack
             infoTypes.Add("Judge"); // Lying cop
             infoTypes.Add("Arbiter"); // Disguising cop
             infoTypes.Add("Forager"); // Villager Cop
+            infoTypes.Add("Cartomancer"); // Learns an in-play character and an out-of-play character, but not which is which.
+            infoTypes.Add("Duchess"); // Learns 4 characters, among which are exactly 3 Types.
+            infoTypes.Add("Scout"); // Learns distance from an Evil character to its closest Evil.
             if (goodCharacters.Count != 0 && evilCharacters.Count != 0)
             {
                 infoTypes.Add("Medium"); // #X is a Good Y
@@ -1294,6 +1382,7 @@ namespace ExpansionPack
                 infoTypes.Add("EvilChainLong"); // The longest chain of Evil characters is X cards long
                 infoTypes.Add("EvilDistLong"); // The longest distance between two Evil characters is X cards
                 infoTypes.Add("EvilDistShort"); // The shortest distance between two Evil characters is X cards
+                infoTypes.Add("Visionary"); // Learns that a particular character is 1 of 2 roles.
             }
             // if (corruptedCharacters.Count != 0 && pureCharacters.Count != 0) infoTypes.Add("CorruptionChecker"); // #X is Corrupted
 
@@ -2744,6 +2833,201 @@ namespace ExpansionPack
                     cardsPlural = "card";
                 }
                 finalInfo = $"The longest distance between two Evils is:\n{conjureNumber} {cardsPlural}";
+            }
+            if (chosenInfoType == "Cartomancer")
+            {
+                w_Cartomancer cartoRole = new w_Cartomancer();
+                if (lying) returnInfo = cartoRole.GetBluffInfo(charRef);
+                else returnInfo = cartoRole.GetInfo(charRef);
+                finalInfo = returnInfo.desc;
+                selection = returnInfo.characters;
+            }
+            if (chosenInfoType == "Duchess")
+            {
+                Il2CppSystem.Collections.Generic.List<Character> charactersNotMe = new Il2CppSystem.Collections.Generic.List<Character>();
+                foreach (Character character in Gameplay.CurrentCharacters)
+                {
+                    if (character != charRef) charactersNotMe.Add(character);
+                }
+                if (!lying)
+                {
+                    // Do truthful info first because it's easier
+                    Il2CppSystem.Collections.Generic.List<ECharacterType> chosenTypes = new Il2CppSystem.Collections.Generic.List<ECharacterType>();
+                    Il2CppSystem.Collections.Generic.List<Character> possibleTargets = new Il2CppSystem.Collections.Generic.List<Character>();
+                    chosenTypes.Add(selection[0].GetRegisterAs().type);
+                    selection.Add(Gameplay.CurrentCharacters[UnityEngine.Random.RandomRangeInt(0, Gameplay.CurrentCharacters.Count)]); // Start with a random character
+                    foreach (Character character in charactersNotMe)
+                    {
+                        if (!chosenTypes.Contains(character.GetRegisterAs().type)) possibleTargets.Add(character);
+                    }
+                    if (possibleTargets.Count != 0)
+                    {
+                        selection.Add(possibleTargets[UnityEngine.Random.RandomRangeInt(0, possibleTargets.Count)]);
+                        chosenTypes.Add(selection[1].GetRegisterAs().type);
+                    }
+                    possibleTargets.Clear();
+                    foreach (Character character in charactersNotMe)
+                    {
+                        if (!chosenTypes.Contains(character.GetRegisterAs().type)) possibleTargets.Add(character);
+                    }
+                    if (possibleTargets.Count != 0)
+                    {
+                        selection.Add(possibleTargets[UnityEngine.Random.RandomRangeInt(0, possibleTargets.Count)]);
+                        chosenTypes.Add(selection[2].GetRegisterAs().type);
+                    }
+                    possibleTargets.Clear();
+                    foreach (Character character in charactersNotMe)
+                    {
+                        if (chosenTypes.Contains(character.GetRegisterAs().type)) possibleTargets.Add(character);
+                    }
+                    if (possibleTargets.Count != 0)
+                    {
+                        selection.Add(possibleTargets[UnityEngine.Random.RandomRangeInt(0, possibleTargets.Count)]);
+                    }
+                }
+                else
+                {
+                    Il2CppSystem.Collections.Generic.List<ECharacterType> possibleTypes = new Il2CppSystem.Collections.Generic.List<ECharacterType>();
+                    if (villagerCharacters.Count != 0) possibleTypes.Add(ECharacterType.Villager);
+                    if (outcastCharacters.Count != 0) possibleTypes.Add(ECharacterType.Outcast);
+                    if (minionCharacters.Count != 0) possibleTypes.Add(ECharacterType.Minion);
+                    if (demonCharacters.Count != 0) possibleTypes.Add(ECharacterType.Demon);
+                    if (possibleTypes.Count < 3) // If there's less than 3 in-play types, nothing to worry about, just grab four random characters.
+                    {
+                        selection.Add(charactersNotMe[UnityEngine.Random.RandomRangeInt(0, charactersNotMe.Count)]);
+                        charactersNotMe.Remove(selection[0]);
+                        selection.Add(charactersNotMe[UnityEngine.Random.RandomRangeInt(0, charactersNotMe.Count)]);
+                        charactersNotMe.Remove(selection[1]);
+                        selection.Add(charactersNotMe[UnityEngine.Random.RandomRangeInt(0, charactersNotMe.Count)]);
+                        charactersNotMe.Remove(selection[2]);
+                        selection.Add(charactersNotMe[UnityEngine.Random.RandomRangeInt(0, charactersNotMe.Count)]);
+                    }
+                    else
+                    {
+                        Il2CppSystem.Collections.Generic.List<int> possibleCounts = new Il2CppSystem.Collections.Generic.List<int>();
+                        possibleCounts.Add(2);
+                        possibleCounts.Add(2);
+                        if (possibleTypes.Count > 3) possibleCounts.Add(4);
+
+                        int chosenCount = possibleCounts[UnityEngine.Random.RandomRangeInt(0, possibleCounts.Count)];
+                        if (chosenCount == 4)
+                        {
+                            selection.Add(villagerCharacters[UnityEngine.Random.RandomRangeInt(0, villagerCharacters.Count)]);
+                            selection.Add(outcastCharacters[UnityEngine.Random.RandomRangeInt(0, outcastCharacters.Count)]);
+                            selection.Add(minionCharacters[UnityEngine.Random.RandomRangeInt(0, minionCharacters.Count)]);
+                            selection.Add(demonCharacters[UnityEngine.Random.RandomRangeInt(0, demonCharacters.Count)]);
+                        }
+                        else
+                        {
+                            possibleTypes.Clear();
+                            if (villagerCharacters.Count > 1) possibleTypes.Add(ECharacterType.Villager);
+                            if (outcastCharacters.Count > 1) possibleTypes.Add(ECharacterType.Outcast);
+                            if (minionCharacters.Count > 1) possibleTypes.Add(ECharacterType.Minion);
+                            if (demonCharacters.Count != 0) possibleTypes.Add(ECharacterType.Demon);
+                            Il2CppSystem.Collections.Generic.List<ECharacterType> chosenTypes = new Il2CppSystem.Collections.Generic.List<ECharacterType>();
+                            chosenTypes.Add(possibleTypes[UnityEngine.Random.RandomRangeInt(0, possibleTypes.Count)]);
+                            possibleTypes.Remove(chosenTypes[0]);
+                            chosenTypes.Add(possibleTypes[UnityEngine.Random.RandomRangeInt(0, possibleTypes.Count)]);
+
+                            Il2CppSystem.Collections.Generic.List<Character> possibleTargets = new Il2CppSystem.Collections.Generic.List<Character>();
+                            foreach (Character character in charactersNotMe)
+                            {
+                                if (chosenTypes.Contains(character.GetRegisterAs().type))
+                                {
+                                    possibleTargets.Add(character);
+                                }
+                            }
+                            selection.Add(possibleTargets[UnityEngine.Random.RandomRangeInt(0, possibleTargets.Count)]);
+                            possibleTargets.Remove(selection[0]);
+                            selection.Add(possibleTargets[UnityEngine.Random.RandomRangeInt(0, possibleTargets.Count)]);
+                            possibleTargets.Remove(selection[1]);
+                            selection.Add(possibleTargets[UnityEngine.Random.RandomRangeInt(0, possibleTargets.Count)]);
+                            possibleTargets.Remove(selection[2]);
+                        }
+
+                    }
+                }
+
+                if (selection.Count == 4)
+                {
+                    finalInfo = $"Among {MentionEveryCharacterInList(selection, "")}, there are 3 Types";
+                }
+                else
+                {
+                    selection.Clear();
+                    finalInfo = "There are two or less in-play Types";
+                }
+            }
+
+            if (chosenInfoType == "Scout")
+            {
+                string evilName = "";
+                CharacterData evilData = charRef.dataRef;
+                int chosenDist = 0;
+
+                if (charRef.GetRegisterAlignment() == EAlignment.Good && !goodCharacters.Contains(charRef)) goodCharacters.Add(charRef);
+                if (charRef.GetRegisterAlignment() == EAlignment.Evil && !evilCharacters.Contains(charRef)) evilCharacters.Add(charRef);
+
+                Il2CppSystem.Collections.Generic.List<CharacterData> allPossibleEvils = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+                Il2CppSystem.Collections.Generic.List<CharacterData> inPlayEvils = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+                foreach (Character character in evilCharacters)
+                {
+                    inPlayEvils.Add(character.GetRegisterAs());
+                    allPossibleEvils.Add(character.GetRegisterAs());
+                }
+                Il2CppSystem.Collections.Generic.List<CharacterData> outOfPlayEvils = GetPossibleHiddenRoles();
+                foreach (CharacterData character in Gameplay.Instance.GetScriptCharactersOfAlignment(EAlignment.Evil))
+                {
+                    if (!inPlayEvils.Contains(character)) outOfPlayEvils.Add(character);
+                    if (!allPossibleEvils.Contains(character)) allPossibleEvils.Add(character);
+                }
+
+                if (allPossibleEvils.Count == 0 || (inPlayEvils.Count == 0 && !lying))
+                {
+                    returnInfo.desc = "There are no Evil characters";
+                }
+                else
+                {
+                    if (lying) evilData = GetRandomItemOfList(allPossibleEvils);
+                    else evilData = GetRandomItemOfList(inPlayEvils);
+                    evilName = evilData.characterName;
+                    int trueDist = 10000;
+                    int checkDist = 10000;
+                    foreach (Character character in Gameplay.CurrentCharacters)
+                    {
+                        if (character.GetRegisterAs().characterName == evilName && character.GetRegisterAlignment() == EAlignment.Evil)
+                        {
+                            checkDist = GetClosestDistance(evilCharacters, character);
+                            if (checkDist < trueDist) trueDist = checkDist;
+                        }
+                    }
+                    if (!lying) chosenDist = trueDist;
+                    else
+                    {
+                        Il2CppSystem.Collections.Generic.List<Character> fakeEvilTeam = GetFakeEvilTeam();
+                        Character anchor = GetRandomItemOfList(fakeEvilTeam);
+                        int falseDist = GetClosestDistance(fakeEvilTeam, anchor);
+                        falseDist = MakeNumberWrongByRange(trueDist, falseDist, 1, 4, 3, 2);
+                        chosenDist = falseDist;
+                    }
+
+                    string cards = "cards";
+                    string their = "its";
+                    if (chosenDist == 1) cards = "card";
+                    if (evilData.gender == EGender.Male) their = "his";
+                    if (evilData.gender == EGender.Female) their = "her";
+                    if (evilData.gender == EGender.They) their = "their";
+
+                    finalInfo = $"{evilName} is {chosenDist} {cards} away from {their} closest Evil";
+                }
+            }
+            if (chosenInfoType == "Visionary")
+            {
+                w_Visionary visionaryRole = new w_Visionary();
+                if (lying) returnInfo = visionaryRole.GetBluffInfo(charRef);
+                else returnInfo = visionaryRole.GetInfo(charRef);
+                finalInfo = returnInfo.desc;
+                selection = returnInfo.characters;
             }
 
             returnInfo.desc = finalInfo;

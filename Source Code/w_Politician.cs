@@ -24,7 +24,7 @@ public class w_Politician : Role
             while (falseInfoOne.desc == falseInfoTwo.desc)
             {
                 MelonLogger.Msg("Not good enough, let's try that again");
-                falseInfoTwo = sharedScripts.GetRandomInfo(charRef, true, false, false);
+                falseInfoTwo = sharedScripts.GetRandomInfo(charRef, infoShouldBeFalse, false, false);
             }
         }
 

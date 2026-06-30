@@ -128,13 +128,16 @@ public class w_Tergiversator : Role
         randomNonsense.Add("To be Evil or not to be Evil - THAT is the question");
         randomNonsense.Add("The Arbiter and the Judge have an immense amount of respect for each other");
         randomNonsense.Add("The Arithmetician has never made a mistake in her life");
+        randomNonsense.Add("Every day, at 9AM sharp, the Bartender opens the bar and the Drunk walks in two seconds later");
         randomNonsense.Add("Nobody is sure why the Bloodseer is considered \"Good\". The Empress says she's \"helpful\"");
         randomNonsense.Add("The Cardshark has never lost a card game. People think she cheats, but she doesn't");
+        randomNonsense.Add("The Cartomancer once used the Cardshark's deck to predict the future, and still did so flawlessly");
         //randomNonsense.Add("People go to the Fortune Teller when they want to hear something, the Oracle when they need to hear something, and the Chiromancer when they aren't sure");
         randomNonsense.Add("The Clairvoyant considers the Enlightened a role model");
         randomNonsense.Add("The Copycat is the Doppelganger's sibling, and only the Druid knows so far");
         randomNonsense.Add("One time, the Detective was so frustrated with us, she declared everyone a liar and stormed off with a huff");
         randomNonsense.Add("The Devout's real name is Faith");
+        randomNonsense.Add("I'm convinced the Empath is friends with literally everyone at this point");
         randomNonsense.Add("The Forager and the Dreamer once both called the same person a cabbage. They're best friends now!");
         randomNonsense.Add("The Gossip knows almost everything about everyone. She's who I'm getting most of my info from!");
         randomNonsense.Add("The Gravekeeper and the Medium have a friendly rivalry with each other");
@@ -142,7 +145,10 @@ public class w_Tergiversator : Role
         //randomNonsense.Add("I heard the Gemcrafter telling the Jewelsmith that she bedazzled Mendaverte once. The Jewelsmith said she was probably just Corrupted");
         randomNonsense.Add("The Knave's been going on about some \"Riddle\" nonsense lately");
         randomNonsense.Add("The first shepherd the Lamb ever tried was the Drunk. I'm sure you can guess how that went");
+        randomNonsense.Add("One time, the Matchmaker tried to get the Gemcrafter and Lover together");
+        randomNonsense.Add("The Paperboy and Scout are brothers.\nYou can tell by their sense of direction");
         //randomNonsense.Add("One time, a random stranger came into the village and told the Performer that \"the muppets always lie\". Called themselves \"docomputernerd4096\", whatever that means");
+        randomNonsense.Add("Nobody knows who the Politician is.\nHe just showed up one day");
         randomNonsense.Add("The Prince wishes his mother, the Empress, was more trusting. The Empress wishes her son had her instinct");
         //randomNonsense.Add("The Ranger and the Hunter have a friendly rivalry going on, they constantly try to one-up the other during target practice");
         randomNonsense.Add("The Scavenger is the only person who isn't sad at funerals. We're used to it by now");
@@ -150,17 +156,21 @@ public class w_Tergiversator : Role
         randomNonsense.Add("The Sheriff wants to jail the Doppelganger and Copycat for identity theft, but he can't find either of them");
         randomNonsense.Add("The Spy sleeps on the roof of his house sometimes. He thinks nobody's caught on");
         randomNonsense.Add("The Sheriff and Warden both think the other is an idiot, but they love each other. Romantically");
+        randomNonsense.Add("I think the Visionary and Dreamer are friends? They hang out a lot, but their speeches are both incoherent");
 
         randomNonsense.Add("Would it surprise you to learn that the Chatterbox and the Rambler usually get along?");
+        randomNonsense.Add("I saw some kind of... shapeshifter, the other day, turning into whoever walked close");
         randomNonsense.Add("Some think the Lunatic is just stupid, but I'm pretty sure the guy is actually crazy");
         randomNonsense.Add("I saw a Puppet next to the Demon instead of a Puppeteer earlier, it was pretty weird");
         randomNonsense.Add("I still don't know what's up with the Mutant, but he scares me");
         randomNonsense.Add("One time, the Revolutionary yelled out \"Viva la revolution!\" and then proceeded to execute Iris");
         randomNonsense.Add("The Renegade and the Turncoat go way back. I think they defected together");
+        randomNonsense.Add("The Switchblade is actually my sister! She's so cold and closed off, but I bet she's secretly a big softie");
 
         randomNonsense.Add("The Acolyte is actually kind of smart, but the Zealot is an idiot");
         randomNonsense.Add("The Fanatic's just a poor naive kid who thought the Undying was really cool");
         randomNonsense.Add("The Zealot is an idiot, compared to their actually smart counterpart that is the Acolyte");
+        randomNonsense.Add("You heard the conspiracy theories of a Cryptid who lives in the nearby forest?");
         randomNonsense.Add("The Bishop hates the Heretic, but doesn't know who exactly it is. The Heretic loves messing with her");
         randomNonsense.Add("One night, I saw the Jester following Lilis around. It was weird");
         //randomNonsense.Add("The Architect is going crazy trying to work out what was wrong with their work. They shush us whenever we try to tell them about the Saboteur");
@@ -173,6 +183,7 @@ public class w_Tergiversator : Role
         randomNonsense.Add("The Empress tried to disguise herself to be safe from Carnicarius once. It didn't work");
         randomNonsense.Add("I've never actually seen Iris myself, I've only heard rumours");
         randomNonsense.Add("Leviathan is feared by even the rest of the Demons. Ever heard the Undying ask you to reason with them?");
+        randomNonsense.Add("Magnere is said to be the bravest of the Demons");
         //randomNonsense.Add("She's not a temptress, but most think she's Good.\nShe's truly Evil, but her teammates betray her.\nWhen she arrives in town, mass hysteria ensues.\n\nWho is she?\nMendaverte!");
         randomNonsense.Add("I feel bad for Praesect's Zealot. The Acolyte knows what's going on, but the Zealot is just a clueless kid");
         randomNonsense.Add("When that dense mist rolls in, I worry Tenecaligo is soon to follow");

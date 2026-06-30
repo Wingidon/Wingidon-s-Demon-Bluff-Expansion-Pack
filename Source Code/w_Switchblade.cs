@@ -152,6 +152,12 @@ public class w_Switchblade : Role
     public ActedInfo GetTargetedOneLiner(Character target)
     {
         Il2CppSystem.Collections.Generic.List<string> oneLiner = new Il2CppSystem.Collections.Generic.List<string>();
+        if (target.dataRef.characterId == "Tergiversator_WING")
+        {
+            return new ActedInfo($"Sorry, #{target.id}. You know I don't mean it, right, sis?");
+        }
+        Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
+        selection.Add(target);
         oneLiner.Add($"Bad decision, #{target.id}");
         oneLiner.Add($"You wouldn't dare, #{target.id}");
         oneLiner.Add($"#{target.id} needs to stop getting in my way");
@@ -163,7 +169,7 @@ public class w_Switchblade : Role
         oneLiner.Add($"You're really getting on my nerves, #{target.id}");
         oneLiner.Add($"I killed Good at #{target.id}");
         oneLiner.Add($"#{target.id} deserved that, by the way");
-        ActedInfo returnInfo = new ActedInfo(oneLiner[UnityEngine.Random.RandomRangeInt(0, oneLiner.Count)]);
+        ActedInfo returnInfo = new ActedInfo(oneLiner[UnityEngine.Random.RandomRangeInt(0, oneLiner.Count)], selection);
         return returnInfo;
     }
 

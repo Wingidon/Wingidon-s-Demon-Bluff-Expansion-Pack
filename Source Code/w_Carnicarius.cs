@@ -26,18 +26,23 @@ public class w_Carnicarius : Demon
     {
         if (trigger == ETriggerPhase.Init)
         {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
+        if (trigger == ETriggerPhase.Init)
+        {
             firstNight = true;
             firstDamage = false;
         }    
         if (trigger == ETriggerPhase.Night)
         {
+            Health health = PlayerController.PlayerInfo.health;
+            if (charRef.state == ECharacterState.Dead) return;
             if (firstNight == true)
             {
                 firstNight = false;
                 Act(ETriggerPhase.Night, charRef);
             }
-            if (charRef.state == ECharacterState.Dead) return;
-            Health health = PlayerController.PlayerInfo.health;
+            health.Damage(1);
 
             // Define "valuable" roles
             Il2CppSystem.Collections.Generic.List<string> valuableCharacters_IDs = new Il2CppSystem.Collections.Generic.List<string>(); // IDs
@@ -260,7 +265,7 @@ public class w_Carnicarius : Demon
             //wx_SavedScripts sharedScripts = new wx_SavedScripts();
             if (firstDamage)
             {
-                health.Damage(2);
+                //health.Damage(2);
             }
             else
             {

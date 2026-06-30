@@ -28,6 +28,7 @@ public class w_Echo : Role
         }
         if (trigger == wx_SavedScripts.w_AnyRevealPatch.AnyReveal) // When any character is Revealed
         {
+            wx_SavedScripts sharedScripts = new wx_SavedScripts();
             Il2CppSystem.Collections.Generic.List<Character> possibleTargets = new Il2CppSystem.Collections.Generic.List<Character>();
             foreach (Character character in Gameplay.CurrentCharacters)
             {
@@ -39,14 +40,13 @@ public class w_Echo : Role
             if (possibleTargets.Count != 0)
             {
                 Character chosenTarget = possibleTargets[UnityEngine.Random.RandomRangeInt(0, possibleTargets.Count)];
-                MelonLogger.Msg($"Echo at #{charRef.id} updating registration to {chosenTarget.dataRef.characterName} at #{chosenTarget.id}");
+                sharedScripts.DebugMessage($"Echo at #{charRef.id} updating registration to {chosenTarget.dataRef.characterName} at #{chosenTarget.id}");
                 charRef.UpdateRegisterAsRole(chosenTarget.dataRef);
             }
             else
             {
-                MelonLogger.Msg($"Echo at #{charRef.id} found nothing to Register as! This shouldn't be happening, is everyone an Echo or something?");
+                sharedScripts.DebugMessage($"Echo at #{charRef.id} found nothing to Register as! This shouldn't be happening, is everyone an Echo or something?");
             }
-            wx_SavedScripts sharedScripts = new wx_SavedScripts();
             if (sharedScripts.PercentChance(50))
             {
                 if (charRef.statuses.Contains(ECharacterStatus.AppearLying))

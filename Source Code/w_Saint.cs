@@ -99,7 +99,7 @@ public class w_Saint : Role
         returnList.Add("Let us pray, and may the unity of our vision make Saints of us all");
 
         // https://www.franciscanmedia.org/franciscan-spirit-blog/quotes-from-catholic-saints/
-        returnList.Add("Neither graces, nor revelations, nor raptures, nor gifts granted to a soul make it perfect, but rather the intimate union of the soul with God"); // Quote from Saint Maria Faustina Kowalska
+        //returnList.Add("Neither graces, nor revelations, nor raptures, nor gifts granted to a soul make it perfect, but rather the intimate union of the soul with God"); // Quote from Saint Maria Faustina Kowalska. Removed for being too long.
         returnList.Add("This morning my soul is greater than the world since it possesses you, you whom heaven and earth do not contain"); // Quote from Saint Margaret of Cortona
 
         // https://www.goodreads.com/quotes/40124-have-patience-with-all-things-but-chiefly-have-patience-with
@@ -112,7 +112,7 @@ public class w_Saint : Role
         returnList.Add("Be brave, do not be led by what others think or say!"); // Quote from Saint John Bosco
 
         // https://www.dosp.org/our-faith/saints/saint-quotes/
-        returnList.Add("You see my heart, you know my desires. Possess all that I am - you alone. I am your sheep; make me worthy to overcome the devil"); // Quote from Saint Agatha
+        //returnList.Add("You see my heart, you know my desires. Possess all that I am - you alone. I am your sheep; make me worthy to overcome the devil"); // Quote from Saint Agatha. Removed for being too long.
         returnList.Add("It is with the smallest brushes that the artist paints the most exquisitely beautiful pictures"); // Quote from Saint André Bessette
         returnList.Add("When we pray, the voice of the heart must be heard more than that proceeding from the mouth"); // Quote from Saint Bonaventure
         returnList.Add("In everything, whether it is a thing sensed or a thing known, God himself is hidden within"); // Quote from Saint Bonaventure

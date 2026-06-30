@@ -24,6 +24,10 @@ public class w_Tenecaligo : Demon
     public Il2CppSystem.Collections.Generic.List<Il2Cpp.CharacterData> scriptCharacters = Gameplay.Instance.GetScriptCharacters();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             Il2CppSystem.Collections.Generic.List<string> possibleOutcasts = new Il2CppSystem.Collections.Generic.List<string>(); // What Outcasts can Tenecaligo add? (By ID)
@@ -261,8 +265,7 @@ public class w_Tenecaligo : Demon
     }
     public override CharacterData GetBluffIfAble(Character charRef)
     {
-        CharacterData bluff = Characters.Instance.GetRandomUniqueVillagerBluff();
-        bluff = Characters.Instance.GetRandomUniqueVillagerBluff();
+        CharacterData bluff = new wx_SavedScripts().GetOverrideNotInPlayBluff(charRef, false);
         Gameplay.Instance.AddScriptCharacterIfAble(bluff.type, bluff);
         return bluff;
     }

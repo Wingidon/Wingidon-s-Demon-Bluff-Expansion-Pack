@@ -11,6 +11,8 @@ public class w_Knave : Role
 {
     public Il2CppSystem.Collections.Generic.List<ActedInfo> GetInfoList(Character charRef)
     {
+        Il2CppSystem.Collections.Generic.List<ActedInfo> possibleCaptivator = CheckIfUniqueCharacter(charRef);
+        if (possibleCaptivator.Count != 1) return possibleCaptivator;
         Il2CppSystem.Collections.Generic.List<ActedInfo> returnList = new Il2CppSystem.Collections.Generic.List<ActedInfo>();
         wx_SavedScripts sharedScripts = new wx_SavedScripts();
         ActedInfo trueInfo = sharedScripts.GetRandomInfo(charRef, false, false, false);
@@ -59,6 +61,8 @@ public class w_Knave : Role
     }
     public Il2CppSystem.Collections.Generic.List<ActedInfo> GetBluffInfoList(Character charRef)
     {
+        Il2CppSystem.Collections.Generic.List<ActedInfo> possibleCaptivator = CheckIfUniqueCharacter(charRef);
+        if (possibleCaptivator.Count != 1) return possibleCaptivator;
         wx_SavedScripts sharedScripts = new wx_SavedScripts();
         Il2CppSystem.Collections.Generic.List<ActedInfo> returnList = new Il2CppSystem.Collections.Generic.List<ActedInfo>();
         ActedInfo infoOne = new ActedInfo("");
@@ -153,50 +157,79 @@ public class w_Knave : Role
     }
 
 
-    public ActedInfo CheckIfUniqueCharacter(Character charRef) // Checks if the character is one that gives unique info
+    public Il2CppSystem.Collections.Generic.List<ActedInfo> CheckIfUniqueCharacter(Character charRef) // Checks if the character is one that gives unique info
     {
+        Il2CppSystem.Collections.Generic.List<ActedInfo> returnInfo = new Il2CppSystem.Collections.Generic.List<ActedInfo>();
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
         if (charRef.dataRef.characterId == "Captivator_scm") // Learns 2 false statements and a true statement
         {
-            wx_SavedScripts sharedScripts = new wx_SavedScripts();
-            ActedInfo trueInfo = sharedScripts.GetRandomInfo(charRef, false, false, false);
-            ActedInfo trueInfoTwo = sharedScripts.GetRandomInfo(charRef, true, false, false);
-            ActedInfo falseInfo = sharedScripts.GetRandomInfo(charRef, true, false, false);
+            sharedScripts.DebugMessage("We got a Captivator Knave!");
+            Il2CppSystem.Collections.Generic.List<string> infoSoFar = new Il2CppSystem.Collections.Generic.List<string>(); // Used to avoid doubling up
+            int trueStatementNumber = UnityEngine.Random.RandomRangeInt(1, 4); // Generates 1, 2 or 3
+            ActedInfo infoOne = sharedScripts.GetRandomInfo(charRef, true, false, false);
+            ActedInfo infoTwo = sharedScripts.GetRandomInfo(charRef, true, false, false);
+            ActedInfo infoThree = sharedScripts.GetRandomInfo(charRef, true, false, false);
 
-            if (falseInfo == trueInfoTwo)
+            infoSoFar.Add(infoOne.desc);
+            if (infoSoFar.Contains(infoTwo.desc))
             {
-                while (falseInfo == trueInfoTwo)
+                while (infoSoFar.Contains(infoTwo.desc))
                 {
-                    MelonLogger.Msg("Not good enough, let's try again");
-                    trueInfoTwo = sharedScripts.GetRandomInfo(charRef, true, false, false);
+                    sharedScripts.DebugMessage("Not good enough, let's try again");
+                    infoTwo = sharedScripts.GetRandomInfo(charRef, true, false, false);
+                }
+            }
+            infoSoFar.Add(infoTwo.desc);
+            if (infoSoFar.Contains(infoThree.desc))
+            {
+                while (infoSoFar.Contains(infoThree.desc))
+                {
+                    sharedScripts.DebugMessage("Not good enough, let's try again");
+                    infoThree = sharedScripts.GetRandomInfo(charRef, true, false, false);
                 }
             }
 
-            string line = "";
-            Il2CppSystem.Collections.Generic.List<ActedInfo> infos = new Il2CppSystem.Collections.Generic.List<ActedInfo>();
-            infos.Add(trueInfo);
-            infos.Add(trueInfoTwo);
-            infos.Add(falseInfo);
+            sharedScripts.DebugMessage($"Statement #{trueStatementNumber} is true, others are false");
+            if (trueStatementNumber == 1) infoOne = sharedScripts.GetRandomInfo(charRef, false, false, false);
+            else if (trueStatementNumber == 2) infoTwo = sharedScripts.GetRandomInfo(charRef, false, false, false);
+            else infoThree = sharedScripts.GetRandomInfo(charRef, false, false, false);
 
-            Il2CppSystem.Collections.Generic.List<ActedInfo> randomisedOrderInfos = new Il2CppSystem.Collections.Generic.List<ActedInfo>();
-            randomisedOrderInfos.Add(infos[UnityEngine.Random.RandomRangeInt(0, infos.Count)]);
-            infos.Remove(randomisedOrderInfos[0]);
-            randomisedOrderInfos.Add(infos[UnityEngine.Random.RandomRangeInt(0, infos.Count)]);
-            infos.Remove(randomisedOrderInfos[1]);
-            randomisedOrderInfos.Add(infos[0]);
+            string combinedInfo = $"{infoOne.desc}\n\n"
+                                + $"{infoTwo.desc}\n\n"
+                                + $"{infoThree.desc}";
+            Il2CppSystem.Collections.Generic.List<Character> combinedSelection = new Il2CppSystem.Collections.Generic.List<Character>();
+            if (infoOne.characters.Count != 0)
+            {
+                foreach (Character character in infoOne.characters)
+                {
+                    combinedSelection.Add(character);
+                }
+            }
+            if (infoTwo.characters.Count != 0)
+            {
+                foreach (Character character in infoTwo.characters)
+                {
+                    combinedSelection.Add(character);
+                }
+            }
+            if (infoThree.characters.Count != 0)
+            {
+                foreach (Character character in infoThree.characters)
+                {
+                    combinedSelection.Add(character);
+                }
+            }
 
-            Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
-            foreach (Character character in trueInfo.characters) selection.Add(character);
-            foreach (Character character in trueInfoTwo.characters) selection.Add(character);
-            foreach (Character character in falseInfo.characters) selection.Add(character);
+            ActedInfo combinedActedInfo = new ActedInfo(combinedInfo, combinedSelection);
 
-            line = $"{randomisedOrderInfos[0].desc}\n\n"
-                 + $"{randomisedOrderInfos[1].desc}\n\n"
-                 + $"{randomisedOrderInfos[2].desc}";
-
-            ActedInfo actedInfo = new ActedInfo(line, selection);
-            return actedInfo;
+            returnInfo.Add(infoOne);
+            returnInfo.Add(infoTwo);
+            returnInfo.Add(infoThree);
+            returnInfo.Add(combinedActedInfo);
         }
-        return new ActedInfo("False");
+        sharedScripts.DebugMessage("Knave isn't a Captivator");
+        returnInfo.Add(new ActedInfo("False"));
+        return returnInfo;
     }
 }
 
