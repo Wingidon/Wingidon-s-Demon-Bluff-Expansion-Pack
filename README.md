@@ -43,11 +43,13 @@ Currently, this mod includes the following roles:
 - Forager - Picks 1 character and Learns if they're a Villager.
 - Gossip - Picks 1 character and Learns random info about them.
 - Gravekeeper - Learns random info about every dead character when activated.
+- Hound Tamer - Learns a character that is either Lying, Disguising, or a non-Villager.
 - Introvert - Learns 2 roles that sit within 2 cards of herself.
 - Jewelsmith - Learns an Honest character.
 - Knave - Learns two sets of info, but only one is true.
 - Lamb - Learns his distance to a particular Outcast.
 - Matchmaker - Picks 2 characters and Learns something they have in common.
+- Overseer - Picks a character and Disguises as them.
 - Paperboy - Learns how long his chain of Good characters is.
 - Performer - Learns an Evil character, but gets bad info if adjacent to Evil.
 - Politician - Corrupted Villager that Learns two sets of false info.
