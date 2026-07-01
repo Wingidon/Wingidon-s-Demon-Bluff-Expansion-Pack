@@ -28,9 +28,14 @@ public class w_Politician : Role
             }
         }
 
+        sharedScripts.DebugMessage("Finished gathering Politician info");
+
+
+        // The error is happening around here. Seems to be happening specifically with Cartomancer info? Will remove and see if that fixes it.
         Il2CppSystem.Collections.Generic.List<Character> realSelection = new Il2CppSystem.Collections.Generic.List<Character>();
         if (falseInfoOne.characters.Count != 0)
         {
+            sharedScripts.DebugMessage($"FalseInfoOne has characters: {sharedScripts.MentionEveryCharacterInList(falseInfoOne.characters, "")}");
             foreach (Character character in falseInfoOne.characters)
             {
                 realSelection.Add(character);
@@ -38,13 +43,16 @@ public class w_Politician : Role
         }
         if (falseInfoTwo.characters.Count != 0)
         {
+            sharedScripts.DebugMessage($"FalseInfoTwo has characters: {sharedScripts.MentionEveryCharacterInList(falseInfoTwo.characters, "")}");
             foreach (Character character in falseInfoTwo.characters)
             {
                 realSelection.Add(character);
             }
         }
+        sharedScripts.DebugMessage("Finished compiling selection");
 
         string realInfo = $"{falseInfoOne.desc}\n\n{falseInfoTwo.desc}";
+        sharedScripts.DebugMessage("Finished compiling info");
         return new ActedInfo(realInfo, realSelection);
     }
     public override ActedInfo GetBluffInfo(Character charRef)

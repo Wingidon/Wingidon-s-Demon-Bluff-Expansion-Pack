@@ -587,6 +587,15 @@ public class MainMod : MelonMod
 
 
 
+        CharacterData w_houndtamer = newCharacter("Hound Tamer", EAlignment.Good, ECharacterType.Villager, true, false, "\"If her dog loves you, she loves you.\nIf it doesn't, though...\"", "Werewolf_78350415");
+        w_houndtamer.role = new w_HoundTamer();
+        w_houndtamer.description = "Learn a character that is either Lying, Disguising, an Outcast, a Minion or a Demon.";
+        w_houndtamer.hints = $"My dog growls at most characters, but barks at the {roleColour("Minion")}Werewolf</color>.";
+        w_houndtamer.gender = EGender.Female;
+        // Little easter egg for anyone reading this, the Hound Tamer's dog is based on an Ibizan Hound. More specifically, I used this image as reference when colouring it: https://www.dogsnsw.org.au/media/img/BrowseAllBreed/Ibizan-Hound.jpg
+
+
+
         /* Apparently ETriggerPhase.OnReveal doesn't work for Pick characters :(
         CharacterData w_bountyhunter = newCharacter("Bounty Hunter", EAlignment.Good, ECharacterType.Villager, false, false, "\"Alone, she walks these streets, paved with the sick stench of corruption. Its thickness worms its way into her nostrils, unbidden, burning with revulsion. And anticipation. The illness of this wretched place grows each night. And she... she is the cure.\"", "Bounty Hunter_39284184");
         w_bountyhunter.role = new w_BountyHunter();
@@ -2792,6 +2801,7 @@ public class MainMod : MelonMod
             //addRole(script.startingTownsfolks, w_gambler);
             addRole(script.startingTownsfolks, w_gossip);
             addRole(script.startingTownsfolks, w_gravekeeper);
+            addRole(script.startingTownsfolks, w_houndtamer);
             //addRole(script.startingTownsfolks, w_insomniac);
             addRole(script.startingTownsfolks, w_introvert);
             addRole(script.startingTownsfolks, w_jewelsmith);
@@ -2835,8 +2845,9 @@ public class MainMod : MelonMod
             addRoleIfNotJinxed(script.startingMinions, w_undying, undyingJinxes, script.startingDemons);
             for (int i = 0; i < 100; i++)
             {
-                //addRoleEvenIfDupe(script.startingTownsfolks, w_bartender);
-                //addRoleEvenIfDupe(script.startingTownsfolks, w_visionary);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_houndtamer);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_politician);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_knave);
                 //addRoleEvenIfDupe(script.startingOutsiders, w_switchblade);
                 //addRoleEvenIfDupe(script.startingMinions, w_cryptid);
                 //addRoleEvenIfDupe(script.startingMinions, w_snakeCharmer);

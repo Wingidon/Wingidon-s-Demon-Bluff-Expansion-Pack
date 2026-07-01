@@ -42,9 +42,9 @@ public class w_Knave : Role
         randomisedOrderInfos.Add(infos[0]);
 
         Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
-        foreach (Character character in trueInfo.characters) selection.Add(character);
-        foreach (Character character in trueInfoTwo.characters) selection.Add(character);
-        foreach (Character character in falseInfo.characters) selection.Add(character);
+        if (trueInfo.characters.Count != 0) foreach (Character character in trueInfo.characters) selection.Add(character);
+        if (trueInfoTwo.characters.Count != 0) foreach (Character character in trueInfoTwo.characters) selection.Add(character);
+        if (falseInfo.characters.Count != 0) foreach (Character character in falseInfo.characters) selection.Add(character);
 
         line = $"{randomisedOrderInfos[0].desc}\n\n"
              + $"{randomisedOrderInfos[1].desc}\n\n"
@@ -99,9 +99,9 @@ public class w_Knave : Role
              + $"{infoThree.desc}";
 
         Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
-        foreach (Character character in infoOne.characters) selection.Add(character);
-        foreach (Character character in infoTwo.characters) selection.Add(character);
-        foreach (Character character in infoThree.characters) selection.Add(character);
+        if (infoOne.characters.Count != 0) foreach (Character character in infoOne.characters) selection.Add(character);
+        if (infoTwo.characters.Count != 0) foreach (Character character in infoTwo.characters) selection.Add(character);
+        if (infoThree.characters.Count != 0) foreach (Character character in infoThree.characters) selection.Add(character);
 
         returnList.Add(infoOne);
         returnList.Add(infoTwo);

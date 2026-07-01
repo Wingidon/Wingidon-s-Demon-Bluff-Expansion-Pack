@@ -630,6 +630,15 @@ namespace ExpansionPack
 
 
 
+        public ActedInfo ReturnInfoWithSingleSelection(string info, Character selection)
+        {
+            Il2CppSystem.Collections.Generic.List<Character> selectionList = new Il2CppSystem.Collections.Generic.List<Character>();
+            selectionList.Add(selection);
+            return new ActedInfo(info, selectionList);
+        }
+
+
+
         public Character GetRandomItemOfList(Il2CppSystem.Collections.Generic.List<Character> list)
         {
             if (list.Count == 0)
@@ -1368,7 +1377,7 @@ namespace ExpansionPack
             infoTypes.Add("Judge"); // Lying cop
             infoTypes.Add("Arbiter"); // Disguising cop
             infoTypes.Add("Forager"); // Villager Cop
-            infoTypes.Add("Cartomancer"); // Learns an in-play character and an out-of-play character, but not which is which.
+            // infoTypes.Add("Cartomancer"); // Learns an in-play character and an out-of-play character, but not which is which.
             infoTypes.Add("Duchess"); // Learns 4 characters, among which are exactly 3 Types.
             infoTypes.Add("Scout"); // Learns distance from an Evil character to its closest Evil.
             if (goodCharacters.Count != 0 && evilCharacters.Count != 0)
