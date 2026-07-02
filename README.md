@@ -46,7 +46,7 @@ Currently, this mod includes the following roles:
 - Hound Tamer - Learns a character that is either Lying, Disguising, or a non-Villager.
 - Introvert - Learns 2 roles that sit within 2 cards of herself.
 - Jewelsmith - Learns an Honest character.
-- Knave - Learns two sets of info, but only one is true.
+- Knave - Learns three sets of info, but one is false.
 - Lamb - Learns his distance to a particular Outcast.
 - Matchmaker - Picks 2 characters and Learns something they have in common.
 - Overseer - Picks a character and Disguises as them.
@@ -90,7 +90,7 @@ Currently, this mod includes the following roles:
 - Caedoccidere - Kills a revealed character at night. Lies and Disguises.
 - Carnicarius - Kills at night, picking its targets wisely. Lies and Disguises.
 - Iris - Registers as Good and turns a Villager Evil. Lies and Disguises.
-- Leviathan - Most characters are Outcasts. Lose if you execute a Villager. Lies and Disguises.
+- Leviathan - Extra fake characters are added to the Deck. Lose if you execute a Villager. Lies and Disguises.
 - Magnere - Attacks you with bigger villages, becoming a different Demon in the process.
 - Mendaverte - Villagers are Corrupted. Evil characters tell the truth. Lies and Disguises.
 - Praesect - Creates an Acolyte and a Zealot. Deals damage if Executed before both are killed. Lies and Diguises.
@@ -99,4 +99,4 @@ Currently, this mod includes the following roles:
 - Venelum - Corrupts an adjacent Villager. Turns a Corrupted character Evil. Lies and Disguises.
 - Veniyon - Shows up alongside Vidiyon & Viciyon. Corrupts a nearby character. Lies and Disguises like a Minion.
 - Vidiyon - Shows up alongside Veniyon & Viciyon. Turns Corrupted characters Evil. Lies and Disguises.
-- Viciyon - Shows up alongside Veniyon & Vidiyon. Deals damage if Executed while other Evil characters live. Lies and Disguises.
+- Viciyon - Shows up alongside Veniyon & Vidiyon. Corrupts a far away character. Corrupts herself. Lies and Disguises.
