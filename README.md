@@ -77,9 +77,9 @@ Currently, this mod includes the following roles:
 - Fanatic - Minion created by another character's ability. Lies and Disguises.
 - Heretic - Adds two fake Minions and two fake Demons to the Deck. Lies and Disguises.
 - Professional - Registers as Good. Lies and Disguises.
-- Ritualist - Deals damage based on characters revealed.
+- Ritualist - Deals damage based on characters revealed. Lies and Disguises.
 - Saboteur - Corrupts the character furthest away from it. Lies and Disguises.
-- Snake Charmer - Poisons a random character, killing them after five characters are Revealed
+- Snake Charmer - Poisons a random character, killing them after five characters are Revealed. Lies and Disguises.
 - Swarm - There are 3 Swarm. Two of them are Evil, they Lie and Disguise, and the other is Good, Learning that two of four characters are Swarm.
 - Turncoat - Disguises as an in-play character.
 - Undying - Doesn't Disguise, but can't be killed unless they're the last remaining Evil. Might create a Fanatic.
