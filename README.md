@@ -56,7 +56,7 @@ Currently, this mod includes the following roles:
 - Ranger - Learns his distance to his furthest Evil character.
 - Scavenger - Heals you based on the number of dead Evil characters.
 - Sentinel - Learns that one of two characters is Corrupted.
-- Sheriff - Learns a character being used as a Disguise.
+- Sleuth - Learns a role being used as a Disguise.
 - Spy - Learns an Evil role that hasn't been revealed yet.
 - Visionary - Learns what characters could be every few Reveals.
 - Warden - Picks 4 and learns the most common character type among them.
