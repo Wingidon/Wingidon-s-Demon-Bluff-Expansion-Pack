@@ -13,7 +13,6 @@ Almost none of the art was made by me. Most are either by Normandia, or edits of
 - Paperboy: Astery (https://discord.com/channels/1148903384968089640/1399932582723846144/1437801771090317392)
 - Scavenger: LostIllustrator (https://discord.com/channels/1148903384968089640/1408446574685585458/1408446574685585458)
 - Sentinel: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1433438063341731881)
-- Sheriff: I recoloured the silhouette of the role from Town of Salem 2. (https://town-of-salem.fandom.com/wiki/Sheriff_(ToS_2))
 - Spy: Panda, though the original message was deleted for some reason? Remnants exist at https://discord.com/channels/1148903384968089640/1400730209472221234/1426689893211570293.
 - Warden: LullabiesMourn (https://discord.com/channels/1148903384968089640/1399932582723846144/1455229912179933244)
 - Lunatic: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1417961198258753627)
