@@ -18,7 +18,7 @@ using static Il2Cpp.GameplayEvents;
 using static Il2CppSystem.Array;
 using static MelonLoader.Modules.MelonModule;
 
-[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "1.0", "Wingidon")]
+[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.2.4", "Wingidon")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
 
 namespace ExpansionPack;
@@ -312,8 +312,10 @@ public class MainMod : MelonMod
         w_devoutNew.picking = true;
         w_devoutNew.abilityUsage = EAbilityUsage.Once;
 
-        CharacterData w_sheriff = newCharacter("Sheriff", EAlignment.Good, ECharacterType.Villager, true, false, "\"Paid to deal with common criminals, not demons.\"", "Bishop_58855542");
+        //CharacterData w_sheriff = newCharacter("Sheriff", EAlignment.Good, ECharacterType.Villager, true, false, "\"Paid to deal with common criminals, not demons.\"", "Bishop_58855542");
+        CharacterData w_sheriff = newCharacter("Sleuth", EAlignment.Good, ECharacterType.Villager, true, false, "\"He's the reason Evil doesn't coordinate much.\nWhen they do, he catches them.\"", "Investigator_34015277");
         w_sheriff.role = new w_Sheriff();
+        w_sheriff.characterId = "Sheriff_WING";
         w_sheriff.description = "Learn 1 role that is being used as a Disguise.";
         w_sheriff.gender = EGender.Male;
 
@@ -596,11 +598,11 @@ public class MainMod : MelonMod
 
 
 
-        /* Apparently ETriggerPhase.OnReveal doesn't work for Pick characters :(
-        CharacterData w_bountyhunter = newCharacter("Bounty Hunter", EAlignment.Good, ECharacterType.Villager, false, false, "\"Alone, she walks these streets, paved with the sick stench of corruption. Its thickness worms its way into her nostrils, unbidden, burning with revulsion. And anticipation. The illness of this wretched place grows each night. And she... she is the cure.\"", "Bounty Hunter_39284184");
+        /*
+        CharacterData w_bountyhunter = newCharacter("Bounty Hunter", EAlignment.Good, ECharacterType.Villager, false, false, "\"Where there's Evil, there are bounties.\nSaid bounties aren't going to hunt themselves.\"", "Bounty Hunter_39284184");
         w_bountyhunter.role = new w_BountyHunter();
         w_bountyhunter.description = $"Learn an in-play Evil Minion or Demon role.\n\n<b>Activate Me:</b>\nDeal 2 {formattedKeyText("Damage")} to you.\nLearn who it is.";
-        w_bountyhunter.ifLies = $"The role I mention can be in-play or not-in-play.\nThe character I Learn will be wrong.\nI still deal {formattedKeyText("Damage")} to you when Activated.";
+        w_bountyhunter.ifLies = $"I still deal {formattedKeyText("Damage")} to you when Activated, but my info will be wrong.\nThe role I mention could be in-play or out-of-play.";
         w_bountyhunter.gender = EGender.Female;
         w_bountyhunter.picking = true;
         w_bountyhunter.abilityUsage = EAbilityUsage.Once;
@@ -2787,7 +2789,7 @@ public class MainMod : MelonMod
             // addRole(script.startingTownsfolks, w_balloonist); // Doesn't work
             addRole(script.startingTownsfolks, w_bartender);
             addRole(script.startingTownsfolks, w_bloodseer);
-            // addRole(script.startingTownsfolks, w_bountyhunter);
+            //addRole(script.startingTownsfolks, w_bountyhunter);
             addRole(script.startingTownsfolks, w_cardshark);
             addRole(script.startingTownsfolks, w_cartomancer);
             addRole(script.startingTownsfolks, w_chiromancer);
@@ -2845,7 +2847,7 @@ public class MainMod : MelonMod
             addRoleIfNotJinxed(script.startingMinions, w_undying, undyingJinxes, script.startingDemons);
             for (int i = 0; i < 100; i++)
             {
-                //addRoleEvenIfDupe(script.startingTownsfolks, w_houndtamer);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_bountyhunter);
                 //addRoleEvenIfDupe(script.startingTownsfolks, w_politician);
                 //addRoleEvenIfDupe(script.startingTownsfolks, w_knave);
                 //addRoleEvenIfDupe(script.startingOutsiders, w_switchblade);
