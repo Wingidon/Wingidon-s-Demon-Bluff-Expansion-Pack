@@ -54,6 +54,7 @@ Currently, this mod includes the following roles:
 - Politician - Corrupted Villager that Learns two sets of false info.
 - Prince - Learns that one of two characters is Disguised.
 - Ranger - Learns his distance to his furthest Evil character.
+- Saint - Always Good. _Always._
 - Scavenger - Heals you based on the number of dead Evil characters.
 - Sentinel - Learns that one of two characters is Corrupted.
 - Sleuth - Learns a role being used as a Disguise.
