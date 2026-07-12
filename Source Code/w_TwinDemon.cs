@@ -9,7 +9,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using static Il2CppSystem.Globalization.CultureInfo;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_TwinDemon : Demon
@@ -25,6 +25,10 @@ public class w_TwinDemon : Demon
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             Il2CppSystem.Collections.Generic.List<Character> validPoisonTargets = new Il2CppSystem.Collections.Generic.List<Character>();
@@ -79,6 +83,10 @@ public class w_TwinDemon : Demon
     /* Old code
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             Il2CppSystem.Collections.Generic.List<Character> chars = new Il2CppSystem.Collections.Generic.List<Character>(Gameplay.CurrentCharacters.Pointer);

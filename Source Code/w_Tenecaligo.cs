@@ -9,7 +9,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using static Il2CppSystem.Globalization.CultureInfo;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Tenecaligo : Demon

@@ -8,7 +8,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using HarmonyLib;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Chatterbox : Role
@@ -25,6 +25,10 @@ public class w_Chatterbox : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
             chatterPoisonTarget = charRef;
@@ -100,6 +104,10 @@ public class w_Chatterbox : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger != ETriggerPhase.Day) return;
         onActed.Invoke(GetInfo(charRef));
     }

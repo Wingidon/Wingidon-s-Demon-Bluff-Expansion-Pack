@@ -7,7 +7,7 @@ using System;
 using System.ComponentModel.Design;
 using UnityEngine;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Professional : Role
@@ -22,6 +22,10 @@ public class w_Professional : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
     }
     public override ActedInfo GetInfo(Character charRef)
     {
@@ -33,6 +37,10 @@ public class w_Professional : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
     }
     public string ConjourInfo()
     {

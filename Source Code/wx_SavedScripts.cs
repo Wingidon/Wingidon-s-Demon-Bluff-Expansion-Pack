@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using static MelonLoader.MelonLaunchOptions;
 
-namespace ExpansionPack
+namespace WingidonExpansionPack
 {
     // Token: 0x02000007 RID: 7
     [RegisterTypeInIl2Cpp]
@@ -400,8 +400,8 @@ namespace ExpansionPack
         }
         public bool PercentChance(float percentage)
         {
-            if (UnityEngine.Random.RandomRange(0, 100) <= percentage) return false;
-            return true;
+            if (UnityEngine.Random.RandomRange(0, 100) <= percentage) return true;
+            return false;
         }
 
         public Il2CppSystem.Collections.Generic.List<Character> GetCharacterNeighbours(Character targetChar)
@@ -486,6 +486,18 @@ namespace ExpansionPack
 
             // CSK's Expansion Pack
             demonNames.Add("Belias");
+
+            // LRZH's Circus
+            demonNames.Add("Dominion");
+            demonNames.Add("Mahr");
+            demonNames.Add("Po");
+
+            // Power Play
+            demonNames.Add("Death");
+            demonNames.Add("Famine");
+            demonNames.Add("Pestilence");
+            demonNames.Add("War");
+
             if (pluralNamesV.Contains(Name))
             {
                 return "an ";
@@ -1378,7 +1390,7 @@ namespace ExpansionPack
             infoTypes.Add("Arbiter"); // Disguising cop
             infoTypes.Add("Forager"); // Villager Cop
             // infoTypes.Add("Cartomancer"); // Learns an in-play character and an out-of-play character, but not which is which.
-            infoTypes.Add("Duchess"); // Learns 4 characters, among which are exactly 3 Types.
+            // infoTypes.Add("Duchess"); // Learns 4 characters, among which are exactly 3 Types.
             infoTypes.Add("Scout"); // Learns distance from an Evil character to its closest Evil.
             if (goodCharacters.Count != 0 && evilCharacters.Count != 0)
             {
@@ -2087,6 +2099,14 @@ namespace ExpansionPack
                 if (lying)
                 {
                     Il2CppSystem.Collections.Generic.List<Character> fakeChars = GetFakeGroup(evilCharacters);
+                    if (fakeChars.Count == 1)
+                    {
+                        if (fakeChars[0].id == charRef.id)
+                        {
+                            fakeChars.Clear();
+                            fakeChars.Add(allCharacters[UnityEngine.Random.RandomRangeInt(0, allCharacters.Count)]);
+                        }
+                    }
                     int falseDist = GetFurthestDistance(fakeChars, charRef);
                     int trueDist = GetFurthestDistance(evilCharacters, charRef);
                     chosenDist = MakeNumberWrong(trueDist, falseDist, 1);
@@ -2181,6 +2201,14 @@ namespace ExpansionPack
                 if (lying)
                 {
                     Il2CppSystem.Collections.Generic.List<Character> fakeChars = GetFakeGroup(evilCharacters);
+                    if (fakeChars.Count == 1)
+                    {
+                        if (fakeChars[0].id == charRef.id)
+                        {
+                            fakeChars.Clear();
+                            fakeChars.Add(allCharacters[UnityEngine.Random.RandomRangeInt(0, allCharacters.Count)]);
+                        }
+                    }
                     int falseDist = GetClosestDistance(fakeChars, charRef);
                     int trueDist = GetClosestDistance(evilCharacters, charRef);
                     chosenDist = MakeNumberWrong(trueDist, falseDist, 1);
@@ -2208,6 +2236,14 @@ namespace ExpansionPack
                 if (lying)
                 {
                     Il2CppSystem.Collections.Generic.List<Character> fakeChars = GetFakeGroup(corruptedCharacters);
+                    if (fakeChars.Count == 1)
+                    {
+                        if (fakeChars[0].id == charRef.id)
+                        {
+                            fakeChars.Clear();
+                            fakeChars.Add(allCharacters[UnityEngine.Random.RandomRangeInt(0, allCharacters.Count)]);
+                        }
+                    }
                     int falseDist = GetClosestDistance(fakeChars, charRef);
                     int trueDist = GetClosestDistance(corruptedCharacters, charRef);
                     chosenDist = MakeNumberWrong(trueDist, falseDist, 1);

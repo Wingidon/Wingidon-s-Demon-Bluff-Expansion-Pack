@@ -7,9 +7,9 @@ using MelonLoader;
 using System;
 using System.ComponentModel.Design;
 using UnityEngine;
-using static ExpansionPack.w_Caedoccidere;
+using static WingidonExpansionPack.w_Caedoccidere;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Carnicarius : Demon

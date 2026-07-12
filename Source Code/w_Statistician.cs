@@ -6,7 +6,7 @@ using System;
 using static MelonLoader.MelonLogger;
 using static MelonLoader.Modules.MelonModule;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Statistician : Role

@@ -7,7 +7,7 @@ using System;
 using System.ComponentModel.Design;
 using UnityEngine;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Scholar : Role
@@ -74,6 +74,7 @@ public class w_Scholar : Role
             myDisguise = chars[0].dataRef;
         }
         if (myDisguise.startingAlignment == EAlignment.Evil) return;
+        if (!myDisguise.bluffable) return;
 
         chRef.statuses.AddStatus(ECharacterStatus.HealthyBluff, charRef);
         OnActed(ETriggerPhase.Day, chRef, new ActedInfo("I am the Overseer"));

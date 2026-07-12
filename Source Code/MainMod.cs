@@ -1,4 +1,4 @@
-﻿using ExpansionPack;
+﻿using WingidonExpansionPack;
 using HarmonyLib;
 using Il2Cpp;
 using Il2CppInterop.Runtime;
@@ -18,10 +18,10 @@ using static Il2Cpp.GameplayEvents;
 using static Il2CppSystem.Array;
 using static MelonLoader.Modules.MelonModule;
 
-[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.2.4", "Wingidon")]
+[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.2.6", "Wingidon")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 public class MainMod : MelonMod
 {
     public override void OnInitializeMelon()
@@ -907,7 +907,7 @@ public class MainMod : MelonMod
         CharacterData w_professional = newCharacter("Professional", EAlignment.Evil, ECharacterType.Minion, false, true, "\"If you're going to be committing crimes, you really ought to clean up the mess behind you.\"", "Doppleganger_52694042");
         w_professional.role = new w_Professional();
         w_professional.description = "I Lie and Disguise.\nI Register as Good and as my Disguise.";
-        w_professional.hints = $"If I am Disguised as the {roleColour("Villager")}Confessor</color>, I will say \"I am Good\".\nI can also be converted by the {roleColour("Villager")}Baker</color>. If this happens, I will appear 'Evil' when Executed, and will not convert anyone else.";
+        w_professional.hints = $"If I am Disguised as the {roleColour("Villager")}Confessor</color>, I will say \"I am Good\".";
         w_professional.gender = EGender.Male;
 
         CharacterData w_saboteur = newCharacter("Saboteur", EAlignment.Evil, ECharacterType.Minion, false, true, "\"The Architect has been trying to work out what was wrong with the Gemcrafter's house for weeks.\nHere's a hint: Sabotage.\"", "Poisoner_64796285");
@@ -1273,10 +1273,10 @@ public class MainMod : MelonMod
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_zealot);
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_legion);
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_politician);
+        Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_iris);
 
         Characters.Instance.startGameActOrder = InsertAfterAct("Alchemist", w_heretic);
         Characters.Instance.startGameActOrder = InsertAfterAct("Alchemist", w_mezepheles); // This makes it uncurable by Alchemist but it might still have issues with other roles later on.
-        Characters.Instance.startGameActOrder = InsertAfterAct("Alchemist", w_iris);
         Characters.Instance.startGameActOrder = InsertAfterAct("Alchemist", w_twindemontwin);
 
         //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_illusionist);
@@ -2850,7 +2850,7 @@ public class MainMod : MelonMod
                 //addRoleEvenIfDupe(script.startingTownsfolks, w_bountyhunter);
                 //addRoleEvenIfDupe(script.startingTownsfolks, w_politician);
                 //addRoleEvenIfDupe(script.startingTownsfolks, w_knave);
-                //addRoleEvenIfDupe(script.startingOutsiders, w_switchblade);
+                //addRoleEvenIfDupe(script.startingOutsiders, w_echo);
                 //addRoleEvenIfDupe(script.startingMinions, w_cryptid);
                 //addRoleEvenIfDupe(script.startingMinions, w_snakeCharmer);
             }
@@ -3906,6 +3906,59 @@ public class MainMod : MelonMod
 
     public void PatchVanillaCharacterDescriptions()
     {
+        Il2CppSystem.Collections.Generic.List<string> maleCharacters = new Il2CppSystem.Collections.Generic.List<string>();
+        Il2CppSystem.Collections.Generic.List<string> femaleCharacters = new Il2CppSystem.Collections.Generic.List<string>();
+        Il2CppSystem.Collections.Generic.List<string> enbyCharacters = new Il2CppSystem.Collections.Generic.List<string>();
+
+        // Most vanilla roles don't have .gender defined, so I'm just gonna correct them here briefly.
+        // Genders sourced from http://docs.google.com/document/d/1p36GvJFJBMuST9mfEBzVH1L6V9zcPLe5oESwLZ1hruw/edit?pli=1&tab=t.0
+        maleCharacters.Add("Alchemist");
+        maleCharacters.Add("Architect");
+        enbyCharacters.Add("Baker"); // Original Baker is she/her, but other Bakers are they/them.
+        femaleCharacters.Add("Bard");
+        femaleCharacters.Add("Bishop");
+        femaleCharacters.Add("Confessor");
+        femaleCharacters.Add("Dreamer");
+        femaleCharacters.Add("Druid");
+        femaleCharacters.Add("Empress");
+        femaleCharacters.Add("Enlightened");
+        femaleCharacters.Add("Fortune Teller");
+        femaleCharacters.Add("Gemcrafter");
+        maleCharacters.Add("Hunter");
+        maleCharacters.Add("Investigator");
+        maleCharacters.Add("Jester");
+        maleCharacters.Add("Judge");
+        maleCharacters.Add("Knight");
+        femaleCharacters.Add("Knitter");
+        femaleCharacters.Add("Lover");
+        femaleCharacters.Add("Medium");
+        femaleCharacters.Add("Oracle");
+        femaleCharacters.Add("Poet");
+        maleCharacters.Add("Scout");
+        maleCharacters.Add("Slayer");
+        maleCharacters.Add("Witness");
+
+        maleCharacters.Add("Bombardier");
+        enbyCharacters.Add("Doppelganger");
+        maleCharacters.Add("Drunk");
+        maleCharacters.Add("Lycanthrope");
+        maleCharacters.Add("Plague Doctor");
+        maleCharacters.Add("Rambler");
+        enbyCharacters.Add("Wretch");
+
+        maleCharacters.Add("Chancellor");
+        maleCharacters.Add("Minion");
+        maleCharacters.Add("Poisoner");
+        maleCharacters.Add("Puppeteer");
+        enbyCharacters.Add("Puppet");
+        femaleCharacters.Add("Shaman");
+        femaleCharacters.Add("Twin Minion");
+        maleCharacters.Add("Werewolf");
+        femaleCharacters.Add("Witch");
+
+        maleCharacters.Add("Baa");
+        femaleCharacters.Add("Lilis");
+        femaleCharacters.Add("Pooka");
         for (int i = 0; i < allDatas.Count(); i++)
         {
             MelonLogger.Msg($"Description Patcher: Found {allDatas[i].name.ToString()}");
@@ -3919,6 +3972,9 @@ public class MainMod : MelonMod
                                      "\n- Outcast or Minion created by Tenecaligo";
                 MelonLogger.Msg($"Patched Witness. New description: {allDatas[i].hints}");
             }
+            if (maleCharacters.Contains(allDatas[i].characterName)) allDatas[i].gender = EGender.Male;
+            if (femaleCharacters.Contains(allDatas[i].characterName)) allDatas[i].gender = EGender.Female;
+            if (enbyCharacters.Contains(allDatas[i].characterName)) allDatas[i].gender = EGender.They;
         }
     }
     //int toxomancerPoisonTimer = 0;

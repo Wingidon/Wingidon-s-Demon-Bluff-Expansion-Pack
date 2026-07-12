@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using HarmonyLib;
 using UnityEngine;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 
 // Couldn't get this part working, so I'm reworking her.
@@ -103,6 +103,10 @@ public class w_Devout : Role
     {
         if (trigger == ETriggerPhase.Init)
         {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
+        if (trigger == ETriggerPhase.Init)
+        {
             haveActed = false;
         }
         if (trigger == ETriggerPhase.None)
@@ -134,6 +138,10 @@ public class w_Devout : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Init)
         {
             haveActed = false;

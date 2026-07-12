@@ -5,7 +5,7 @@ using System;
 using Il2Cpp;
 using System.Diagnostics.Metrics;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Introvert : Role
@@ -65,57 +65,57 @@ public class w_Introvert : Role
                 incorrectInfo.Add(c); // Adds all Evil characters in the Deck to the 'Incorrect' list.
             }
         }
-            // Now we need to make sure the Introvert's not gonna say anything 'correct'
-            // So I'm going to go through the 'Correct' list and remove all instances of everything from there from the 'incorrect' list.
-            foreach (CharacterData correctChar in correctInfo) // For every bit of correct info,
+        // Now we need to make sure the Introvert's not gonna say anything 'correct'
+        // So I'm going to go through the 'Correct' list and remove all instances of everything from there from the 'incorrect' list.
+        foreach (CharacterData correctChar in correctInfo) // For every bit of correct info,
+        {
+            if (incorrectInfo.Contains(correctChar)) // If the incorrect list contains it,
             {
-                if (incorrectInfo.Contains(correctChar)) // If the incorrect list contains it,
+                while (incorrectInfo.Contains(correctChar)) // For as long as the incorrect list contains it,
                 {
-                    while (incorrectInfo.Contains(correctChar)) // For as long as the incorrect list contains it,
-                    {
-                        incorrectInfo.Remove(correctChar); // Remove it from the incorrect list.
-                    }
-                } // Goddamn these brackets are ugly
-            }
-            CharacterData targetInfo = new CharacterData();
-            if (UnityEngine.Random.RandomRangeInt(0,2) == 1)
-            {
-                //Yield a piece of correct info
-                targetInfo = correctInfo[UnityEngine.Random.RandomRangeInt(0, correctInfo.Count)];
-                chosenInfo.Add(targetInfo);
-            }
-            else
-            {
-                // All info is incorrect
-                targetInfo = incorrectInfo[UnityEngine.Random.RandomRangeInt(0, incorrectInfo.Count)];
-                chosenInfo.Add(targetInfo);
-                while (incorrectInfo.Contains(targetInfo))
-                {
-                    incorrectInfo.Remove(targetInfo);
+                    incorrectInfo.Remove(correctChar); // Remove it from the incorrect list.
                 }
-            }
-            // Get an incorrect statement
-            if (incorrectInfo.Count == 0) // Sometimes a Lying Introvert has every Disguised character *and* the characters they're Disguised as near them.
-            {
-            foreach (CharacterData c in Gameplay.Instance.GetScriptCharacters()) // Grabs everything currently on the script.
-                {
-                    if (!correctInfo.Contains(c)) incorrectInfo.Add(c); // Adds every non-correct piece of info to the list.
-                }
-            }
+            } // Goddamn these brackets are ugly
+        }
+        CharacterData targetInfo = new CharacterData();
+        if (UnityEngine.Random.RandomRangeInt(0, 2) == 1)
+        {
+            //Yield a piece of correct info
+            targetInfo = correctInfo[UnityEngine.Random.RandomRangeInt(0, correctInfo.Count)];
+            chosenInfo.Add(targetInfo);
+        }
+        else
+        {
+            // All info is incorrect
             targetInfo = incorrectInfo[UnityEngine.Random.RandomRangeInt(0, incorrectInfo.Count)];
             chosenInfo.Add(targetInfo);
+            while (incorrectInfo.Contains(targetInfo))
+            {
+                incorrectInfo.Remove(targetInfo);
+            }
+        }
+        // Get an incorrect statement
+        if (incorrectInfo.Count == 0) // Sometimes a Lying Introvert has every Disguised character *and* the characters they're Disguised as near them.
+        {
+            foreach (CharacterData c in Gameplay.Instance.GetScriptCharacters()) // Grabs everything currently on the script.
+            {
+                if (!correctInfo.Contains(c)) incorrectInfo.Add(c); // Adds every non-correct piece of info to the list.
+            }
+        }
+        targetInfo = incorrectInfo[UnityEngine.Random.RandomRangeInt(0, incorrectInfo.Count)];
+        chosenInfo.Add(targetInfo);
 
-            // Now we need to conjure the info's wording.
-            string line = "";
-            if (UnityEngine.Random.RandomRangeInt(0, 2) == 1) // Start by randomising the order.
-            {
-                line = string.Format("The {0} and the {1} sit within 2 cards of me", chosenInfo[1].name.ToString(), chosenInfo[0].name.ToString());
-            }
-            else
-            {
-                line = string.Format("The {0} and the {1} sit within 2 cards of me", chosenInfo[0].name.ToString(), chosenInfo[1].name.ToString());
-            }
-            return new ActedInfo(line, selection); // Okay, so theoretically, she should be correctly getting annoyed by characters not actually near her when she's Lying. If not, she'll be annoyed by *me* when I stab her in the face.
+        // Now we need to conjure the info's wording.
+        string line = "";
+        if (UnityEngine.Random.RandomRangeInt(0, 2) == 1) // Start by randomising the order.
+        {
+            line = string.Format("The {0} and the {1} sit within 2 cards of me", chosenInfo[1].name.ToString(), chosenInfo[0].name.ToString());
+        }
+        else
+        {
+            line = string.Format("The {0} and the {1} sit within 2 cards of me", chosenInfo[0].name.ToString(), chosenInfo[1].name.ToString());
+        }
+        return new ActedInfo(line, selection); // Okay, so theoretically, she should be correctly getting annoyed by characters not actually near her when she's Lying. If not, she'll be annoyed by *me* when I stab her in the face.
     }
     public override string Description
     {
@@ -144,6 +144,10 @@ public class w_Introvert : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
             this.onActed.Invoke(this.GetInfo(charRef));
@@ -151,6 +155,10 @@ public class w_Introvert : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
             this.onActed.Invoke(this.GetBluffInfo(charRef));

@@ -8,7 +8,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using HarmonyLib;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Tergiversator : Role
@@ -153,7 +153,7 @@ public class w_Tergiversator : Role
         //randomNonsense.Add("The Ranger and the Hunter have a friendly rivalry going on, they constantly try to one-up the other during target practice");
         randomNonsense.Add("The Scavenger is the only person who isn't sad at funerals. We're used to it by now");
         randomNonsense.Add("One time, the Sentinel called the Drunk an idiot, and the Drunk agreed!");
-        randomNonsense.Add("The Sheriff wants to jail the Doppelganger and Copycat for identity theft, but he can't find either of them");
+        //randomNonsense.Add("The Sheriff wants to jail the Doppelganger and Copycat for identity theft, but he can't find either of them"); // COME UP WITH SOMETHING FOR SLEUTH LATER?
         randomNonsense.Add("The Spy sleeps on the roof of his house sometimes. He thinks nobody's caught on");
         randomNonsense.Add("The Sheriff and Warden both think the other is an idiot, but they love each other. Romantically");
         randomNonsense.Add("I think the Visionary and Dreamer are friends? They hang out a lot, but their speeches are both incoherent");

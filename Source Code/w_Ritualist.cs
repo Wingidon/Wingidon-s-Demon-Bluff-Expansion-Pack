@@ -7,7 +7,7 @@ using System;
 using System.ComponentModel.Design;
 using UnityEngine;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Ritualist : Role
@@ -23,6 +23,10 @@ public class w_Ritualist : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         //MelonLogger.Msg($"Ritualist has been called to act! The trigger is {trigger}");
         if (charRef.GetState() == ECharacterState.Dead) return;
         if (trigger == wx_SavedScripts.w_AnyRevealPatch.AnyReveal) // When any character is Revealed
@@ -47,6 +51,10 @@ public class w_Ritualist : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         Act(trigger, charRef);
     }
     public string ConjourInfo()
@@ -74,7 +82,6 @@ public class w_Ritualist : Role
 
 
         Gameplay.Instance.AddScriptCharacterIfAble(bluff.type, bluff);
-        charRef.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
         return bluff;
     }
 }

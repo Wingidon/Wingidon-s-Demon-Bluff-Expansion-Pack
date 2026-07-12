@@ -8,13 +8,17 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using static Il2CppSystem.Collections.SortedList;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Illusionist : Role
 {
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;
@@ -73,6 +77,10 @@ public class w_Illusionist : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;

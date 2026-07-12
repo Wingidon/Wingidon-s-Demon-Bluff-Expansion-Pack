@@ -7,13 +7,17 @@ using System;
 using System.ComponentModel.Design;
 using UnityEngine;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Swarm_Evil : Minion
 {
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
     }
     public w_Swarm_Evil() : base(ClassInjector.DerivedConstructorPointer<w_Swarm_Evil>())
     {

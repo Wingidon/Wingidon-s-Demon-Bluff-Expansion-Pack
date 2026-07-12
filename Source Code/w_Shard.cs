@@ -8,7 +8,7 @@ using System;
 using System.ComponentModel.Design;
 using UnityEngine;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Shard : Demon
@@ -16,6 +16,10 @@ public class w_Shard : Demon
     public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             Il2CppSystem.Collections.Generic.List<CharacterData> disguiseCharacters = new Il2CppSystem.Collections.Generic.List<CharacterData>();

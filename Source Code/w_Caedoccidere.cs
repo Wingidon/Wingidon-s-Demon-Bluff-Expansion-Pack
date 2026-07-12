@@ -7,9 +7,9 @@ using MelonLoader;
 using System;
 using System.ComponentModel.Design;
 using UnityEngine;
-using static ExpansionPack.w_Caedoccidere;
+using static WingidonExpansionPack.w_Caedoccidere;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Caedoccidere : Demon
@@ -22,6 +22,10 @@ public class w_Caedoccidere : Demon
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Night)
         {
             if (charRef.state == ECharacterState.Dead) return;

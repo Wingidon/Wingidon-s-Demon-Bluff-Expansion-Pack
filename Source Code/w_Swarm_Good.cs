@@ -9,7 +9,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using static Il2CppSystem.Globalization.CultureInfo;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Swarm_Good : Minion
@@ -17,6 +17,10 @@ public class w_Swarm_Good : Minion
     public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start && !charRef.statuses.Contains(ECharacterStatus.BrokenAbility))
         {
             Il2CppSystem.Collections.Generic.List<Character> chars = new Il2CppSystem.Collections.Generic.List<Character>(Gameplay.CurrentCharacters.Pointer);
@@ -74,6 +78,10 @@ public class w_Swarm_Good : Minion
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
             this.onActed.Invoke(this.GetBluffInfo(charRef));

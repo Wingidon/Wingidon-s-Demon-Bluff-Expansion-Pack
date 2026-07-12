@@ -8,7 +8,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using HarmonyLib;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Saboteur : Role
@@ -24,6 +24,10 @@ public class w_Saboteur : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             UnityEngine.Debug.Log(string.Format("Saboteur at {0} acting.", charRef.id));
@@ -71,6 +75,10 @@ public class w_Saboteur : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         Act(trigger, charRef);
     }
     public string ConjourInfo()

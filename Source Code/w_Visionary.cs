@@ -6,7 +6,7 @@ using Il2Cpp;
 using System.Diagnostics.Metrics;
 using System.ComponentModel.Design;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Visionary : Role

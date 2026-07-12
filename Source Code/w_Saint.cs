@@ -6,7 +6,7 @@ using System;
 using static MelonLoader.MelonLogger;
 using static MelonLoader.Modules.MelonModule;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Saint : Role
@@ -108,7 +108,7 @@ public class w_Saint : Role
 
         // https://www.catholictradition.org/Saints/saintly-quotes12.htm
         returnList.Add("I do not fear at all what men can do to me for speaking the truth. I only fear what God would do if I were to lie"); // Quote from Saint John Bosco
-        returnList.Add("Pray! Pray, but with faith – with living faith! Courage! Onward, ever onward!"); // Quote from Saint John Bosco
+        returnList.Add("Pray! Pray, but with faith - with living faith! Courage! Onward, ever onward!"); // Quote from Saint John Bosco
         returnList.Add("Be brave, do not be led by what others think or say!"); // Quote from Saint John Bosco
 
         // https://www.dosp.org/our-faith/saints/saint-quotes/

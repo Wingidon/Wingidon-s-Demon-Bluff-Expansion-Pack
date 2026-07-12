@@ -10,7 +10,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using static Il2CppSystem.Globalization.CultureInfo;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Heretic : Minion
@@ -18,6 +18,10 @@ public class w_Heretic : Minion
     public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             if (allDatas.Length == 0)
@@ -55,6 +59,7 @@ public class w_Heretic : Minion
             blacklistMinionIDs.Add("Marionette_11628408"); // That's the wrong Marionette.
             blacklistMinionIDs.Add("Werewolf_78350415"); // Werewolf is never in the Deck to begin with.
             blacklistMinionIDs.Add("Wretch_Evil_91222191"); // That's the wrong Wretch.
+            blacklistMinionIDs.Add("Vizier_LRZH"); // Leave everything to me...
 
             supportDemonIDs.Add("Baatender_ER"); // Baatender (ExtraRandomized)
             supportDemonIDs.Add("BeerThrower_TAVERN"); // Beer Thrower (Tavern Mode)
@@ -66,11 +71,13 @@ public class w_Heretic : Minion
             supportDemonIDs.Add("Iris_WING"); // Iris (Wingidon's Expansion Pack)
             supportDemonIDs.Add("Kingmaker_scm"); // Kingmaker (Skill Cycler's Riddles)
             supportDemonIDs.Add("Leviathan_WING"); // Leviathan (Wingidon's Expansion Pack)
+            supportDemonIDs.Add("Lleech_LRZH"); // Lleech (Circus)
             supportDemonIDs.Add("Mendaverte_WING"); // Mendaverte (Wingidon's Expansion Pack)
             supportDemonIDs.Add("Mezepheles_WING"); // Venelum (Wingidon's Expansion Pack)
             // supportDemonIDs.Add("Mutant_84675843"); // Mutant (Vanilla, Unused)
             supportDemonIDs.Add("Phantom_VP"); // Phantom (CarlzVillagePack)
             supportDemonIDs.Add("Pooka_13445289"); // Pooka (Vanilla)
+            supportDemonIDs.Add("Ringleader_LRZH"); // Ringleader (Circus)
             // supportDemonIDs.Add("Praesect_WING"); // Praesect (Wingidon's Expansion Pack) - The Acolytes and Zealots it add make it too obvious
             supportDemonIDs.Add("Shard_WING"); // Specularus (Wingidon's Expansion Pack)
             supportDemonIDs.Add("SoulCollector_RCol"); // Soul Collector (Roles Collection) - Could plausibly fit in as something else ig
@@ -85,10 +92,13 @@ public class w_Heretic : Minion
             nightDemonIDs.Add("Infestation_scm"); // Infestation (Skill Cycler's Riddles)
             nightDemonIDs.Add("Lillith_90453844"); // Lilis (Vanilla)
             nightDemonIDs.Add("Mystifier_scm"); // Mystifier (Skill Cycler's Riddles)
+            nightDemonIDs.Add("Po_LRZH"); // Po (Circus)
 
+            setupDemonIDs.Add("Dominion_LRZH"); // Dominion (Circus)
             setupDemonIDs.Add("Illusionist_WING"); // Emenverax (Wingidon's Expansion Pack)
             setupDemonIDs.Add("Imp_58992273"); // Baa (Vanilla) - Here because it's kind of difficult to miss a card hidden in the deck. Might split into his own category later.
             setupDemonIDs.Add("Legion_WING"); // Agmeres (Wingidon's Expansion Pack)
+            setupDemonIDs.Add("Mahr_LRZH"); // Mahr (Circus)
             setupDemonIDs.Add("Minos_WING"); // Sanguitaurus (Wingidon's Expansion Pack)
             setupDemonIDs.Add("Pandemonium_WING"); // Magnere (Wingidon's Expansion Pack)
             setupDemonIDs.Add("Pestilence_VP"); // Pestilence (CarlzVillagePack), because it's kind of difficult to miss everyone's abilities refreshing.

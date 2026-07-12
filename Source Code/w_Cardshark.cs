@@ -9,7 +9,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using static MelonLoader.Modules.MelonModule;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Cardshark : Role
@@ -35,6 +35,10 @@ public class w_Cardshark : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger != ETriggerPhase.Day) return;
         chRef = charRef;
         CharacterPicker.Instance.StartPickCharacters(3, charRef);
@@ -43,6 +47,10 @@ public class w_Cardshark : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger != ETriggerPhase.Day) return;
         chRef = charRef;
         CharacterPicker.Instance.StartPickCharacters(3, charRef);

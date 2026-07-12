@@ -17,7 +17,7 @@ using UnityEngine;
 using UnityEngine.Diagnostics;
 using static Il2CppSystem.Collections.SortedList;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Legion : Role
@@ -40,8 +40,6 @@ public class w_Legion : Role
             aliveGoods = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
             aliveGoods = Characters.Instance.FilterRealAlignmentCharacters(aliveGoods, EAlignment.Good);
             Health health = PlayerController.PlayerInfo.health;
-            if (aliveGoods.Count == 0) health.Damage(999);
-            if (charRef.state == ECharacterState.Dead) return;
             //health.Damage(2);
             health.AddMaxHp(-2);
         }
@@ -51,7 +49,7 @@ public class w_Legion : Role
             aliveGoods = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
             aliveGoods = Characters.Instance.FilterRealAlignmentCharacters(aliveGoods, EAlignment.Good);
             Health health = PlayerController.PlayerInfo.health;
-            if (aliveGoods.Count == 0) health.Damage(999);
+            LegionLoss.checkExe(charRef);
             if (charRef.state == ECharacterState.Dead) return;
             //health.Damage(2);
             health.AddMaxHp(-2);
@@ -104,6 +102,7 @@ public static class LegionLoss
     {
         UnityEngine.Debug.Log("Checking if Good should lose due to Agmeres...");
         bool goodLives = false;
+        bool goodDies = false;
         bool legionInPlay = false;
         foreach (Character character in Gameplay.CurrentCharacters)
         {
@@ -111,6 +110,10 @@ public static class LegionLoss
             {
                 UnityEngine.Debug.Log(string.Format("Found an alive Good character at #{0}", character.id));
                 goodLives = true;
+            }
+            if (character.alignment == EAlignment.Good && character.state == ECharacterState.Dead)
+            {
+                goodDies = true;
             }
             if (character.dataRef.name.ToString() == "Agmeres")
             {
@@ -121,7 +124,7 @@ public static class LegionLoss
         int healthCount = health.value.GetValue();
         bool noHealth = false;
         if (healthCount <= 0) noHealth = true;
-        if (!goodLives && legionInPlay && !noHealth)
+        if (!goodLives && legionInPlay && !noHealth && goodDies)
         {
             UnityEngine.Debug.Log("No Good characters live. Initiating Agmeres loss.");
             health.Damage(999999);

@@ -5,7 +5,7 @@ using MelonLoader;
 using System;
 using UnityEngine;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Chiromancer : Role
@@ -118,6 +118,10 @@ public class w_Chiromancer : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
             onActed.Invoke(GetInfo(charRef));
@@ -125,6 +129,10 @@ public class w_Chiromancer : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
             onActed.Invoke(GetBluffInfo(charRef));

@@ -7,9 +7,9 @@ using MelonLoader;
 using System;
 using System.ComponentModel.Design;
 using UnityEngine;
-using static ExpansionPack.MainMod;
+using static WingidonExpansionPack.MainMod;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Pandemonium : Demon
@@ -23,6 +23,10 @@ public class w_Pandemonium : Demon
     public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             wx_SavedScripts sharedScripts = new wx_SavedScripts();
@@ -47,7 +51,7 @@ public class w_Pandemonium : Demon
 
             for (int j = 0; j < allDatas.Length; j++)
             {
-                if (possibleDemonIDs.Contains(allDatas[j].characterId))
+                if (possibleDemonIDs.Contains(allDatas[j].characterId) && !Gameplay.Instance.GetScriptCharactersOfType(ECharacterType.Demon).Contains(allDatas[j]))
                 {
                     possibleDemons.Add(allDatas[j]);
                 }

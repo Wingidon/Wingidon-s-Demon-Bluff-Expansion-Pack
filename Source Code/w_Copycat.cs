@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 using UnityEngine;
 using static MelonLoader.Modules.MelonModule;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Copycat : Role

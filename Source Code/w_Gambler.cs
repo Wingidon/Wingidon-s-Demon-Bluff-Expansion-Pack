@@ -9,7 +9,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using static MelonLoader.Modules.MelonModule;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Gambler : Role
@@ -51,6 +51,10 @@ public class w_Gambler : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger != ETriggerPhase.Day) return;
         Il2CppSystem.Collections.Generic.List<Character> unrevealedChars = new Il2CppSystem.Collections.Generic.List<Character>();
         unrevealedChars = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);
@@ -66,6 +70,10 @@ public class w_Gambler : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger != ETriggerPhase.Day) return;
         Il2CppSystem.Collections.Generic.List<Character> unrevealedChars = new Il2CppSystem.Collections.Generic.List<Character>();
         unrevealedChars = Characters.Instance.FilterHiddenCharacters(Gameplay.CurrentCharacters);

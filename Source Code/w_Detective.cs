@@ -7,7 +7,7 @@ using System.Diagnostics.Metrics;
 using System.Net.Http.Headers;
 using static MelonLoader.Modules.MelonModule;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Detective : Role
@@ -146,6 +146,10 @@ public class w_Detective : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
             this.onActed.Invoke(this.GetInfo(charRef));
@@ -153,6 +157,10 @@ public class w_Detective : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
             this.onActed.Invoke(this.GetBluffInfo(charRef));

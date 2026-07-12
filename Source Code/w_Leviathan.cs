@@ -19,13 +19,17 @@ using static Il2CppSystem.Collections.SortedList;
 using static MelonLoader.MelonLogger;
 using static UnityEngine.GraphicsBuffer;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Leviathan : Role
 {
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
     }
     public w_Leviathan() : base(ClassInjector.DerivedConstructorPointer<w_Leviathan>())
     {

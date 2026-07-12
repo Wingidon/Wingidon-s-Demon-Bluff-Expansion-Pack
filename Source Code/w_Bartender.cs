@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using static MelonLoader.MelonLaunchOptions;
 using static MelonLoader.Modules.MelonModule;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Bartender : Role

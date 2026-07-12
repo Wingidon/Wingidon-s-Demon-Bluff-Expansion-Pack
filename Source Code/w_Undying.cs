@@ -12,7 +12,7 @@ using UnityEngine;
 using static Il2CppSystem.Globalization.CultureInfo;
 using static MelonLoader.MelonLaunchOptions;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Undying : Minion
@@ -20,6 +20,10 @@ public class w_Undying : Minion
     public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             if (allDatas.Length == 0)
@@ -97,14 +101,17 @@ public class w_Undying : Minion
             if (charRef.statuses.Contains(undyingDie))
             {
                 OnActed(ETriggerPhase.Day, charRef, getTaunt("Death"));
+                charRef.statuses.statuses.Remove(undyingDie);
             }
             if (charRef.statuses.Contains(undyingFail))
             {
                 OnActed(ETriggerPhase.Day, charRef, getTaunt("Fail"));
+                charRef.statuses.statuses.Remove(undyingFail);
             }
             if (charRef.statuses.Contains(undyingWin))
             {
                 OnActed(ETriggerPhase.Day, charRef, getTaunt("Win"));
+                charRef.statuses.statuses.Remove(undyingWin);
             }
         }
     }

@@ -8,7 +8,7 @@ using UnityEngine.Playables;
 using static MelonLoader.MelonLaunchOptions;
 using static MelonLoader.Modules.MelonModule;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Bloodseer : Role
@@ -65,6 +65,10 @@ public class w_Bloodseer : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.AfterRoundStart)
         {
             haveActedAlready = false;
@@ -81,6 +85,10 @@ public class w_Bloodseer : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.AfterRoundStart)
         {
             haveActedAlready = false;

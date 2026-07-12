@@ -8,10 +8,10 @@ using MelonLoader;
 using System;
 using System.ComponentModel.Design;
 using UnityEngine;
-using static ExpansionPack.MainMod;
-using static ExpansionPack.w_Mezepheles;
+using static WingidonExpansionPack.MainMod;
+using static WingidonExpansionPack.w_Mezepheles;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Mutant : Role
@@ -19,6 +19,10 @@ public class w_Mutant : Role
     public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             wx_SavedScripts sharedScripts = new wx_SavedScripts();

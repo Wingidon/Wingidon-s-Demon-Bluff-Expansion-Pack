@@ -7,7 +7,7 @@ using Il2CppSystem.Collections.Generic;
 using MelonLoader;
 using UnityEngine;
 
-namespace ExpansionPack
+namespace WingidonExpansionPack
 {
     // Token: 0x02000007 RID: 7
     [RegisterTypeInIl2Cpp]

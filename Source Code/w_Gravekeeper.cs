@@ -8,7 +8,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using static MelonLoader.Modules.MelonModule;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Gravekeeper : Role
@@ -30,6 +30,10 @@ public class w_Gravekeeper : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger != ETriggerPhase.Day) return;
         Il2CppSystem.Collections.Generic.List<Character> deadCharacters = new Il2CppSystem.Collections.Generic.List<Character>();
         ActedInfo tempInfo = new ActedInfo("");
@@ -74,6 +78,10 @@ public class w_Gravekeeper : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger != ETriggerPhase.Day) return;
         Il2CppSystem.Collections.Generic.List<Character> deadCharacters = new Il2CppSystem.Collections.Generic.List<Character>();
         ActedInfo tempInfo = new ActedInfo("");

@@ -7,7 +7,7 @@ using System;
 using System.ComponentModel.Design;
 using UnityEngine;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_WardenNew : Role
@@ -33,6 +33,10 @@ public class w_WardenNew : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger != ETriggerPhase.Day) return;
         chRef = charRef;
         CharacterPicker.Instance.StartPickCharacters(4, charRef);
@@ -41,6 +45,10 @@ public class w_WardenNew : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger != ETriggerPhase.Day) return;
         chRef = charRef;
         CharacterPicker.Instance.StartPickCharacters(4, charRef);

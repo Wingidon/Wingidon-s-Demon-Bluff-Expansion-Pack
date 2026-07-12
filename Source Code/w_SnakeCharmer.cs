@@ -7,9 +7,9 @@ using MelonLoader;
 using System;
 using System.ComponentModel.Design;
 using UnityEngine;
-using static ExpansionPack.w_Carnicarius;
+using static WingidonExpansionPack.w_Carnicarius;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_SnakeCharmer : Role

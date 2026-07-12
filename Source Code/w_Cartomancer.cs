@@ -4,7 +4,7 @@ using MelonLoader;
 using System;
 using Il2Cpp;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Cartomancer : Role
@@ -51,7 +51,7 @@ public class w_Cartomancer : Role
 
         if (outOfPlayChars.Count == 0)
         {
-            outOfPlayChars.Add("mystery card");
+            outOfPlayChars.Add("Cartomancer"); // Had this trigger on an Overseer-Cartomancer where Cartomancer was the only not-in-play card. The only way this happens is if Cartomancer was the only not-in-play card and the previous statements removed it.
         }
 
         string inPlayChar = inPlayChars[UnityEngine.Random.RandomRangeInt(0, inPlayChars.Count)];

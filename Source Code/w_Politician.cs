@@ -4,7 +4,7 @@ using MelonLoader;
 using System;
 using Il2Cpp;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Politician : Role

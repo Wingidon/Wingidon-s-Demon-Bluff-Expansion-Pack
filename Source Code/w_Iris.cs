@@ -8,9 +8,9 @@ using MelonLoader;
 using System;
 using System.ComponentModel.Design;
 using UnityEngine;
-using static ExpansionPack.w_Mezepheles;
+using static WingidonExpansionPack.w_Mezepheles;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Iris : Role
@@ -28,6 +28,10 @@ public class w_Iris : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             Il2CppSystem.Collections.Generic.List<Character> possibleVictims = new Il2CppSystem.Collections.Generic.List<Character>();

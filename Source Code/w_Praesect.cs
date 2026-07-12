@@ -9,7 +9,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using static Il2CppSystem.Globalization.CultureInfo;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Praesect : Demon
@@ -18,6 +18,10 @@ public class w_Praesect : Demon
     public Il2CppSystem.Collections.Generic.List<Il2Cpp.CharacterData> scriptCharacters = Gameplay.Instance.GetScriptCharacters();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Start)
         {
             Il2CppSystem.Collections.Generic.List<Character> chars = new Il2CppSystem.Collections.Generic.List<Character>(Gameplay.CurrentCharacters.Pointer);

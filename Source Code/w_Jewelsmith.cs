@@ -4,7 +4,7 @@ using MelonLoader;
 using System;
 using Il2Cpp;
 
-namespace ExpansionPack;
+namespace WingidonExpansionPack;
 
 [RegisterTypeInIl2Cpp]
 public class w_Jewelsmith : Role
@@ -76,6 +76,10 @@ public class w_Jewelsmith : Role
     }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
             OnActed(ETriggerPhase.Day, charRef, GetInfo(charRef));
@@ -83,6 +87,10 @@ public class w_Jewelsmith : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == ETriggerPhase.Init)
+        {
+            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+        }
         if (trigger == ETriggerPhase.Day)
         {
             OnActed(ETriggerPhase.Day, charRef, GetBluffInfo(charRef));
