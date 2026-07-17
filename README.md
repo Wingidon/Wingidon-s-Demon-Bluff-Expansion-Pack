@@ -34,6 +34,7 @@ Currently, this mod includes the following roles:
 - Cardshark - Picks 3, and heals or hurts you depending on how many Villagers you picked.
 - Cartomancer - Learns that only one of two roles is in-play.
 - Chiromancer - Learns 3 characters and which Evil role each is, but only one is correct.
+- Citizen - Learn random info. Is not Unique.
 - Clairvoyant - Learns 2 characters that're on the same team.
 - Copycat - Disguises as an in-play Villager, but gives you a health buff.
 - Detective - Learns how many unrevealed characters are Lying.
@@ -53,6 +54,7 @@ Currently, this mod includes the following roles:
 - Performer - Learns an Evil character, but gets bad info if adjacent to Evil.
 - Politician - Corrupted Villager that Learns two sets of false info.
 - Prince - Learns that one of two characters is Disguised.
+- Puzzlemaster - Learns two strangely-worded pieces of info.
 - Ranger - Learns his distance to his furthest Evil character.
 - Saint - Always Good. _Always._
 - Scavenger - Heals you based on the number of dead Evil characters.
@@ -67,6 +69,7 @@ Currently, this mod includes the following roles:
 - Lunatic - Disguises, but only Lies sometimes.
 - Marionette - Lies, Disguises, Registers as a Puppet, and sits next to the Demon.
 - Mutant - Might become Evil. If it remains Good, it creates an additional Minion.
+- Pariah - Has no ability. Is not Unique.
 - Revolutionary - Disguises. If executed, executes another Villager.
 - Renegade - Evil Outcast that Lies and Disguises.
 - Switchblade - Mimics the alignments of her neighbours. Might kill one.
@@ -82,6 +85,7 @@ Currently, this mod includes the following roles:
 - Snake Charmer - Poisons a random character, killing them after five characters are Revealed. Lies and Disguises.
 - Swarm - There are 3 Swarm. Two of them are Evil, they Lie and Disguise, and the other is Good, Learning that two of four characters are Swarm.
 - Turncoat - Disguises as an in-play character.
+- Underling - Lies and Disguises. Is not Unique.
 - Undying - Doesn't Disguise, but can't be killed unless they're the last remaining Evil. Might create a Fanatic.
 - Zealot - Minion created by another character's ability. Lies and Disguises as an in-play character.
 ### Demons
