@@ -8,6 +8,7 @@ using MelonLoader;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 using UnityEngine;
 using static MelonLoader.MelonLaunchOptions;
 
@@ -38,6 +39,7 @@ namespace WingidonExpansionPack
     public Il2CppSystem.Collections.Generic.List<Character> SortList(Il2CppSystem.Collections.Generic.List<Character> list)
         {
             Il2CppSystem.Collections.Generic.List<Character> newList = new Il2CppSystem.Collections.Generic.List<Character>();
+            if (list.Count == 0) return newList;
             for (int i = 0; i < Gameplay.CurrentCharacters.Count + 3; i++)
             {
                 foreach (Character character in list)
@@ -50,6 +52,7 @@ namespace WingidonExpansionPack
         public Il2CppSystem.Collections.Generic.List<ECharacterType> SortList(Il2CppSystem.Collections.Generic.List<ECharacterType> list)
         {
             Il2CppSystem.Collections.Generic.List<ECharacterType> newList = new Il2CppSystem.Collections.Generic.List<ECharacterType>();
+            if (list.Count == 0) return newList;
             foreach (ECharacterType characterType in list)
             {
                 if (characterType == ECharacterType.Villager)
@@ -157,6 +160,7 @@ namespace WingidonExpansionPack
                     dist = calcDist;
                 }
             }
+            if (dist == 10000) dist = 1;
             return dist;
         }
 
@@ -444,9 +448,18 @@ namespace WingidonExpansionPack
             Il2CppSystem.Collections.Generic.List<string> pluralNamesV = new Il2CppSystem.Collections.Generic.List<string>(); // There may be many of this character, they start with a vowel. #X is an Y.
             Il2CppSystem.Collections.Generic.List<string> pluralNamesC = new Il2CppSystem.Collections.Generic.List<string>(); // There may be many of this character, they start with a consonant. #X is a Y.
             Il2CppSystem.Collections.Generic.List<string> demonNames = new Il2CppSystem.Collections.Generic.List<string>(); // This character has an actual name. #X is Y.
-                                                                                                                            // Minions
+
+            // Villagers
+            pluralNamesC.Add("Citizen");
+
+            // Outcasts
+            pluralNamesC.Add("Pariah");
+            pluralNamesC.Add("Trickster"); // From Skill Cycler's Riddles mod.
+
+            // Minions
             demonNames.Add("Swarm");
             pluralNamesV.Add("Acolyte");
+            pluralNamesV.Add("Underling");
             pluralNamesC.Add("Fanatic");
             pluralNamesC.Add("Mastermind"); // From Skill Cycler's Riddles mod
             pluralNamesC.Add("Zealot");
@@ -682,6 +695,36 @@ namespace WingidonExpansionPack
                 return -1;
             }
             return list[UnityEngine.Random.RandomRangeInt(0, list.Count)];
+        }
+
+        public Il2CppSystem.Collections.Generic.List<CharacterData> GetUnderlingDatas(Character charRef)
+        {
+            if (allDatas.Length == 0)
+            {
+                var loadedCharList = Resources.FindObjectsOfTypeAll(Il2CppType.Of<CharacterData>());
+                if (loadedCharList != null)
+                {
+                    allDatas = new CharacterData[loadedCharList.Length];
+                    for (int j = 0; j < loadedCharList.Length; j++)
+                    {
+                        allDatas[j] = loadedCharList[j]!.Cast<CharacterData>();
+                    }
+                }
+            }
+
+            Il2CppSystem.Collections.Generic.List<CharacterData> underlingDatas = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            underlingDatas.Add(charRef.dataRef);
+            underlingDatas.Add(charRef.dataRef);
+            underlingDatas.Add(charRef.dataRef);
+
+            foreach (CharacterData character in allDatas)
+            {
+                if (character.characterId == "Underling_V_WING") underlingDatas[0] = character;
+                if (character.characterId == "Underling_O_WING") underlingDatas[1] = character;
+                if (character.characterId == "Underling_M_WING") underlingDatas[2] = character;
+            }
+            DebugMessage($"Underling roles found: {underlingDatas[0].characterName}, {underlingDatas[1].characterName}, {underlingDatas[2].characterName}");
+            return underlingDatas;
         }
 
 
@@ -1003,7 +1046,7 @@ namespace WingidonExpansionPack
                 returnChars.Add("Carnicarius_WING"); // Carnicarius
                 returnChars.Add("Iris_WING"); // Iris
                 returnChars.Add("Leviathan_WING"); // Leviathan
-                returnChars.Add("Mendaverte_WING"); // Mendaverte
+                //returnChars.Add("Mendaverte_WING"); // Mendaverte
                 returnChars.Add("Praesect_WING"); // Praesect
                 returnChars.Add("Mezepheles_WING"); // Venelum
 
@@ -1455,7 +1498,7 @@ namespace WingidonExpansionPack
             if (evilCharacters.Count != 0 && goodCharacters.Count != 0)
             {
                 infoTypes.Add("Arithmetician"); // sum of all Evil
-                infoTypes.Add("GoodArithmetician"); // sum of all Good
+                if (UnityEngine.Random.RandomRangeInt(0, 2) == 0) infoTypes.Add("GoodArithmetician"); // sum of all Good. 50% chance to be possible to begin with.
                 if (UnityEngine.Random.RandomRangeInt(0, 3) == 0) // 1 in 3 chance of being possible, since this is a weird info type
                 {
                     // infoTypes.Add("ArithmeticianMultiply"); // product of all Evil
@@ -3081,6 +3124,74 @@ namespace WingidonExpansionPack
             return returnInfo;
         }
 
+        public string ConjureStatusName(string statusID)
+        {
+            switch (statusID)
+            {
+                // This mod
+                case "999": return "Hidden Role";
+                case "132": return "Killed by Caedoccidere";
+                case "311814931": return "Killed by Carnicarius";
+                case "2018931154": return "Tricked by the Faerie";
+                case "918918": return "Is Iris";
+                case "918919": return "Hypnotised by Iris";
+                case "1252291208": return "Targeted by Leviathan";
+                case "968": return "Misled";
+                case "1521203119": return "Evil Outcast";
+                case "133": return "Killed by Sanguitaurus";
+                case "82113114": return "Good (Mutant)";
+                case "16118119": return "Evil (Mutant)";
+                case "1615919151": return "Poisoned";
+                case "1923920382": return "Killed by the Switchblade";
+                case "2051879715": return "Good (Tergiversator/Switchblade)";
+                case "2051879522": return "Evil (Tergiversator/Switchblade)";
+                case "2114495619": return "Taunt, Fail (Undying)";
+                case "2114495161": return "Taunt, Death (Undying)";
+                case "2114495239": return "Taunt, Victory (Undying)";
+                case "318251620": return "Is the Cryptid";
+
+                // Skill Cycler's Riddles
+                case "880": return "Evil-turned";
+                case "879": return "Muddled";
+                case "901": return "Villager (Trickster)";
+                case "902": return "Outcast (Trickster)";
+                case "903": return "Minion (Trickster)";
+                case "904": return "Not Bugged (Trickster)";
+                case "874": return "Killed by the Hitman";
+                case "878": return "Guarded";
+                case "882": return "Dead (Skill Cycler's Riddles)";
+                case "881": return "Confused";
+                case "1201": return "Has Ghost Ability (Mad Scientist)";
+                case "1202": return "Has Sleeper Ability (Mad Scientist)";
+                case "1203": return "Has Undying Ability (Mad Scientist)";
+                case "1204": return "Has Guardian Ability (Mad Scientist)";
+                case "873": return "Accused";
+                case "876": return "Killed by the Follower";
+
+                // Power Play
+                case "195": return "Dueled (Pirate)";
+                case "200": return "Starved (Famine)";
+                case "205": return "Immune (Pestilence)";
+                case "210": return "Protected";
+                case "230": return "Jinxed (Ambusher)";
+                case "235": return "Swapped (Godfather)";
+                case "255": return "Targeted (Hangman)";
+                case "260": return "Mad (260)";
+                case "261": return "Mad (261)";
+                case "265": return "Mad (265)";
+
+                // The Salem Trials
+                case "1615919000": return "Heretic (Inquisitor)";
+
+                // LRZH's Circus
+                case "311": return "Evil (Ogre)";
+                case "312": return "Miraged (Mirage)";
+                case "313": return "Hosted (Lleech)";
+                case "314": return "Haunted (Wraith)";
+            }
+            return statusID;
+        }
+
 
 
 
@@ -3112,7 +3223,7 @@ namespace WingidonExpansionPack
                         wx_SavedScripts sharedScripts = new wx_SavedScripts();
                         foreach (ECharacterStatus status in __instance.statuses.statuses)
                         {
-                            sharedScripts.DebugMessage($"Found status on #{__instance.id}: {status.ToString()}");
+                            sharedScripts.DebugMessage($"Found status on #{__instance.id}: {sharedScripts.ConjureStatusName(status.ToString())}");
                         }
                     }
                 }

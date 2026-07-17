@@ -12,87 +12,91 @@ public class w_Performer : Role
 {
     public override ActedInfo GetInfo(Character charRef)
     {
-        Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;
-        System.Collections.Generic.List<Character> newList = new System.Collections.Generic.List<Character>();
-        System.Collections.Generic.List<Character> newList2 = new System.Collections.Generic.List<Character>();
         Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
-        Characters charInst = Characters.Instance;
-        foreach (Character character in characters)
+        Il2CppSystem.Collections.Generic.List<Character> goodChars = new Il2CppSystem.Collections.Generic.List<Character>();
+        Il2CppSystem.Collections.Generic.List<Character> evilChars = new Il2CppSystem.Collections.Generic.List<Character>();
+        bool shouldPingEvil = true;
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+        foreach (Character character in Gameplay.CurrentCharacters)
         {
-            if (character.GetRegisterAlignment() != EAlignment.Good)
+            if (character.GetRegisterAlignment() == EAlignment.Evil) evilChars.Add(character);
+            else goodChars.Add(character);
+        }
+
+
+        goodChars.Remove(charRef);
+        evilChars.Remove(charRef);
+        foreach (Character character in sharedScripts.GetCharacterNeighbours(charRef))
+        {
+            goodChars.Remove(charRef);
+            evilChars.Remove(charRef);
+            if (character.GetRegisterAlignment() == EAlignment.Evil) shouldPingEvil = false;
+        }
+
+
+        if (shouldPingEvil)
+        {
+            if (evilChars.Count == 0)
             {
-                newList.Add(character);
+                return new ActedInfo("Something does not make sense");
             }
-            else
-            {
-                newList2.Add(character);
-            }
-        }
-        if (newList.Count > 1)
-        {
-            newList.Remove(charRef);
-        }
-        if (newList2.Count > 1)
-        {
-            newList2.Remove(charRef);
-        }
-        int adjacentEvils = CheckAdjacentEvils(charRef);
-        Character random = newList[0];
-        if (adjacentEvils == 0)
-        {
-            random = newList[UnityEngine.Random.RandomRangeInt(0, newList.Count)];
+            selection.Add(evilChars[UnityEngine.Random.RandomRangeInt(0, evilChars.Count)]);
         }
         else
         {
-            random = newList2[UnityEngine.Random.RandomRangeInt(0, newList2.Count)];
+            if (goodChars.Count == 0)
+            {
+                return new ActedInfo("Something does not make sense");
+            }
+            selection.Add(goodChars[UnityEngine.Random.RandomRangeInt(0, goodChars.Count)]);
         }
-        selection.Add(random);
-        string line = string.Format("#{0} is Evil", random.id);
 
-        ActedInfo actedInfo = new ActedInfo(line, selection);
-        return actedInfo;
+        return new ActedInfo($"#{selection[0].id} is Evil", selection);
+
+
     }
     public override ActedInfo GetBluffInfo(Character charRef)
     {
-        Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;
-        System.Collections.Generic.List<Character> newList = new System.Collections.Generic.List<Character>();
-        System.Collections.Generic.List<Character> newList2 = new System.Collections.Generic.List<Character>();
         Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
-        Characters charInst = Characters.Instance;
-        foreach (Character character in characters)
+        Il2CppSystem.Collections.Generic.List<Character> goodChars = new Il2CppSystem.Collections.Generic.List<Character>();
+        Il2CppSystem.Collections.Generic.List<Character> evilChars = new Il2CppSystem.Collections.Generic.List<Character>();
+        bool shouldPingEvil = true;
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+        foreach (Character character in Gameplay.CurrentCharacters)
         {
-            if (character.GetRegisterAlignment() != EAlignment.Good)
+            if (character.GetRegisterAlignment() == EAlignment.Evil) evilChars.Add(character);
+            else goodChars.Add(character);
+        }
+
+
+        goodChars.Remove(charRef);
+        evilChars.Remove(charRef);
+        foreach (Character character in sharedScripts.GetCharacterNeighbours(charRef))
+        {
+            goodChars.Remove(charRef);
+            evilChars.Remove(charRef);
+            if (character.GetRegisterAlignment() == EAlignment.Evil) shouldPingEvil = false;
+        }
+
+
+        if (!shouldPingEvil)
+        {
+            if (evilChars.Count == 0)
             {
-                newList.Add(character);
+                return new ActedInfo("Something does not make sense");
             }
-            else
-            {
-                newList2.Add(character);
-            }
-        }
-        if (newList.Count > 1)
-        {
-            newList.Remove(charRef);
-        }
-        if (newList2.Count > 1)
-        {
-            newList2.Remove(charRef);
-        }
-        int adjacentEvils = CheckAdjacentEvils(charRef);
-        Character random = newList[0];
-        if (adjacentEvils != 0)
-        {
-            random = newList[UnityEngine.Random.RandomRangeInt(0, newList.Count)];
+            selection.Add(evilChars[UnityEngine.Random.RandomRangeInt(0, evilChars.Count)]);
         }
         else
         {
-            random = newList2[UnityEngine.Random.RandomRangeInt(0, newList2.Count)];
+            if (goodChars.Count == 0)
+            {
+                return new ActedInfo("Something does not make sense");
+            }
+            selection.Add(goodChars[UnityEngine.Random.RandomRangeInt(0, goodChars.Count)]);
         }
-        selection.Add(random);
-        string line = string.Format("#{0} is Evil", random.id);
 
-        ActedInfo actedInfo = new ActedInfo(line, selection);
-        return actedInfo;
+        return new ActedInfo($"#{selection[0].id} is Evil", selection);
     }
     public override string Description
     {

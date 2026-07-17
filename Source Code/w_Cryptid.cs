@@ -7,6 +7,7 @@ using MelonLoader;
 using System;
 using System.ComponentModel.Design;
 using UnityEngine;
+using HarmonyLib;
 using static WingidonExpansionPack.MainMod;
 
 namespace WingidonExpansionPack;
@@ -69,8 +70,26 @@ public class w_Cryptid : Role
             CharacterData realMinion = whitelistMinions[UnityEngine.Random.RandomRangeInt(0, whitelistMinions.Count)];
             Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Minion, realMinion);
             DeckView.AddToObscuredDeckView(realMinion);
+            sharedScripts.DebugMessage($"Cryptid at #{charRef.id} transforming into {realMinion.characterName}");
             charRef.Init(realMinion);
+            charRef.statuses.AddStatus(CryptidIdentity.w_cryptidName, charRef);
         }
+    }
+    public override void BluffAct(ETriggerPhase trigger, Character charRef)
+    {
+        Act(trigger, charRef);
+    }
+
+    public override CharacterData GetBluffIfAble(Character charRef)
+    {
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+        sharedScripts.DebugMessage($"Cryptid at #{charRef.id} couldn't transform! Panic-transforming into Underling.");
+        Il2CppSystem.Collections.Generic.List<CharacterData> underlings = sharedScripts.GetUnderlingDatas(charRef);
+        charRef.Init(underlings[2]);
+        charRef.statuses.AddStatus(CryptidIdentity.w_cryptidName, charRef);
+        CharacterData bluff = sharedScripts.GetOverrideNotInPlayBluff(charRef, true);
+        charRef.GiveBluff(bluff);
+        return bluff;
     }
     public w_Cryptid() : base(ClassInjector.DerivedConstructorPointer<w_Cryptid>())
     {
@@ -81,5 +100,27 @@ public class w_Cryptid : Role
 
     }
 }
+public static class CryptidIdentity
+{
+    public static ECharacterStatus w_cryptidName = (ECharacterStatus)318251620;
 
+    [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+    public static class pvt
+    {
+        public static void Postfix(Character __instance)
+        {
+            if (__instance.statuses.Contains(w_cryptidName) && __instance.dataRef.type == ECharacterType.Minion)
+            {
+                __instance.chName.text = "CRYPTID";
+            }
+            //if (__instance.statuses.Contains(w_irisName))
+            //{
+            //    if (__instance.name.ToString() != "Iris")
+            //    {
+            //        __instance.chName.text = "IRIS";
+            //    }
+            //}
+        }
+    }
+}
 

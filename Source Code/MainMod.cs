@@ -18,7 +18,7 @@ using static Il2Cpp.GameplayEvents;
 using static Il2CppSystem.Array;
 using static MelonLoader.Modules.MelonModule;
 
-[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.2.6", "Wingidon")]
+[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.3.0", "Wingidon")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
 
 namespace WingidonExpansionPack;
@@ -64,6 +64,7 @@ public class MainMod : MelonMod
 
         // Minions
         ClassInjector.RegisterTypeInIl2Cpp<w_Acolyte>();
+        ClassInjector.RegisterTypeInIl2Cpp<w_Cryptid>();
         ClassInjector.RegisterTypeInIl2Cpp<w_Fanatic>();
         ClassInjector.RegisterTypeInIl2Cpp<w_Professional>();
         ClassInjector.RegisterTypeInIl2Cpp<w_Saboteur>();
@@ -158,7 +159,7 @@ public class MainMod : MelonMod
         configCategory.CreateEntry("Veni-Vidi-Vici_Weight", 2, description: "How likely the Hellspawn Triplets are to be in-play.");
         configCategory.CreateEntry("Caedoccidere_Weight", 2, description: "How likely Caedoccidere is to be in-play.");
         configCategory.CreateEntry("Praesect_Weight", 2, description: "How likely Praesect is to be in-play.");
-        configCategory.CreateEntry("Mendaverte_Weight", 2, description: "How likely Mendaverte is to be in-play.");
+        configCategory.CreateEntry("Mendaverte_Weight", 0, description: "Mendaverte has proven itself to have some weird bugs, such as characters having the wrong ability or rapidly shifting roles, so it's disabled by default - enable at your own peril (or something).");
         configCategory.CreateEntry("Venelum_Weight", 2, description: "How likely Venelum is to be in-play.");
         configCategory.CreateEntry("Sanguitaurus_Weight", 2, description: "How likely Sanguitaurus is to be in-play.");
         configCategory.CreateEntry("Tenecaligo_Weight", 2, description: "How likely Tenecaligo is to be in-play.");
@@ -346,7 +347,7 @@ public class MainMod : MelonMod
         CharacterData w_performer = newCharacter("Performer", EAlignment.Good, ECharacterType.Villager, true, false, "\"Puts on a good show, but relies heavily on her background actors.", "Athlete_95133291");
         w_performer.role = new w_Performer();
         w_performer.description = "Learn 1 Evil character.\nIf I am adjacent to Evil, Learn false info.";
-        w_performer.hints = "If I Learn false info due only to my ability, it does not count as Lying, as my ability is functioning as intended.";
+        w_performer.hints = "If I Learn false info due only to my ability, it does not count as Lying, as my ability is functioning as intended.\n\nI cannot point at my neighbours, even if they are my only valid targets.";
         w_performer.ifLies = "My info is the opposite of what I would normally Learn.";
         w_performer.gender = EGender.Female;
         // w_performer.flavorText = "\"What a wonderful performance!\n...is what I would say if her background characters weren't saboteurs.\"";
@@ -595,6 +596,25 @@ public class MainMod : MelonMod
         w_houndtamer.hints = $"My dog growls at most characters, but barks at the {roleColour("Minion")}Werewolf</color>.";
         w_houndtamer.gender = EGender.Female;
         // Little easter egg for anyone reading this, the Hound Tamer's dog is based on an Ibizan Hound. More specifically, I used this image as reference when colouring it: https://www.dogsnsw.org.au/media/img/BrowseAllBreed/Ibizan-Hound.jpg
+
+
+
+        CharacterData w_underling_v = newCharacter("Citizen", EAlignment.Good, ECharacterType.Villager, true, false, "\"Never asked to be wrapped up in this mess.\nStill here anyway.\"", "Witness_25155076");
+        w_underling_v.role = new w_Underling_V();
+        w_underling_v.description = "I am not Unique.\n\nLearn random info.";
+        w_underling_v.ifLies = $"My info can be false in any way. It may not follow the Lying rules you may expect it to.";
+        w_underling_v.hints = $"I am usually the result of my previous Villager role not working well with an in-play Demon. Not always, though.";
+        w_underling_v.gender = EGender.They;
+        w_underling_v.characterId = "Underling_V_WING";
+
+
+
+        CharacterData w_riddleGuy = newCharacter("Puzzlemaster", EAlignment.Good, ECharacterType.Villager, true, false, "\"Speaks in riddles.\nNobody knows what they mean.\"", "Gossip_85354100");
+        w_riddleGuy.role = new w_RiddleGuy();
+        w_riddleGuy.description = "Learn two pieces of strangely-worded random info.";
+        w_riddleGuy.hints = $"Have you ever played games like Dupery? Or Blood on the Clocktower? Maybe a little bit of The Wrong Ones? You may recognise some of my statements.";
+        w_riddleGuy.ifLies = $"Both of my statements are false.";
+        w_riddleGuy.gender = EGender.Female;
 
 
 
@@ -869,6 +889,13 @@ public class MainMod : MelonMod
         w_switchblade.hints = $"I cannot be Disguised as.\n\nI can only {formattedKeyText("Kill")} once per game.\n\n{formattedKeyText("Cycle")} abilities resolve starting from the top, going counter-clockwise.";
         w_switchblade.gender = EGender.Female;
 
+        CharacterData w_underling_o = newCharacter("Pariah", EAlignment.Good, ECharacterType.Outcast, true, false, "\"Fades into the background.\nPerhaps a little too well.\"", "Wretch_80988916");
+        w_underling_o.role = new w_Underling_O();
+        w_underling_o.description = "I am not Unique.\nI have no ability.";
+        w_underling_o.hints = $"I am usually the result of my previous Outcast role not working well with an in-play Demon. Not always, though.";
+        w_underling_o.gender = EGender.They;
+        w_underling_o.characterId = "Underling_O_WING";
+
 
 
 
@@ -939,6 +966,13 @@ public class MainMod : MelonMod
         w_cryptid.description = $"<b>Game Start</b>:\nI become a random not-in-play Minion role.\nHide it from the {formattedKeyText("Deck")}.";
         w_cryptid.hints = $"Some characters may mention not-in-{formattedKeyText("Deck")} Minions if I am in-play.";
         w_cryptid.gender = EGender.They;
+
+        CharacterData w_underling_m = newCharacter("Underling", EAlignment.Evil, ECharacterType.Minion, false, true, "\"They just like Lying.\nAnd also the thrill of deception.\"", "Minion_71804875");
+        w_underling_m.role = new w_Underling_M();
+        w_underling_m.description = "I am not Unique.\nI Lie and Disguise.";
+        w_underling_m.hints = "I am usually the result of my previous Minion role not working well with an in-play Demon. Not always, though.";
+        w_underling_m.gender = EGender.They;
+        w_underling_m.characterId = "Underling_M_WING";
 
         /*CharacterData w_toxomancer = new CharacterData();
         w_toxomancer.role = new w_Toxomancer();
@@ -1156,7 +1190,7 @@ public class MainMod : MelonMod
         w_pandemonium.role = new w_Pandemonium();
         // Name derived from Latin 'Magna' meaning 'Large', and 'Fallere' meaning 'Deceive'
         w_pandemonium.description = $"<b>Setup:</b>\nVillages are much bigger than usual.\n\n<b>Game Start:</b>\nYour {formattedKeyText("Max Health")} is equal to the village size.\n2 Demons are added to the {formattedKeyText("Deck")}; I become one of them.";
-        w_pandemonium.hints = $"I put a Night Cycle in-play, even if nothing uses it.\n\nHuge thanks to <color=#FFFF00>WWW Is Not Taken</color> on <color=#9999FF>Discord</color> for helping me get this ability working, I could <i>not</i> have done this without you.\nAdditional thanks to {formattedKeyText("Cycler")} ({formattedKeyText("@skillcycler")} for getting 12+ card villages working again.";
+        w_pandemonium.hints = $"Huge thanks to <color=#FFFF00>WWW Is Not Taken</color> on {formattedKeyText("Discord")} for helping me get this ability working, I could <i>not</i> have done this without you.\nAdditional thanks to {formattedKeyText("Cycler")} ({formattedKeyText("@skillcycler")} on <color=#9999FF>Discord</color>) for getting 12+ card villages working again.";
         w_pandemonium.characterId = "Pandemonium_WING";
         w_pandemonium.gender = EGender.They;
 
@@ -1245,6 +1279,8 @@ public class MainMod : MelonMod
 
         // Vanilla order: Baa, Chancellor, Pooka, Poisoner, Witch, Puppeteer, Plague Doctor, Shaman, Alchemist, Puppet, Lilis
 
+        Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_legion);
+        Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_invertDemon);
         Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_cryptid);
         Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_fogDemon);
         Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_pandemonium);
@@ -1271,7 +1307,6 @@ public class MainMod : MelonMod
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_acolyte);
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_fanatic);
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_zealot);
-        Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_legion);
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_politician);
         Characters.Instance.startGameActOrder = InsertAfterAct("Shaman", w_iris);
 
@@ -1281,7 +1316,6 @@ public class MainMod : MelonMod
 
         //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_illusionist);
         //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_shard);
-        Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_invertDemon);
         // Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_pilgrim);
         Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_tergiversator);
         //Characters.Instance.startGameActOrder = InsertAtEndOfActOrder(w_wannabe);
@@ -2815,6 +2849,7 @@ public class MainMod : MelonMod
             addRole(script.startingTownsfolks, w_politician);
             addRole(script.startingTownsfolks, w_prince);
             addRole(script.startingTownsfolks, w_ranger);
+            addRole(script.startingTownsfolks, w_riddleGuy);
             addRole(script.startingTownsfolks, w_saint);
             addRole(script.startingTownsfolks, w_scavenger);
             addRole(script.startingTownsfolks, w_scholar);
@@ -2822,6 +2857,7 @@ public class MainMod : MelonMod
             addRole(script.startingTownsfolks, w_sheriff);
             addRole(script.startingTownsfolks, w_spy);
             //addRole(script.startingTownsfolks, w_slayerRework);
+            addRole(script.startingTownsfolks, w_underling_v); // Allow Citizen to spawn naturally.
             addRole(script.startingTownsfolks, w_visionary);
             //addRole(script.startingTownsfolks, w_wannabe);
             addRole(script.startingTownsfolks, w_warden);
@@ -2836,6 +2872,7 @@ public class MainMod : MelonMod
             addRole(script.startingOutsiders, w_revolutionary);
             addRole(script.startingOutsiders, w_switchblade);
             addRole(script.startingOutsiders, w_tergiversator);
+            addRole(script.startingOutsiders, w_underling_o); // Allow Pariah to spawn naturally.
             addRole(script.startingMinions, w_cryptid);
             addRole(script.startingMinions, w_heretic);
             addRole(script.startingMinions, w_professional);
@@ -2847,12 +2884,9 @@ public class MainMod : MelonMod
             addRoleIfNotJinxed(script.startingMinions, w_undying, undyingJinxes, script.startingDemons);
             for (int i = 0; i < 100; i++)
             {
-                //addRoleEvenIfDupe(script.startingTownsfolks, w_bountyhunter);
-                //addRoleEvenIfDupe(script.startingTownsfolks, w_politician);
-                //addRoleEvenIfDupe(script.startingTownsfolks, w_knave);
-                //addRoleEvenIfDupe(script.startingOutsiders, w_echo);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_riddleGuy);
+                //addRoleEvenIfDupe(script.startingOutsiders, w_underling_o);
                 //addRoleEvenIfDupe(script.startingMinions, w_cryptid);
-                //addRoleEvenIfDupe(script.startingMinions, w_snakeCharmer);
             }
             for (int i = 0; i < allDatas.Length; i++)
             {

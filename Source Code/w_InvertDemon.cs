@@ -15,16 +15,73 @@ namespace WingidonExpansionPack;
 public class w_InvertDemon : Demon
 {
     public CharacterData[] allDatas = Il2CppSystem.Array.Empty<CharacterData>();
+
+    Il2CppSystem.Collections.Generic.List<string> GetJinxedIDs()
+    {
+        Il2CppSystem.Collections.Generic.List<string> jinxedIDs = new Il2CppSystem.Collections.Generic.List<string>();
+        jinxedIDs.Add("Alchemist_94446803");
+        jinxedIDs.Add("Empress_13782227");
+
+        jinxedIDs.Add("Chatterbox_WING");
+        jinxedIDs.Add("Lycanthrope_16077432");
+
+        jinxedIDs.Add("Mezepheles_09511163");
+        jinxedIDs.Add("Poisoner_64796285");
+        jinxedIDs.Add("Saboteur_WING");
+        jinxedIDs.Add("Snake Charmer_WING");
+        jinxedIDs.Add("Turncoat_WING");
+
+        return jinxedIDs;
+    }
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
         if (trigger == ETriggerPhase.Init)
         {
             // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
         }
-        if (trigger == ETriggerPhase.AfterRoundStart)
+        if (trigger == ETriggerPhase.Start)
         {
+
+            wx_SavedScripts sharedScripts = new wx_SavedScripts();
+            Il2CppSystem.Collections.Generic.List<CharacterData> underlingRoles = sharedScripts.GetUnderlingDatas(charRef);
+            Il2CppSystem.Collections.Generic.List<string> jinxedIDs = GetJinxedIDs();
+            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[0].type, underlingRoles[0]);
+            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[1].type, underlingRoles[1]);
+            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[2].type, underlingRoles[2]);
+
             foreach (Character character in Gameplay.CurrentCharacters)
             {
+                if (jinxedIDs.Contains(character.dataRef.characterId))
+                {
+                    sharedScripts.DebugMessage($"Mendaverte found {character.dataRef.characterName} at #{character.id}, replacing with underling");
+                    int underlingID = 0;
+                    if (character.dataRef.type == ECharacterType.Villager) underlingID = 0;
+                    if (character.dataRef.type == ECharacterType.Outcast) underlingID = 1;
+                    if (character.dataRef.type == ECharacterType.Minion) underlingID = 2;
+                    character.Init(underlingRoles[underlingID]);
+                }
+            }
+        }
+        if (trigger == ETriggerPhase.AfterRoundStart)
+        {
+            Il2CppSystem.Collections.Generic.List<string> jinxedIDs = GetJinxedIDs();
+            wx_SavedScripts sharedScripts = new wx_SavedScripts();
+            Il2CppSystem.Collections.Generic.List<CharacterData> underlingRoles = sharedScripts.GetUnderlingDatas(charRef);
+            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[0].type, underlingRoles[0]);
+            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[1].type, underlingRoles[1]);
+            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[2].type, underlingRoles[2]);
+            foreach (Character character in Gameplay.CurrentCharacters)
+            {
+                if (character.bluff)
+                {
+                    if (jinxedIDs.Contains(character.bluff.characterId))
+                    {
+                        int underlingID = 0;
+                        if (character.bluff.type == ECharacterType.Outcast) underlingID = 1;
+                        sharedScripts.DebugMessage($"Mendaverte discovered that #{character.id} has an invalid bluff of {character.bluff.characterName}, replacing with {underlingRoles[underlingID].characterName}");
+                        character.GiveBluff(underlingRoles[underlingID]);
+                    }
+                }
                 if (character.dataRef.type == ECharacterType.Villager && character.alignment == EAlignment.Good) // Checks if they're a Good Villager
                 {
                     character.statuses.AddStatus(ECharacterStatus.Corrupted, charRef); // Corrupts them.

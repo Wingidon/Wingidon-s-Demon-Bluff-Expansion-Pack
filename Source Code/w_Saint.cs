@@ -31,6 +31,7 @@ public class w_Saint : Role
         if (CheckTriggerPhases().Contains(trigger))
         {
             SaintCureStatuses(charRef);
+            charRef.statuses.AddStatus(ECharacterStatus.AppearTruthfull, charRef);
             if (charRef.alignment == EAlignment.Evil)
             {
                 charRef.ChangeAlignment(EAlignment.Good);
@@ -94,7 +95,7 @@ public class w_Saint : Role
     {
         Il2CppSystem.Collections.Generic.List<string> returnList = new Il2CppSystem.Collections.Generic.List<string>();
         // From BotC's Saint quote
-        returnList.Add("Wisdom begets peace\nPatience begets wisdom");
+        returnList.Add("Wisdom begets peace.\nPatience begets wisdom");
         returnList.Add("Fear not, for the time shall come when fear too shall pass");
         returnList.Add("Let us pray, and may the unity of our vision make Saints of us all");
 
