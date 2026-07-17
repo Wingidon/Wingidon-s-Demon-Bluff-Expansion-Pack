@@ -28,8 +28,8 @@ public class w_Performer : Role
         evilChars.Remove(charRef);
         foreach (Character character in sharedScripts.GetCharacterNeighbours(charRef))
         {
-            goodChars.Remove(charRef);
-            evilChars.Remove(charRef);
+            goodChars.Remove(character);
+            evilChars.Remove(character);
             if (character.GetRegisterAlignment() == EAlignment.Evil) shouldPingEvil = false;
         }
 
@@ -73,8 +73,8 @@ public class w_Performer : Role
         evilChars.Remove(charRef);
         foreach (Character character in sharedScripts.GetCharacterNeighbours(charRef))
         {
-            goodChars.Remove(charRef);
-            evilChars.Remove(charRef);
+            goodChars.Remove(character);
+            evilChars.Remove(character);
             if (character.GetRegisterAlignment() == EAlignment.Evil) shouldPingEvil = false;
         }
 
