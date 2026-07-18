@@ -34,7 +34,7 @@ Currently, this mod includes the following roles:
 - Cardshark - Picks 3, and heals or hurts you depending on how many Villagers you picked.
 - Cartomancer - Learns that only one of two roles is in-play.
 - Chiromancer - Learns 3 characters and which Evil role each is, but only one is correct.
-- Citizen - Learn random info. Is not Unique.
+- Citizen - Learns random info. Is not Unique.
 - Clairvoyant - Learns 2 characters that're on the same team.
 - Copycat - Disguises as an in-play Villager, but gives you a health buff.
 - Detective - Learns how many unrevealed characters are Lying.
