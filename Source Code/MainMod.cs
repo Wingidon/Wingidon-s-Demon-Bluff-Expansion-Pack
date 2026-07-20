@@ -18,7 +18,7 @@ using static Il2Cpp.GameplayEvents;
 using static Il2CppSystem.Array;
 using static MelonLoader.Modules.MelonModule;
 
-[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.3.2", "Wingidon")]
+[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.3.4", "Wingidon")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
 
 namespace WingidonExpansionPack;

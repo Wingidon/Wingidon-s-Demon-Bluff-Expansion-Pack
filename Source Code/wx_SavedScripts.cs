@@ -1258,24 +1258,9 @@ namespace WingidonExpansionPack
 
 
 
-        CharacterData citizenData = new CharacterData();
-        CharacterData pariahData = new CharacterData();
-        CharacterData underlingData = new CharacterData();
 
         public void DoJinxes(Character charRef, string demonID, bool bluffs)
         {
-            if (citizenData == null)
-            {
-                Il2CppSystem.Collections.Generic.List<CharacterData> underlingDatas = GetUnderlingDatas(charRef);
-                citizenData = underlingDatas[0];
-                pariahData = underlingDatas[1];
-                underlingData = underlingDatas[2];
-            }
-
-
-            Gameplay.Instance.AddScriptCharacterIfAble(citizenData.type, citizenData);
-            Gameplay.Instance.AddScriptCharacterIfAble(pariahData.type, pariahData);
-            Gameplay.Instance.AddScriptCharacterIfAble(underlingData.type, underlingData);
 
             Il2CppSystem.Collections.Generic.List<string> jinxedIDs = new Il2CppSystem.Collections.Generic.List<string>();
 
@@ -1315,19 +1300,27 @@ namespace WingidonExpansionPack
                 jinxedIDs.Add("Captivator_scm");
                 jinxedIDs.Add("Hypnotist_scm");
                 jinxedIDs.Add("Chatterbox_WING");
+                jinxedIDs.Add("Godfather_POW");
                 jinxedIDs.Add("Marionette_WING");
+                jinxedIDs.Add("Mobster_POW");
                 jinxedIDs.Add("Mutant_WING");
+                jinxedIDs.Add("Pirate_POW");
+                jinxedIDs.Add("Psychopath_POW");
                 jinxedIDs.Add("Renegade_WING");
                 jinxedIDs.Add("Switchblade_WING");
                 jinxedIDs.Add("Tergiversator_WING");
+                jinxedIDs.Add("Veteran_POW");
                 jinxedIDs.Add("Wretch_80988916");
 
+                jinxedIDs.Add("Jinx_POW"); // Ambusher
                 jinxedIDs.Add("Balancer_POW");
                 jinxedIDs.Add("Baron_04539999");
                 jinxedIDs.Add("Mezepheles_09511163");
                 jinxedIDs.Add("Cryptid_WING");
+                jinxedIDs.Add("Grenadier_POW");
                 jinxedIDs.Add("Ritualist_WING");
                 jinxedIDs.Add("Saboteur_WING");
+                jinxedIDs.Add("Slinger_POW");
                 jinxedIDs.Add("Snake Charmer_WING");
                 jinxedIDs.Add("Swarm_Good_WING");
                 jinxedIDs.Add("Undying_WING");
@@ -1339,6 +1332,7 @@ namespace WingidonExpansionPack
 
             if (jinxedIDs.Count == 0) return;
 
+            Il2CppSystem.Collections.Generic.List<CharacterData> underlingDatas = GetUnderlingDatas(charRef);
             if (!bluffs)
             {
                 foreach (Character character in Gameplay.CurrentCharacters)
@@ -1346,12 +1340,10 @@ namespace WingidonExpansionPack
                     if (jinxedIDs.Contains(character.dataRef.characterId))
                     {
                         int underlingID = 0;
-                        Il2CppSystem.Collections.Generic.List<CharacterData> underlingDatas = new();
-                        underlingDatas.Add(citizenData);
-                        underlingDatas.Add(pariahData);
-                        underlingDatas.Add(underlingData);
                         if (character.dataRef.type == ECharacterType.Outcast) underlingID = 1;
                         if (character.dataRef.type == ECharacterType.Minion) underlingID = 2;
+                        if (character.dataRef.type == (ECharacterType)40) underlingID = 1; // Replace Neutrals (Power Play) with Outcasts.
+                        if (character.dataRef.type == (ECharacterType)50) underlingID = 2; // Replace Weather (Power Play) with Minions.
                         DebugMessage($"{charRef.dataRef.characterName} (#{charRef.id}) found {character.dataRef.characterName} at #{character.id}, replacing with {underlingDatas[underlingID].characterName}");
                         character.Init(underlingDatas[underlingID]);
                     }
@@ -1366,12 +1358,10 @@ namespace WingidonExpansionPack
                         if (jinxedIDs.Contains(character.bluff.characterId))
                         {
                             int underlingID = 0;
-                            Il2CppSystem.Collections.Generic.List<CharacterData> underlingDatas = new();
-                            underlingDatas.Add(citizenData);
-                            underlingDatas.Add(pariahData);
-                            underlingDatas.Add(underlingData);
                             if (character.bluff.type == ECharacterType.Outcast) underlingID = 1;
                             if (character.bluff.type == ECharacterType.Minion) underlingID = 2;
+                            if (character.bluff.type == (ECharacterType)40) underlingID = 1; // Replace Neutrals (Power Play) with Outcasts.
+                            if (character.bluff.type == (ECharacterType)50) underlingID = 2; // Replace Weather (Power Play) with Minions.
                             DebugMessage($"{charRef.dataRef.characterName} (#{charRef.id}) found bad bluff of {character.dataRef.characterName} at #{character.id}, replacing with {underlingDatas[underlingID].characterName}");
                             character.Init(underlingDatas[underlingID]);
                         }
