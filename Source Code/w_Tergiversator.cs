@@ -121,6 +121,12 @@ public class w_Tergiversator : Role
         return "";
     }
 
+    public override int GetDamageToYou()
+    {
+        if (charRef.alignment == EAlignment.Good) return 4;
+        else return 0;
+    }
+
     public ActedInfo GetRandomNonsense()
     {
         Il2CppSystem.Collections.Generic.List<string> randomNonsense = new Il2CppSystem.Collections.Generic.List<string>();

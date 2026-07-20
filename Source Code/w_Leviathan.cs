@@ -26,9 +26,9 @@ public class w_Leviathan : Role
 {
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
-        if (trigger == ETriggerPhase.Init)
+        if (trigger == ETriggerPhase.Start)
         {
-            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+            new wx_SavedScripts().DoJinxes(charRef, "Weather", false);
         }
     }
     public w_Leviathan() : base(ClassInjector.DerivedConstructorPointer<w_Leviathan>())

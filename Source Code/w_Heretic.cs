@@ -92,9 +92,13 @@ public class w_Heretic : Minion
             nightDemonIDs.Add("Infestation_scm"); // Infestation (Skill Cycler's Riddles)
             nightDemonIDs.Add("Lillith_90453844"); // Lilis (Vanilla)
             nightDemonIDs.Add("Mystifier_scm"); // Mystifier (Skill Cycler's Riddles)
+            nightDemonIDs.Add("Pestilence_POW"); // Pestilence (Power Play)
             nightDemonIDs.Add("Po_LRZH"); // Po (Circus)
 
+            setupDemonIDs.Add("Atheist_scm"); // Atheist (Skill Cycler's Riddles)
+            setupDemonIDs.Add("Death_POW"); // Dominion (Circus)
             setupDemonIDs.Add("Dominion_LRZH"); // Dominion (Circus)
+            setupDemonIDs.Add("Famine_POW"); // Famine (Power Play)
             setupDemonIDs.Add("Illusionist_WING"); // Emenverax (Wingidon's Expansion Pack)
             setupDemonIDs.Add("Imp_58992273"); // Baa (Vanilla) - Here because it's kind of difficult to miss a card hidden in the deck. Might split into his own category later.
             setupDemonIDs.Add("Legion_WING"); // Agmeres (Wingidon's Expansion Pack)
@@ -104,6 +108,7 @@ public class w_Heretic : Minion
             setupDemonIDs.Add("Pestilence_VP"); // Pestilence (CarlzVillagePack), because it's kind of difficult to miss everyone's abilities refreshing.
             setupDemonIDs.Add("shroud_rdm"); // Shroud (Reveal Dilemma) - blows its cover as soon as you reveal the first card.
             setupDemonIDs.Add("Summoner_scm"); // Summoner (Skill Cycler's Riddles)
+            setupDemonIDs.Add("War_POW"); // Summoner (Skill Cycler's Riddles)
 
 
 

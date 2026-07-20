@@ -230,6 +230,8 @@ public class w_Undying : Minion
         Il2CppSystem.Collections.Generic.List<string> returnList = new Il2CppSystem.Collections.Generic.List<string>();
         returnList.Add("Undying_WING");
         returnList.Add("Vizier_LRZH");
+        returnList.Add("Apprentice_POW");
+        returnList.Add("Squire_scm");
         return returnList;
     }
     public ActedInfo getTaunt(string trigger)

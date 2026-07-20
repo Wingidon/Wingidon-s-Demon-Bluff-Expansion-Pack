@@ -273,6 +273,7 @@ public class w_Carnicarius : Demon
             }
             if (!(validTargets.Count == 0))
             {
+                wx_SavedScripts sharedScripts = new wx_SavedScripts();
                 Character myTarget = validTargets[UnityEngine.Random.Range(0, validTargets.Count)];
                 myTarget.statuses.AddStatus(ECharacterStatus.KilledByEvil, charRef);
                 myTarget.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
@@ -280,9 +281,9 @@ public class w_Carnicarius : Demon
                 myTarget.KillByDemon(charRef);
                 myTarget.pickable.SetActive(false);
                 myTarget.statuses.AddStatus(ECharacterStatus.KilledByEvil, charRef);
-                MelonLogger.Msg($"Killed the {myTarget.dataRef.characterName} at #{myTarget.id}");
+                sharedScripts.DebugMessage($"Killed the {myTarget.dataRef.characterName} at #{myTarget.id}");
                 //MelonLogger.Msg($"The target list was: {sharedScripts.MentionEveryCharacterInList(validTargets, "")}");
-                MelonLogger.Msg($"The reason was as follows: {killReasons[myTarget.id]}");
+                sharedScripts.DebugMessage($"The reason was as follows: {killReasons[myTarget.id]}");
             }
         }
     }

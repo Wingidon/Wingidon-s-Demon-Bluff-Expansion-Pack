@@ -56,6 +56,7 @@ public class w_Legion : Role
 
         return jinxedIDs;
     }
+    wx_SavedScripts sharedScripts = new wx_SavedScripts();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
         if (trigger == ETriggerPhase.Init)
@@ -64,25 +65,8 @@ public class w_Legion : Role
         }
         if (trigger == ETriggerPhase.Start)
         {
-            wx_SavedScripts sharedScripts = new wx_SavedScripts();
-            Il2CppSystem.Collections.Generic.List<CharacterData> underlingRoles = sharedScripts.GetUnderlingDatas(charRef);
-            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[0].type, underlingRoles[0]);
-            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[1].type, underlingRoles[1]);
-            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[2].type, underlingRoles[2]);
-            Il2CppSystem.Collections.Generic.List<string> jinxedIDs = GetJinxedIDs();
-
-            foreach (Character character in Gameplay.CurrentCharacters)
-            {
-                if (jinxedIDs.Contains(character.dataRef.characterId))
-                {
-                    sharedScripts.DebugMessage($"Agmeres found {character.dataRef.characterName} at #{character.id}, replacing with underling");
-                    int underlingID = 0;
-                    if (character.dataRef.type == ECharacterType.Villager) underlingID = 0;
-                    if (character.dataRef.type == ECharacterType.Outcast) underlingID = 1;
-                    if (character.dataRef.type == ECharacterType.Minion) underlingID = 2;
-                    character.Init(underlingRoles[underlingID]);
-                }
-            }
+            sharedScripts.DoJinxes(charRef, "Weather", false);
+            sharedScripts.DoJinxes(charRef, "Legion_WING", false);
         }
         if (trigger == ETriggerPhase.Night)
         {
@@ -103,24 +87,7 @@ public class w_Legion : Role
             Health health = PlayerController.PlayerInfo.health;
             //health.Damage(2);
             health.AddMaxHp(-2);
-            wx_SavedScripts sharedScripts = new wx_SavedScripts();
-            Il2CppSystem.Collections.Generic.List<CharacterData> underlingRoles = sharedScripts.GetUnderlingDatas(charRef);
-            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[0].type, underlingRoles[0]);
-            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[1].type, underlingRoles[1]);
-            Gameplay.Instance.AddScriptCharacterIfAble(underlingRoles[2].type, underlingRoles[2]);
-            foreach (Character character in Gameplay.CurrentCharacters)
-            {
-                if (character.bluff)
-                {
-                    if (GetJinxedIDs().Contains(character.bluff.characterId))
-                    {
-                        int underlingID = 0;
-                        if (character.bluff.type == ECharacterType.Outcast) underlingID = 1;
-                        sharedScripts.DebugMessage($"Agmeres discovered that #{character.id} has an invalid bluff of {character.bluff.characterName}, replacing with {underlingRoles[underlingID].characterName}");
-                        character.GiveBluff(underlingRoles[underlingID]);
-                    }
-                }
-            }
+            sharedScripts.DoJinxes(charRef, "Legion_WING", true);
         }
     }
     public w_Legion() : base(ClassInjector.DerivedConstructorPointer<w_Legion>())

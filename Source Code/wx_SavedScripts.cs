@@ -506,6 +506,7 @@ namespace WingidonExpansionPack
             demonNames.Add("Po");
 
             // Power Play
+            demonNames.Add("Snowed In");
             demonNames.Add("Death");
             demonNames.Add("Famine");
             demonNames.Add("Pestilence");
@@ -1257,6 +1258,127 @@ namespace WingidonExpansionPack
 
 
 
+        CharacterData citizenData = new CharacterData();
+        CharacterData pariahData = new CharacterData();
+        CharacterData underlingData = new CharacterData();
+
+        public void DoJinxes(Character charRef, string demonID, bool bluffs)
+        {
+            if (citizenData == null)
+            {
+                Il2CppSystem.Collections.Generic.List<CharacterData> underlingDatas = GetUnderlingDatas(charRef);
+                citizenData = underlingDatas[0];
+                pariahData = underlingDatas[1];
+                underlingData = underlingDatas[2];
+            }
+
+
+            Gameplay.Instance.AddScriptCharacterIfAble(citizenData.type, citizenData);
+            Gameplay.Instance.AddScriptCharacterIfAble(pariahData.type, pariahData);
+            Gameplay.Instance.AddScriptCharacterIfAble(underlingData.type, underlingData);
+
+            Il2CppSystem.Collections.Generic.List<string> jinxedIDs = new Il2CppSystem.Collections.Generic.List<string>();
+
+            if (demonID == "Weather")
+            {
+                jinxedIDs.Add("Foggy_POW");
+                jinxedIDs.Add("Snowy_POW");
+                jinxedIDs.Add("SnowedIn_POW");
+                jinxedIDs.Add("Stormy_POW");
+                jinxedIDs.Add("Sunny_POW");
+            }
+
+            if (demonID == "Mendaverte_WING")
+            {
+                jinxedIDs.Add("Alchemist_94446803");
+                jinxedIDs.Add("Confessor_18741708");
+                jinxedIDs.Add("Knight_47970624");
+
+                jinxedIDs.Add("Chatterbox_WING");
+                jinxedIDs.Add("Lycanthrope_16077432");
+                jinxedIDs.Add("MadScientist_scm");
+
+                jinxedIDs.Add("Guardian_scm");
+                jinxedIDs.Add("Mezepheles_09511163");
+                jinxedIDs.Add("Poisoner_64796285");
+                jinxedIDs.Add("Saboteur_WING");
+                jinxedIDs.Add("Snake Charmer_WING");
+                jinxedIDs.Add("Turncoat_WING");
+            }
+
+            if (demonID == "Legion_WING")
+            {
+                jinxedIDs.Add("Bishop_58855542");
+                jinxedIDs.Add("Empress_13782227");
+
+                jinxedIDs.Add("Confectioner_scm");
+                jinxedIDs.Add("Captivator_scm");
+                jinxedIDs.Add("Hypnotist_scm");
+                jinxedIDs.Add("Chatterbox_WING");
+                jinxedIDs.Add("Marionette_WING");
+                jinxedIDs.Add("Mutant_WING");
+                jinxedIDs.Add("Renegade_WING");
+                jinxedIDs.Add("Switchblade_WING");
+                jinxedIDs.Add("Tergiversator_WING");
+                jinxedIDs.Add("Wretch_80988916");
+
+                jinxedIDs.Add("Balancer_POW");
+                jinxedIDs.Add("Baron_04539999");
+                jinxedIDs.Add("Mezepheles_09511163");
+                jinxedIDs.Add("Cryptid_WING");
+                jinxedIDs.Add("Ritualist_WING");
+                jinxedIDs.Add("Saboteur_WING");
+                jinxedIDs.Add("Snake Charmer_WING");
+                jinxedIDs.Add("Swarm_Good_WING");
+                jinxedIDs.Add("Undying_WING");
+            }
+
+
+
+
+
+            if (jinxedIDs.Count == 0) return;
+
+            if (!bluffs)
+            {
+                foreach (Character character in Gameplay.CurrentCharacters)
+                {
+                    if (jinxedIDs.Contains(character.dataRef.characterId))
+                    {
+                        int underlingID = 0;
+                        Il2CppSystem.Collections.Generic.List<CharacterData> underlingDatas = new();
+                        underlingDatas.Add(citizenData);
+                        underlingDatas.Add(pariahData);
+                        underlingDatas.Add(underlingData);
+                        if (character.dataRef.type == ECharacterType.Outcast) underlingID = 1;
+                        if (character.dataRef.type == ECharacterType.Minion) underlingID = 2;
+                        DebugMessage($"{charRef.dataRef.characterName} (#{charRef.id}) found {character.dataRef.characterName} at #{character.id}, replacing with {underlingDatas[underlingID].characterName}");
+                        character.Init(underlingDatas[underlingID]);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Character character in Gameplay.CurrentCharacters)
+                {
+                    if (character.bluff)
+                    {
+                        if (jinxedIDs.Contains(character.bluff.characterId))
+                        {
+                            int underlingID = 0;
+                            Il2CppSystem.Collections.Generic.List<CharacterData> underlingDatas = new();
+                            underlingDatas.Add(citizenData);
+                            underlingDatas.Add(pariahData);
+                            underlingDatas.Add(underlingData);
+                            if (character.bluff.type == ECharacterType.Outcast) underlingID = 1;
+                            if (character.bluff.type == ECharacterType.Minion) underlingID = 2;
+                            DebugMessage($"{charRef.dataRef.characterName} (#{charRef.id}) found bad bluff of {character.dataRef.characterName} at #{character.id}, replacing with {underlingDatas[underlingID].characterName}");
+                            character.Init(underlingDatas[underlingID]);
+                        }
+                    }
+                }
+            }
+        }
 
 
         public string GetVisionaryFlavour() // Just a fun little detail, Visionary's flavour is different every time you open the game.
@@ -1467,7 +1589,6 @@ namespace WingidonExpansionPack
             if (villagerCharacters.Count != 0 && nonVillagerCharacters.Count != 0) infoTypes.Add("ForagerCount"); // Learn how many are Villagers
 
             // Learn how far from me to...
-
             if (evilCharacters.Count != 0)
             {
                 infoTypes.Add("Hunter"); // my nearest Evil
@@ -3192,6 +3313,17 @@ namespace WingidonExpansionPack
             return statusID;
         }
 
+
+
+        public Il2CppSystem.Collections.Generic.List<Character> GetCurrentCharacters()
+        {
+            Il2CppSystem.Collections.Generic.List<Character> allChars = new Il2CppSystem.Collections.Generic.List<Character>();
+            foreach (Character character in Gameplay.CurrentCharacters)
+            {
+                allChars.Add(character);
+            }
+            return allChars;
+        }
 
 
 

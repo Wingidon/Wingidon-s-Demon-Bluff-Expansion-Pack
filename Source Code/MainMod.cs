@@ -18,7 +18,7 @@ using static Il2Cpp.GameplayEvents;
 using static Il2CppSystem.Array;
 using static MelonLoader.Modules.MelonModule;
 
-[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.3.0", "Wingidon")]
+[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.3.2", "Wingidon")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
 
 namespace WingidonExpansionPack;
@@ -355,7 +355,7 @@ public class MainMod : MelonMod
 
         CharacterData w_lamb = newCharacter("Lamb", EAlignment.Good, ECharacterType.Villager, true, false, "\"Looking for a shepherd.\nAn adequate one, that is.\"", "Imp_58992273");
         w_lamb.role = new w_Lamb();
-        w_lamb.description = "Learn how far from me to a particular Outcast.";
+        w_lamb.description = "Learn how far from me to a particular random Outcast.";
         w_lamb.hints = $"If an Outcast Disguised as me is {formattedKeyText("Truthful")} and is also the only Outcast, they will say that there are no Outcasts.";
         w_lamb.gender = EGender.Male;
 
@@ -520,7 +520,7 @@ public class MainMod : MelonMod
         CharacterData w_saint = newCharacter("Saint", EAlignment.Good, ECharacterType.Villager, false, false, "\"Wisdom begets peace. Patience begets wisdom. Fear not, for the time shall come when fear too shall pass.\nLet us pray, and may the unity of our vision make saints of us all.\"", "Saint_61372493");
         w_saint.role = new w_Saint();
         w_saint.description = $"I am always Good.";
-        w_saint.hints = "Some roles may try to turn me Evil, but they will fail to do so.\nCertain roles, like the Puppeteer, might have their ability fail if they're adjacent to me.";
+        w_saint.hints = "Some roles may try to turn me Evil, but they will fail to do so.\nCertain roles, like the Puppeteer, might have their ability fail if they're adjacent to me.\n\nI am always Truthful and always seen as such, even if Corrupted.";
         w_saint.gender = EGender.Female;
 
 
@@ -874,7 +874,7 @@ public class MainMod : MelonMod
         CharacterData w_tergiversator = newCharacter("Tergiversator", EAlignment.Good, ECharacterType.Outcast, false, false, "\"Nobody knows her beliefs.\nOr if she even has any.\"", "Witch_25286521");
         w_tergiversator.role = new w_Tergiversator();
         w_tergiversator.description = $"My starting {formattedKeyText("Alignment")} is random.\n\n<b>{formattedKeyText("Cycle 4")}:</b>\nMy Alignment flips.\nIf I am the last Evil and become Good this way, I {formattedKeyText("Die")}.\n\nWhile Good, I {formattedKeyText("Bluff")} being {formattedKeyText("Truthful")} & {formattedKeyText("Honest")}.\nWhile Evil, I {formattedKeyText("Bluff")} Lying & Disguising.\n\nI tell you something really interesting.";
-        w_tergiversator.hints = $"I cannot be Disguised as.\n\n{customHint("Keyword", "Bluff")}\n\n{customHint("Keyword", "Cycle")}";
+        w_tergiversator.hints = $"I cannot be Disguised as and deal 1 less {formattedKeyText("Damage")} when Executed.\n\n{customHint("Keyword", "Bluff")}\n\n{customHint("Keyword", "Cycle")}";
         w_tergiversator.gender = EGender.Female;
 
         CharacterData w_echo = newCharacter("Echo", EAlignment.Good, ECharacterType.Outcast, false, false, "\"This is the truth the Poet was talking about.\"", "Doppleganger_52694042");
@@ -1283,6 +1283,7 @@ public class MainMod : MelonMod
         Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_invertDemon);
         Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_cryptid);
         Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_fogDemon);
+        Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_leviathan);
         Characters.Instance.startGameActOrder = InsertAtStartOfActOrder(w_pandemonium);
 
 
@@ -2858,6 +2859,7 @@ public class MainMod : MelonMod
             addRole(script.startingTownsfolks, w_spy);
             //addRole(script.startingTownsfolks, w_slayerRework);
             addRole(script.startingTownsfolks, w_underling_v); // Allow Citizen to spawn naturally.
+            addRole(script.startingTownsfolks, w_underling_v); // Allow natural double-ups.
             addRole(script.startingTownsfolks, w_visionary);
             //addRole(script.startingTownsfolks, w_wannabe);
             addRole(script.startingTownsfolks, w_warden);
@@ -2884,7 +2886,7 @@ public class MainMod : MelonMod
             addRoleIfNotJinxed(script.startingMinions, w_undying, undyingJinxes, script.startingDemons);
             for (int i = 0; i < 100; i++)
             {
-                //addRoleEvenIfDupe(script.startingTownsfolks, w_riddleGuy);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_bloodseer);
                 //addRoleEvenIfDupe(script.startingOutsiders, w_underling_o);
                 //addRoleEvenIfDupe(script.startingMinions, w_cryptid);
             }
@@ -4617,4 +4619,95 @@ public class MainMod : MelonMod
         randomInfoConfigCategory.SaveToFile();
     }
     */
+
+
+    // Code by Skill Cycler. Prevents Medium from being ambiguous with Good-registering Evils
+    [HarmonyPatch(typeof(Lookout), nameof(Lookout.GetBluffInfo))]
+    private static class FixMediums
+    {
+        private static void Postfix(Lookout __instance, Character charRef, ref ActedInfo __result)
+        {
+            Il2CppSystem.Collections.Generic.List<Character> allCharacters = Gameplay.CurrentCharacters;
+            Il2CppSystem.Collections.Generic.List<Character> filteredAllCharacters = new();
+
+            foreach (Character c in allCharacters)
+                if (c.bluff != null && !(c.alignment == EAlignment.Evil && c.GetRegisterAlignment() == EAlignment.Good))
+                    if (c != charRef)
+                        filteredAllCharacters.Add(c);
+
+            if (filteredAllCharacters.Count == 0)
+                foreach (Character c in allCharacters)
+                    if (c.bluff != null && !(c.alignment == EAlignment.Evil && c.GetRegisterAlignment() == EAlignment.Good))
+                        filteredAllCharacters.Add(c);
+
+            Il2CppSystem.Collections.Generic.List<Character> pickedCh = new();
+            pickedCh.Add(filteredAllCharacters[UnityEngine.Random.Range(0, filteredAllCharacters.Count)]);
+
+            string info = __instance.ConjourInfo(pickedCh[0].id, pickedCh[0].bluff, charRef);
+            ActedInfo newInfo = new ActedInfo(info, pickedCh);
+            __result = newInfo;
+        }
+    }
+
+
+    // Code also by Skill Cycler, avoids weird interaction between Scout & Professional/Iris.
+    [HarmonyPatch(typeof(Scout), nameof(Scout.GetBluffInfo))]
+    private static class ScoutFix
+    {
+        private static void Postfix(Scout __instance, Character charRef, ref ActedInfo __result)
+        {
+            float randomId = UnityEngine.Random.Range(0f, 1f);
+            Il2CppSystem.Collections.Generic.List<Character> allEvils = Characters.Instance.FilterRealAlignmentCharacters(Gameplay.CurrentCharacters, EAlignment.Evil);
+            allEvils = Characters.Instance.FilterAlignmentCharacters(allEvils, EAlignment.Evil);
+
+            Character pickedEvil = allEvils[UnityEngine.Random.Range(0, allEvils.Count)];
+
+            // Leave the Atheist clause in there to avoid issues along those lines.
+            while (pickedEvil.dataRef.characterId == "Atheist_scm") pickedEvil = allEvils[UnityEngine.Random.Range(0, allEvils.Count)];
+
+            int id = __instance.GetClosestEvilToEvil(pickedEvil, charRef);
+            id = Calculator.RemoveNumberAndGetRandomNumberFromList(id, 0, 3);
+
+            string info = __instance.ConjourInfo(pickedEvil.GetRegisterAs(), id, charRef);
+            __result = new ActedInfo(info);
+        }
+    }
+
+
+
+
+
+    // Code still by Skill Cycler. Avoids awkward Scout interactions.
+    [HarmonyPatch(typeof(Scout), nameof(Scout.GetInfo))]
+    private static class HypnotistScout
+    {
+        private static void Postfix(Scout __instance, Character charRef, ref ActedInfo __result)
+        {
+            if (charRef.dataRef.characterId != "Hypnotist_scm") // Leave Hypnotist clause in there to avoid compatibility issues
+            {
+                Il2CppSystem.Collections.Generic.List<Character> allEvils = Characters.Instance.FilterRealAlignmentCharacters(Gameplay.CurrentCharacters, EAlignment.Evil);
+                allEvils = Characters.Instance.FilterAlignmentCharacters(allEvils, EAlignment.Evil);
+
+                Character pickedEvil = allEvils[UnityEngine.Random.Range(0, allEvils.Count)];
+
+                while (pickedEvil.dataRef.characterId == "Atheist_scm") pickedEvil = allEvils[UnityEngine.Random.Range(0, allEvils.Count)];
+
+                int closestEvil = __instance.GetClosestEvilToEvil(pickedEvil, charRef);
+
+                string info = __instance.ConjourInfo(pickedEvil.GetRegisterAs(), closestEvil, charRef);
+                __result = new ActedInfo(info);
+            }
+            else
+            {
+                Il2CppSystem.Collections.Generic.List<Character> allEvils = Characters.Instance.FilterRealAlignmentCharacters(Gameplay.CurrentCharacters, EAlignment.Evil);
+                allEvils = Characters.Instance.FilterAlignmentCharacters(allEvils, EAlignment.Evil);
+
+                Character pickedEvil = allEvils[UnityEngine.Random.Range(0, allEvils.Count)];
+
+                string info = __instance.ConjourInfo(pickedEvil.dataRef, 3, charRef);
+
+                __result = new ActedInfo(info);
+            }
+        }
+    }
 }

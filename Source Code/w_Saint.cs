@@ -82,6 +82,10 @@ public class w_Saint : Role
         {
             charRef.statuses.statuses.Remove((ECharacterStatus)880);
         }
+        if (charRef.statuses.Contains(ECharacterStatus.AppearLying))
+        {
+            charRef.statuses.statuses.Remove(ECharacterStatus.AppearLying);
+        }
     }
 
 

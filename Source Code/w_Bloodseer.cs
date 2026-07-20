@@ -38,7 +38,11 @@ public class w_Bloodseer : Role
             }
             if (charRef.GetCurrentActedInfo().desc != "")
             {
+                ActedInfo isolatedInfo = new ActedInfo(newInfo.desc, newInfo.characters);
                 newInfo.desc = charRef.GetCurrentActedInfo().desc + "\n" + newInfo.desc;
+                OnActed(ETriggerPhase.Day, charRef, isolatedInfo);
+                charRef.pickableUses += 1;
+
             }
         }
         else
