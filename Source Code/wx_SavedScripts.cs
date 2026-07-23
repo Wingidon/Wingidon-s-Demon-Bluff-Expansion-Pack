@@ -279,7 +279,7 @@ namespace WingidonExpansionPack
             int characterCount = characters.Count;
             int counter = 0;
             Il2CppSystem.Collections.Generic.List<string> sortedCharacters = characters;
-            foreach (CharacterData character in sortedCharacters)
+            foreach (string character in sortedCharacters)
             {
                 if (returnString == "Return")
                 {
@@ -909,6 +909,25 @@ namespace WingidonExpansionPack
         }
 
 
+        public Il2CppSystem.Collections.Generic.List<string> GetLastStandIDs()
+        {
+            Il2CppSystem.Collections.Generic.List<string> returnList = new Il2CppSystem.Collections.Generic.List<string>();
+            returnList.Add("Undying_WING");
+            returnList.Add("Vizier_LRZH");
+            returnList.Add("Apprentice_POW");
+            returnList.Add("Squire_scm");
+            return returnList;
+        }
+
+
+        public Il2CppSystem.Collections.Generic.List<string> GetLastStandPunisherIDs(bool includeNormalLastStand)
+        {
+            Il2CppSystem.Collections.Generic.List<string> returnList = new();
+            if (includeNormalLastStand) returnList = GetLastStandIDs();
+            returnList.Add("Praesect_WING");
+            returnList.Add("Grenadier_POW");
+            return returnList;
+        }
 
 
         public Il2CppSystem.Collections.Generic.List<string> GetPossibleCharacterIDsOfRole(string roleID)
@@ -1080,6 +1099,25 @@ namespace WingidonExpansionPack
                 returnChars.Add("Belias_EP"); // Belias
             }
             return returnChars;
+        }
+
+
+        bool CheckModInstalled(string modName)
+        {
+            return MelonBase.RegisteredMelons
+                .Any(melon => melon.Info.Name == modName);
+        }
+
+        public Il2CppSystem.Collections.Generic.List<string> GetInstalledMods()
+        {
+            // My attempt at detecting other in-play mods.
+            Il2CppSystem.Collections.Generic.List<string> installedMods = new Il2CppSystem.Collections.Generic.List<string>();
+            installedMods.Add("Wingidon's Expansion Pack");
+            if (CheckModInstalled("Skill Cycler's Riddles")) installedMods.Add("Riddles"); // Skill Cycler's Riddles
+            if (CheckModInstalled("Demon Bluff Mods")) installedMods.Add("Power Play"); // Power Play
+            if (CheckModInstalled("Circus")) installedMods.Add("Circus"); // LRZH's Circus
+            if (CheckModInstalled("Windways_TheSalemTrials")) installedMods.Add("The Salem Trials"); // LRZH's Circus
+            return installedMods;
         }
 
 
@@ -1362,8 +1400,8 @@ namespace WingidonExpansionPack
                             if (character.bluff.type == ECharacterType.Minion) underlingID = 2;
                             if (character.bluff.type == (ECharacterType)40) underlingID = 1; // Replace Neutrals (Power Play) with Outcasts.
                             if (character.bluff.type == (ECharacterType)50) underlingID = 2; // Replace Weather (Power Play) with Minions.
-                            DebugMessage($"{charRef.dataRef.characterName} (#{charRef.id}) found bad bluff of {character.dataRef.characterName} at #{character.id}, replacing with {underlingDatas[underlingID].characterName}");
-                            character.Init(underlingDatas[underlingID]);
+                            DebugMessage($"{charRef.dataRef.characterName} (#{charRef.id}) found bad bluff of {character.bluff.characterName} at #{character.id}, replacing with {underlingDatas[underlingID].characterName}");
+                            character.GiveBluff(underlingDatas[underlingID]);
                         }
                     }
                 }
@@ -1511,7 +1549,6 @@ namespace WingidonExpansionPack
             Il2CppSystem.Collections.Generic.List<Character> pureCharacters = new Il2CppSystem.Collections.Generic.List<Character>();
 
 
-            string finalInfo = "";
             Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
 
             foreach (Character character in Gameplay.CurrentCharacters)
@@ -1660,7 +1697,7 @@ namespace WingidonExpansionPack
 
 
             string chosenInfoType = infoTypes[UnityEngine.Random.RandomRangeInt(0, infoTypes.Count)];
-            finalInfo = $"Info of type {chosenInfoType} is bugged";
+            string finalInfo = $"Info of type {chosenInfoType} is bugged";
             DebugMessage($"Chose info type of {chosenInfoType}. Lying?: {lying}");
             // Confessor
             if (chosenInfoType == "Confessor")
@@ -3260,6 +3297,8 @@ namespace WingidonExpansionPack
                 case "2114495161": return "Taunt, Death (Undying)";
                 case "2114495239": return "Taunt, Victory (Undying)";
                 case "318251620": return "Is the Cryptid";
+                case "1916514201": return "Spent (Masquerade)";
+                case "1916514202": return "Killed by the Masquerade";
 
                 // Skill Cycler's Riddles
                 case "880": return "Evil-turned";
@@ -3321,10 +3360,12 @@ namespace WingidonExpansionPack
         public static class w_AnyRevealPatch
         {
             public static ETriggerPhase AnyReveal = (ETriggerPhase)1121218522;
+            public static ETriggerPhase SelfReveal = (ETriggerPhase)1951261852; // Used for Pick characters
             [HarmonyPrefix]
             public static bool CharacterRevealPrefix(Character obj)
             {
                 // MelonLogger.Msg("Revealing character...");
+                obj.Act(SelfReveal);
                 foreach (Character character in Gameplay.CurrentCharacters)
                 {
                     //MelonLogger.Msg("Calling on the Ritualist");

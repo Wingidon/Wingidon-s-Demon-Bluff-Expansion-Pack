@@ -44,12 +44,18 @@ public class w_Heretic : Minion
             Il2CppSystem.Collections.Generic.List<CharacterData> setupDemons = new Il2CppSystem.Collections.Generic.List<CharacterData>(); // Demons that have a setup ability or are otherwise very loud
             Il2CppSystem.Collections.Generic.List<CharacterData> supportDemons = new Il2CppSystem.Collections.Generic.List<CharacterData>(); // Demons that don't fit the other categories
             Il2CppSystem.Collections.Generic.List<CharacterData> inPlayCharacters = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            Il2CppSystem.Collections.Generic.List<string> blacklistOutcastIDs = new Il2CppSystem.Collections.Generic.List<string>();
             Il2CppSystem.Collections.Generic.List<string> blacklistMinionIDs = new Il2CppSystem.Collections.Generic.List<string>();
             Il2CppSystem.Collections.Generic.List<string> nightDemonIDs = new Il2CppSystem.Collections.Generic.List<string>();
             Il2CppSystem.Collections.Generic.List<string> setupDemonIDs = new Il2CppSystem.Collections.Generic.List<string>();
             Il2CppSystem.Collections.Generic.List<string> supportDemonIDs = new Il2CppSystem.Collections.Generic.List<string>();
+            Il2CppSystem.Collections.Generic.List<CharacterData> fakeWeatherOptions = new Il2CppSystem.Collections.Generic.List<CharacterData>();
+            Il2CppSystem.Collections.Generic.List<CharacterData> fakeNeutralOptions = new Il2CppSystem.Collections.Generic.List<CharacterData>();
 
             //Let's define the IDs in each list
+            blacklistOutcastIDs.Add("Trickster_o_scm"); // Just in case.
+
+            blacklistMinionIDs.Add("GoodTwin_POW"); // Good Twin is never in the Deck to begin with.
             blacklistMinionIDs.Add("Puppet_15989619"); // Puppet is never in the Deck to begin with.
             blacklistMinionIDs.Add("Swarm_Good_WING"); // Swarm adding its counterpart to the Deck makes it far too obvious
             blacklistMinionIDs.Add("Swarm_Evil_WING"); // Swarm adding its counterpart to the Deck makes it far too obvious.
@@ -81,9 +87,6 @@ public class w_Heretic : Minion
             // supportDemonIDs.Add("Praesect_WING"); // Praesect (Wingidon's Expansion Pack) - The Acolytes and Zealots it add make it too obvious
             supportDemonIDs.Add("Shard_WING"); // Specularus (Wingidon's Expansion Pack)
             supportDemonIDs.Add("SoulCollector_RCol"); // Soul Collector (Roles Collection) - Could plausibly fit in as something else ig
-            // supportDemonIDs.Add("TwinDemon_WING"); // Veniyon (Wingidon's Expansion Pack) - Never adding the triplets because they're too obvious
-            // supportDemonIDs.Add("TwinDemonTwin_WING"); // Vidiyon (Wingidon's Expansion Pack)
-            // supportDemonIDs.Add("TwinDemonTriplet_WING"); // Viciyon (Wingidon's Expansion Pack)
             supportDemonIDs.Add("Veil_scm"); // Veil (Skill Cycler's Riddles) - Its cover won't last long but it's still not obvious until you reveal *everything* that you can reveal.
 
             nightDemonIDs.Add("Caedoccidere_WING"); // Caedoccidere (Wingidon's Expansion Pack)
@@ -109,6 +112,9 @@ public class w_Heretic : Minion
             setupDemonIDs.Add("shroud_rdm"); // Shroud (Reveal Dilemma) - blows its cover as soon as you reveal the first card.
             setupDemonIDs.Add("Summoner_scm"); // Summoner (Skill Cycler's Riddles)
             setupDemonIDs.Add("War_POW"); // Summoner (Skill Cycler's Riddles)
+            setupDemonIDs.Add("TwinDemon_WING"); // Veniyon (Wingidon's Expansion Pack)
+            setupDemonIDs.Add("TwinDemonTwin_WING"); // Vidiyon (Wingidon's Expansion Pack)
+            setupDemonIDs.Add("TwinDemonTriplet_WING"); // Viciyon (Wingidon's Expansion Pack)
 
 
 
@@ -143,6 +149,14 @@ public class w_Heretic : Minion
             }
             for (int j = 0; j < allDatas.Length; j++)
             {
+                if (allDatas[j].type == (ECharacterType)40) // Neutral (Power Play)
+                {
+                    if (!inPlayCharacters.Contains(allDatas[j])) fakeNeutralOptions.Add(allDatas[j]);
+                }
+                if (allDatas[j].type == (ECharacterType)50) // Weather (Power Play)
+                {
+                    if (!inPlayCharacters.Contains(allDatas[j])) fakeWeatherOptions.Add(allDatas[j]);
+                }
                 if (allDatas[j].type == ECharacterType.Outcast)
                 {
                     if (!inPlayCharacters.Contains(allDatas[j])) fakeOutcastOptions.Add(allDatas[j]);
@@ -152,9 +166,6 @@ public class w_Heretic : Minion
                     if (!inPlayCharacters.Contains(allDatas[j])) fakeMinionOptions.Add(allDatas[j]);
                     if (allDatas[j].characterId == "Acolyte_WING") acolyteData = allDatas[j];
                     if (allDatas[j].characterId == "Zealot_WING") zealotData = allDatas[j];
-                    if (allDatas[j].characterId == "TwinDemon_WING") veniData = allDatas[j];
-                    if (allDatas[j].characterId == "TwinDemonTwin_WING") vidiData = allDatas[j];
-                    if (allDatas[j].characterId == "TwinDemonTriplet_WING") viciData = allDatas[j];
                 }
                 if (allDatas[j].type == ECharacterType.Demon)
                 {
@@ -164,116 +175,139 @@ public class w_Heretic : Minion
                         if (nightDemonIDs.Contains(allDatas[j].characterId)) nightDemons.Add(allDatas[j]);
                         if (setupDemonIDs.Contains(allDatas[j].characterId)) setupDemons.Add(allDatas[j]);
                         if (supportDemonIDs.Contains(allDatas[j].characterId)) supportDemons.Add(allDatas[j]);
+                        if (allDatas[j].characterId == "TwinDemon_WING") veniData = allDatas[j];
+                        if (allDatas[j].characterId == "TwinDemonTwin_WING") vidiData = allDatas[j];
+                        if (allDatas[j].characterId == "TwinDemonTriplet_WING") viciData = allDatas[j];
                     }
                 }
             }
 
-            // Now check what types of Demon are in-play
-            bool foundSetup = false;
-            bool foundSupport = false;
-            bool foundNight = false;
-            foreach (CharacterData character in inPlayCharacters)
+            int addedOutcastCount = 0;
+            int addedMinionCount = 0;
+            int addedDemonCount = 0;
+            bool setupInPlay = false;
+            bool nightInPlay = false;
+            bool supportInPlay = false;
+            foreach (Character character in Gameplay.CurrentCharacters)
             {
-                if (setupDemonIDs.Contains(character.characterId) && !foundSetup)
+                if (setupDemonIDs.Contains(character.dataRef.characterId))
                 {
-                    foundSetup = true;
-                    foreach (CharacterData character2 in setupDemons)
+                    addedOutcastCount += 2;
+                    addedMinionCount += 4;
+                    foreach (CharacterData characterData in setupDemons)
                     {
-                        fakeDemonOptions.Add(character2);
+                        fakeDemonOptions.Add(characterData);
                     }
                 }
-                if (nightDemonIDs.Contains(character.characterId) && !foundNight)
+                if (nightDemonIDs.Contains(character.dataRef.characterId))
                 {
-                    foundNight = true;
-                    foreach (CharacterData character2 in nightDemons)
+                    addedOutcastCount += 1;
+                    addedMinionCount += 3;
+                    addedDemonCount += 1;
+                    foreach (CharacterData characterData in nightDemons)
                     {
-                        fakeDemonOptions.Add(character2);
+                        fakeDemonOptions.Add(characterData);
+                        fakeDemonOptions.Add(characterData);
                     }
                 }
-                if (supportDemonIDs.Contains(character.characterId) && !foundSupport)
+                if (supportDemonIDs.Contains(character.dataRef.characterId))
                 {
-                    foundSupport = true;
-                    foreach (CharacterData character2 in supportDemons)
+                    addedMinionCount += 2;
+                    addedDemonCount += 2;
+                    foreach (CharacterData characterData in supportDemons)
                     {
-                        fakeDemonOptions.Add(character2);
+                        fakeDemonOptions.Add(characterData);
+                        fakeDemonOptions.Add(characterData);
+                        fakeDemonOptions.Add(characterData);
+                        fakeDemonOptions.Add(characterData);
+                    }
+                }
+            }
+            wx_SavedScripts sharedScripts = new wx_SavedScripts();
+
+            bool addNeutral = (sharedScripts.PercentChance(50) && sharedScripts.GetInstalledMods().Contains("Power Play"));
+            bool addWeather = (sharedScripts.PercentChance(50) && sharedScripts.GetInstalledMods().Contains("Power Play"));
+            Il2CppSystem.Collections.Generic.List<CharacterData> addedOutcasts = new();
+            Il2CppSystem.Collections.Generic.List<CharacterData> addedMinions = new();
+            Il2CppSystem.Collections.Generic.List<CharacterData> addedDemons = new();
+
+            if (addedOutcastCount == 0 && addedMinionCount == 0 && addedDemonCount == 0)
+            {
+                addedOutcastCount = 0;
+                addedMinionCount = 2;
+                addedDemonCount = 2;
+            }
+            if (addedOutcastCount > 4) addedOutcastCount = 4;
+            if (addedMinionCount > 6) addedMinionCount = 6;
+            if (addedDemonCount > 4) addedDemonCount = 4;
+
+            if (addedOutcastCount != 0)
+            {
+                for (int i = 0; i < addedOutcastCount; i++)
+                {
+                    if (fakeOutcastOptions.Count != 0)
+                    {
+                        addedOutcasts.Add(sharedScripts.GetRandomItemOfList(fakeOutcastOptions));
+                        fakeOutcastOptions.Remove(addedOutcasts[addedOutcasts.Count - 1]);
+                    }
+                }
+            }
+            if (addedMinionCount != 0)
+            {
+                for (int i = 0; i < addedMinionCount; i++)
+                {
+                    if (fakeMinionOptions.Count != 0)
+                    {
+                        addedMinions.Add(sharedScripts.GetRandomItemOfList(fakeMinionOptions));
+                        fakeMinionOptions.Remove(addedMinions[addedMinions.Count - 1]);
+                    }
+                }
+            }
+            if (addedDemonCount != 0)
+            {
+                for (int i = 0; i < addedDemonCount; i++)
+                {
+                    if (fakeDemonOptions.Count != 0)
+                    {
+                        addedDemons.Add(sharedScripts.GetRandomItemOfList(fakeDemonOptions));
+                        while (fakeDemonOptions.Contains(addedDemons[addedDemons.Count - 1])) fakeDemonOptions.Remove(addedDemons[addedDemons.Count - 1]);
                     }
                 }
             }
 
-            if (!foundSetup && !foundNight && !foundSupport)
+
+            // Power Play
+            if (addNeutral && fakeWeatherOptions.Count != 0)
             {
-                foundSupport = true;
-                foreach (CharacterData character in supportDemons)
-                {
-                    fakeDemonOptions.Add(character);
-                }
+                addedOutcasts.Add(sharedScripts.GetRandomItemOfList(fakeWeatherOptions));
+            }
+            if (addWeather && fakeWeatherOptions.Count != 0)
+            {
+                addedMinions.Add(sharedScripts.GetRandomItemOfList(fakeWeatherOptions));
             }
 
-            CharacterData chosenOutcast = charRef.dataRef;
-            CharacterData chosenMinion = charRef.dataRef;
-            CharacterData chosenDemon = charRef.dataRef;
 
-            chosenOutcast = fakeOutcastOptions[UnityEngine.Random.RandomRangeInt(0, fakeOutcastOptions.Count)];
-            Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Outcast, chosenOutcast);
-            //fakeOutcastOptions.Remove(chosenOutcast);
-            //chosenOutcast = fakeOutcastOptions[UnityEngine.Random.RandomRangeInt(0, fakeOutcastOptions.Count)];
-            //Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Outcast, chosenOutcast);
 
-            chosenMinion = fakeMinionOptions[UnityEngine.Random.RandomRangeInt(0, fakeMinionOptions.Count)];
-            Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Minion, chosenMinion);
-            fakeMinionOptions.Remove(chosenMinion);
-            chosenMinion = fakeMinionOptions[UnityEngine.Random.RandomRangeInt(0, fakeMinionOptions.Count)];
-            Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Minion, chosenMinion);
 
-            if (fakeDemonOptions.Count != 0)
+            if (addedOutcasts.Count != 0)
             {
-                chosenDemon = fakeDemonOptions[UnityEngine.Random.RandomRangeInt(0, fakeDemonOptions.Count)];
-                Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, chosenDemon);
-                fakeDemonOptions.Remove(chosenDemon);
-                allDemons.Remove(chosenDemon);
-            }
-            else
-            {
-                chosenDemon = fakeDemonOptions[UnityEngine.Random.RandomRangeInt(0, fakeDemonOptions.Count)];
-                Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, chosenDemon);
-                fakeDemonOptions.Remove(chosenDemon);
-                allDemons.Remove(chosenDemon);
-            }
-
-            if (fakeDemonOptions.Count != 0)
-            {
-                chosenDemon = fakeDemonOptions[UnityEngine.Random.RandomRangeInt(0, fakeDemonOptions.Count)];
-                Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, chosenDemon);
-                fakeDemonOptions.Remove(chosenDemon);
-                allDemons.Remove(chosenDemon);
-                if (chosenDemon.characterId == "Praesect_WING")
+                foreach (CharacterData character in addedOutcasts)
                 {
-                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Minion, acolyteData);
-                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Minion, zealotData);
-                }
-                if (chosenDemon.characterId == "TwinDemon_WING" || chosenDemon.characterId == "TwinDemonTwin_WING" || chosenDemon.characterId == "TwinDemonTriplet_WING")
-                {
-                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, veniData);
-                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, vidiData);
-                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, viciData);
+                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Outcast, character);
                 }
             }
-            else
+            if (addedMinions.Count != 0)
             {
-                chosenDemon = allDemons[UnityEngine.Random.RandomRangeInt(0, allDemons.Count)];
-                Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, chosenDemon);
-                fakeDemonOptions.Remove(chosenDemon);
-                allDemons.Remove(chosenDemon);
-                if (chosenDemon.characterId == "Praesect_WING")
+                foreach (CharacterData character in addedMinions)
                 {
-                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Minion, acolyteData);
-                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Minion, zealotData);
+                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Minion, character);
                 }
-                if (chosenDemon.characterId == "TwinDemon_WING" || chosenDemon.characterId == "TwinDemonTwin_WING" || chosenDemon.characterId == "TwinDemonTriplet_WING")
+            }
+            if (addedDemons.Count != 0)
+            {
+                foreach (CharacterData character in addedDemons)
                 {
-                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, veniData);
-                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, vidiData);
-                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, viciData);
+                    Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Demon, character);
                 }
             }
         }

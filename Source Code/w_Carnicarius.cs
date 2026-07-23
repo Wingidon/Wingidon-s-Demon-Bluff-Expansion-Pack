@@ -78,6 +78,8 @@ public class w_Carnicarius : Demon
             valuableCharacters_OnlyHidden.Add(false);
             valuableCharacters_IDs.Add("Recruiter_scm");
             valuableCharacters_OnlyHidden.Add(true);
+            valuableCharacters_IDs.Add("Crewmate_scm");
+            valuableCharacters_OnlyHidden.Add(true);
             while (valuableCharacters_Prio.Count < valuableCharacters_IDs.Count)
             {
                 valuableCharacters_Prio.Add(60);
@@ -122,6 +124,8 @@ public class w_Carnicarius : Demon
             valuableCharacters_IDs.Add("Lawyer_scm");
             valuableCharacters_OnlyHidden.Add(true);
             valuableCharacters_IDs.Add("Coach_scm");
+            valuableCharacters_OnlyHidden.Add(false);
+            valuableCharacters_IDs.Add("Puzzlemaster_WING");
             valuableCharacters_OnlyHidden.Add(false);
             while (valuableCharacters_Prio.Count < valuableCharacters_IDs.Count)
             {
@@ -176,6 +180,9 @@ public class w_Carnicarius : Demon
             valuableCharacters_IDs.Add("Knight_47970624");
             valuableCharacters_OnlyHidden.Add(false);
             valuableCharacters_Prio.Add(0); // This should just make Carnicarius never stab the Knight, just in case the other check didn't work.
+            valuableCharacters_IDs.Add("Masquerade_WING");
+            valuableCharacters_OnlyHidden.Add(false);
+            valuableCharacters_Prio.Add(0); // This will end poorly for Carnicarius!
 
 
             int corruptMult = 2; // Multiplier for Pure characters, because leaving Corrupted characters alive is good I think
@@ -237,8 +244,15 @@ public class w_Carnicarius : Demon
                         listNum = valuableCharacters_IDs.IndexOf(character.dataRef.characterId);
                         if ((valuableCharacters_OnlyHidden[listNum] == true && !revealedChars.Contains(character)) || valuableCharacters_OnlyHidden[listNum] == false)
                         {
-                            multiplier *= valuableCharacters_Prio[listNum];
-                            if (valuableCharacters_Prio[listNum] != 1) killReason += $" They were a valuable target with a priority level of {valuableCharacters_Prio[listNum]}.";
+                            if (charRef.dataRef.picking == true && charRef.dataRef.abilityUsage == EAbilityUsage.Once && charRef.pickableUses == 0)
+                            {
+                                if (valuableCharacters_Prio[listNum] != 1) killReason += $" They would have been a valuable target with a priority level of {valuableCharacters_Prio[listNum]}, but their ability is exhausted.";
+                            }
+                            else
+                            {
+                                multiplier *= valuableCharacters_Prio[listNum];
+                                if (valuableCharacters_Prio[listNum] != 1) killReason += $" They were a valuable target with a priority level of {valuableCharacters_Prio[listNum]}.";
+                            }
                         }
                     }
                     killReason += $" In total, my choice to kill them had a weight of {multiplier}.";

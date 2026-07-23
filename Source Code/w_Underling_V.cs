@@ -35,13 +35,16 @@ public class w_Underling_V : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
-        if (charRef.dataRef.characterId == "Hypnotist_scm")
+        if (trigger == ETriggerPhase.Day)
         {
-            Il2CppSystem.Collections.Generic.List<Character> myself = new();
-            myself.Add(charRef);
-            OnActed(ETriggerPhase.Day, charRef, new ActedInfo("I am Good", myself));
+            if (charRef.dataRef.characterId == "Hypnotist_scm")
+            {
+                Il2CppSystem.Collections.Generic.List<Character> myself = new();
+                myself.Add(charRef);
+                OnActed(ETriggerPhase.Day, charRef, new ActedInfo("I am Good", myself));
+            }
+            else OnActed(ETriggerPhase.Day, charRef, GetBluffInfo(charRef));
         }
-        else OnActed(ETriggerPhase.Day, charRef, GetBluffInfo(charRef));
     }
     public override ActedInfo GetInfo(Character charRef)
     {

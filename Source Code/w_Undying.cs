@@ -227,12 +227,7 @@ public class w_Undying : Minion
 
     public Il2CppSystem.Collections.Generic.List<string> LastStandCharacterIDs()
     {
-        Il2CppSystem.Collections.Generic.List<string> returnList = new Il2CppSystem.Collections.Generic.List<string>();
-        returnList.Add("Undying_WING");
-        returnList.Add("Vizier_LRZH");
-        returnList.Add("Apprentice_POW");
-        returnList.Add("Squire_scm");
-        return returnList;
+        return new wx_SavedScripts().GetLastStandIDs();
     }
     public ActedInfo getTaunt(string trigger)
     {

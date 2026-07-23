@@ -17,6 +17,7 @@ using UnityEngine.Playables;
 using static Il2Cpp.GameplayEvents;
 using static Il2CppSystem.Array;
 using static MelonLoader.Modules.MelonModule;
+using Il2CppSystem.Reflection;
 
 [assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.3.4", "Wingidon")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
@@ -159,7 +160,8 @@ public class MainMod : MelonMod
         configCategory.CreateEntry("Veni-Vidi-Vici_Weight", 2, description: "How likely the Hellspawn Triplets are to be in-play.");
         configCategory.CreateEntry("Caedoccidere_Weight", 2, description: "How likely Caedoccidere is to be in-play.");
         configCategory.CreateEntry("Praesect_Weight", 2, description: "How likely Praesect is to be in-play.");
-        configCategory.CreateEntry("Mendaverte_Weight", 0, description: "Mendaverte has proven itself to have some weird bugs, such as characters having the wrong ability or rapidly shifting roles, so it's disabled by default - enable at your own peril (or something).");
+        configCategory.CreateEntry("Legacy_Mendaverte", false, "Legacy_Mendaverte", "Mendaverte in its old form has proven itself to have some weird bugs, such as characters having the wrong ability or rapidly shifting roles, so it's disabled by default - enable at your own peril (or something).\nEnabling this setting will replace the updated Mendaverte with the legacy version.");
+        configCategory.CreateEntry("Mendaverte_Weight", 2, description: "How likely Venelum is to be in-play.");
         configCategory.CreateEntry("Venelum_Weight", 2, description: "How likely Venelum is to be in-play.");
         configCategory.CreateEntry("Sanguitaurus_Weight", 2, description: "How likely Sanguitaurus is to be in-play.");
         configCategory.CreateEntry("Tenecaligo_Weight", 2, description: "How likely Tenecaligo is to be in-play.");
@@ -176,7 +178,8 @@ public class MainMod : MelonMod
 
 
 
-
+        wx_SavedScripts sharedScripts = new wx_SavedScripts();
+        Il2CppSystem.Collections.Generic.List<string> otherMods = sharedScripts.GetInstalledMods();
 
         // To potentially add later:
         // Auditor - Learn how many characters fit a particular descriptor (e.g. Good, Evil, Villager, Outcast, Minion, Demon, Corruption, etc)
@@ -616,17 +619,23 @@ public class MainMod : MelonMod
         w_riddleGuy.ifLies = $"Both of my statements are false.";
         w_riddleGuy.gender = EGender.Female;
 
+        CharacterData w_masquerade = newCharacter("Masquerade", EAlignment.Good, ECharacterType.Villager, false, true, "\"Said to be one of the most capable in the whole village, despite their carefree nature.\"", "Doppleganger_52694042");
+        w_masquerade.role = new w_Masquerade();
+        w_masquerade.description = $"<b>If {formattedKeyText("Attacked")} (Once):</b>\n{formattedKeyText("Unmask")} me.\nI {formattedKeyText("Kill")} a random Evil character.\n\nI can't {formattedKeyText("Die")}.\nI Lie and Disguise.";
+        w_masquerade.hints = $"If I am turned into the {roleColour("Minion")}Puppet</color>, I {formattedKeyText("Reveal")} as the {roleColour("Villager")}Masquerade</color>.\n\nIf Executed while Corrupted, I {formattedKeyText("Die")}, dealing only 2 {formattedKeyText("Damage")} to you.\n\nArt by {formattedKeyText("Blue Cheesed")} ({formattedKeyText("@Blue Cheesed")}) on {formattedKeyText("Discord")}";
+        w_masquerade.gender = EGender.They;
 
 
-        /*
-        CharacterData w_bountyhunter = newCharacter("Bounty Hunter", EAlignment.Good, ECharacterType.Villager, false, false, "\"Where there's Evil, there are bounties.\nSaid bounties aren't going to hunt themselves.\"", "Bounty Hunter_39284184");
+
+        CharacterData w_bountyhunter = newCharacter("Bounty Hunter", EAlignment.Good, ECharacterType.Villager, true, false, "\"Where there's Evil, there are bounties.\nThose bounties aren't going to hunt themselves.\"", "Bounty Hunter_39284184");
         w_bountyhunter.role = new w_BountyHunter();
-        w_bountyhunter.description = $"Learn an in-play Evil Minion or Demon role.\n\n<b>Activate Me:</b>\nDeal 2 {formattedKeyText("Damage")} to you.\nLearn who it is.";
-        w_bountyhunter.ifLies = $"I still deal {formattedKeyText("Damage")} to you when Activated, but my info will be wrong.\nThe role I mention could be in-play or out-of-play.";
+        w_bountyhunter.description = $"I {formattedKeyText("Declare")} an in-play Evil Minion or Demon role\n\n<b>Activate Me:</b>\nDeal 2 {formattedKeyText("Damage")} to you.\nLearn who it is.";
+        w_bountyhunter.ifLies = $"I still deal {formattedKeyText("Damage")} to you when Activated, but my info will be wrong.";
+        w_bountyhunter.hints = $"{customHint("Keyword", "Declare")}";
         w_bountyhunter.gender = EGender.Female;
         w_bountyhunter.picking = true;
         w_bountyhunter.abilityUsage = EAbilityUsage.Once;
-        */
+        
 
 
 
@@ -946,6 +955,11 @@ public class MainMod : MelonMod
         CharacterData w_heretic = newCharacter("Heretic", EAlignment.Evil, ECharacterType.Minion, false, true, "\"The Bishop is wondering who keeps turning all the church's crucifixes upside-down\"", "Bishop_58855542");
         w_heretic.role = new w_Heretic();
         w_heretic.description = $"<b>Game Start:</b>\n2 Minions & 2 Demons are added to the {formattedKeyText("Deck")}.\n\nI Lie and Disguise.";
+        w_heretic.hints = $"I might add up to 2 additional Outcasts & 2 additional Minions to the {formattedKeyText("Deck")} if the in-play Demon has an obvious tell.\n\nIf more than one Demon is in-play, my ability activates once per Demon (up to a hard-cap, of 4 Outcasts & 6 Minions).";
+        if (otherMods.Contains("Power Play"))
+        {
+            w_heretic.hints += $"\n\nI have a 50% chance to add 1 additional {roleColour("Neutral")}Neutral</color> and a 50% chance to add 1 additional {roleColour("Weather")}Weather Effect</color> to the {formattedKeyText("Deck")} as well.";
+        }
         w_heretic.gender = EGender.Female;
 
         CharacterData w_ritualist = newCharacter("Ritualist", EAlignment.Evil, ECharacterType.Minion, false, true, "\"If you do literally anything around him,\nhe will retaliate very angrily.\"", "Gambler_42592744");
@@ -1141,11 +1155,20 @@ public class MainMod : MelonMod
         nightPhase.nightCharactersOrder.Add(w_caedoc);
 
         CharacterData w_invertDemon = newCharacter("Mendaverte", EAlignment.Evil, ECharacterType.Demon, false, true, "\"You and your so-called Good and Evil...\nSuch arbitrary divisors, is it really that black-and-white to you?\"", "Pooka_13445289");
-        w_invertDemon.role = new w_InvertDemon();
-        //w_invertDemon.name = "Mendaverte"; // Name derived from Latin "Mendacium", meaning "Lie", and "Subvertere" meaning "Subvert"
-        w_invertDemon.description = $"Good Villagers are Corrupted.\nEvil characters tell the {formattedKeyText("Truth")}.\nI Disguise.";
-        //w_invertDemon.flavorText = "You and your so-called Good and Evil...\nSuch arbitrary divisors, is it really that black-and-white to you?"; //Used to be: "\"You and your 'Good' and 'Evil', like that Plague Doctor is pure Good but the Poisoner is pure Evil.\nIs it really so black-and-white to you?\"";
-        w_invertDemon.hints = $"Characters I Corrupt Register as affected by Evil.\nEvils who tell the {formattedKeyText("Truth")} due to my ability do not.\n\nMy <b>Game Start</b> ability is unaffected by misregistration.\nThe {roleColour("Villager")}Alchemist</color> cannot see or Cure my Corruptions.";
+        //if (configCategory.GetEntry<bool>("Legacy_Mendaverte").Value)
+        //{
+            w_invertDemon.role = new w_InvertDemon();
+            //w_invertDemon.name = "Mendaverte"; // Name derived from Latin "Mendacium", meaning "Lie", and "Subvertere" meaning "Subvert"
+            w_invertDemon.description = $"Good Villagers are Corrupted.\nEvil characters tell the {formattedKeyText("Truth")}.\nI Disguise.";
+            //w_invertDemon.flavorText = "You and your so-called Good and Evil...\nSuch arbitrary divisors, is it really that black-and-white to you?"; //Used to be: "\"You and your 'Good' and 'Evil', like that Plague Doctor is pure Good but the Poisoner is pure Evil.\nIs it really so black-and-white to you?\"";
+            w_invertDemon.hints = $"Characters I Corrupt Register as affected by Evil.\nEvils who tell the {formattedKeyText("Truth")} due to my ability do not.\n\nMy <b>Game Start</b> ability is unaffected by misregistration.\nThe {roleColour("Villager")}Alchemist</color> cannot see or Cure my Corruptions.";
+        //}
+        //else
+        //{
+        //    w_invertDemon.role = new w_InvertDemonNew();
+        //    w_invertDemon.description = $"Good characters Register as Evil.\nEvil characters Register as Good.\nVillagers Register as Outcasts.\nOutcasts Register as Villagers.\nMinions Register as Demons.\nDemons Register as Minions.\n\nI Lie and Disguise.";
+        //    w_invertDemon.hints = $"The {roleColour("Villager")}Witness</color> will not pick up on the effects of my ability.\n\nCharacters still Register as their correct Role. For example, I Register as a Good Minion {roleColour("GoodMinion")}Mendaverte</color>.\nMy ability overrides the {roleColour("Outcast")}Wretch</color> and {roleColour("Minion")}Professional</color>'s abilities, but not the {roleColour("Outcast")}Echo</color>'s.";
+        //}
         w_invertDemon.gender = EGender.They;
 
         CharacterData w_mezepheles = newCharacter("Venelum", EAlignment.Evil, ECharacterType.Demon, false, true, "\"Sign this contract and it will all fall into place...\n Oh, how naive you truly are.\"", "Mezepheles_09511163"); // This was a Minion, but wound up being too strong. Whoops.
@@ -2824,7 +2847,7 @@ public class MainMod : MelonMod
             // addRole(script.startingTownsfolks, w_balloonist); // Doesn't work
             addRole(script.startingTownsfolks, w_bartender);
             addRole(script.startingTownsfolks, w_bloodseer);
-            //addRole(script.startingTownsfolks, w_bountyhunter);
+            addRole(script.startingTownsfolks, w_bountyhunter);
             addRole(script.startingTownsfolks, w_cardshark);
             addRole(script.startingTownsfolks, w_cartomancer);
             addRole(script.startingTownsfolks, w_chiromancer);
@@ -2844,6 +2867,7 @@ public class MainMod : MelonMod
             addRole(script.startingTownsfolks, w_jewelsmith);
             addRole(script.startingTownsfolks, w_knave);
             addRole(script.startingTownsfolks, w_lamb);
+            addRole(script.startingTownsfolks, w_masquerade);
             addRole(script.startingTownsfolks, w_matchmaker);
             addRole(script.startingTownsfolks, w_paperboy);
             addRole(script.startingTownsfolks, w_performer);
@@ -2886,9 +2910,9 @@ public class MainMod : MelonMod
             addRoleIfNotJinxed(script.startingMinions, w_undying, undyingJinxes, script.startingDemons);
             for (int i = 0; i < 100; i++)
             {
-                //addRoleEvenIfDupe(script.startingTownsfolks, w_bloodseer);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_bountyhunter);
                 //addRoleEvenIfDupe(script.startingOutsiders, w_underling_o);
-                //addRoleEvenIfDupe(script.startingMinions, w_cryptid);
+                //addRoleEvenIfDupe(script.startingMinions, w_heretic);
             }
             for (int i = 0; i < allDatas.Length; i++)
             {
@@ -2905,7 +2929,6 @@ public class MainMod : MelonMod
             Debug.LogWarning(advancedAscension.possibleScriptsData[j].name);
             MelonLogger.Msg($"Script: {advancedAscension.possibleScriptsData[j].name.ToString()}");
         }
-        wx_SavedScripts sharedScripts = new wx_SavedScripts();
 
 
 
@@ -3424,6 +3447,10 @@ public class MainMod : MelonMod
             {
                 hint = $"<b>Trust</b>:\nA measure of how much you can {formattedKeyText("Trust")} a character.\nGenerally speaking, the more innocent traits a character exhibits, the more {formattedKeyText("Trustworthy")} they are.";
             }
+            if (parameter == "Declare")
+            {
+                hint = $"<b>Declare</b>:\nThis character makes a statement that is always true, even if they're Lying.";
+            }
         }
         return hint;
     }
@@ -3583,6 +3610,10 @@ public class MainMod : MelonMod
             case "EvilOutcast": return formattedKeyText("EvilOutcastColour");
             case "GoodMinion": return formattedKeyText("GoodMinionColour");
             case "GoodDemon": return formattedKeyText("GoodDemonColour");
+
+            // Power Play
+            case "Weather": return formattedKeyText("WeatherColour");
+            case "Neutral": return formattedKeyText("NeutralColour");
         }
         return formattedKeyText("");
     }
@@ -3837,6 +3868,7 @@ public class MainMod : MelonMod
             case "Bluffs": return "<color=#D96EDB>Bluffs</color>";
             case "Bluffing": return "<color=#D96EDB>Bluffing</color>";
             case "Attack": return "<color=#FF0037>Attack</color>";
+            case "Attacked": return "<color=#FF0037>Attacked</color>";
             case "Kill": return "<color=#FF0037>Kill</color>";
             case "Killed": return "<color=#FF0037>Killed</color>";
             case "Killing": return "<color=#FF0037>Killing</color>";
@@ -3847,6 +3879,8 @@ public class MainMod : MelonMod
             case "Living": return "<color=#A4EDB7>Living</color>";
             case "Deck": return "<color=#789AF0>Deck</color>";
             case "Lose": return "<color=#FF0000>Lose</color>";
+            case "Unmask": return "<color=#B5E9FF>Unmask</color>";
+            case "Declare": return "<color=#FFFF00>Declare</color>";
             // case "Alignment": return "<color=#99FF99>Align</color><color=#FF9999>ment</color>"; // Making an alternate one for Alignment
 
             // Cycle is gonna be a long one because of the fancy gradient I'm doing
@@ -3929,6 +3963,10 @@ public class MainMod : MelonMod
             case "EvilOutcastColour": return "<color=#FF00DD>";
             case "GoodMinionColour": return "<color=#33D1C6>";
             case "GoodDemonColour": return "<color=#7A5CFF>";
+
+            // Colours, Other Mods
+            case "WeatherColour": return "<color=#FF7AE0>"; // Weather (Power Play)
+            case "NeutralColour": return "<color=#8FA7B3>"; // Neutral (Power Play)
 
             // Platforms
             case "Discord": return "<color=#7289DA>Discord</color>";
@@ -4013,6 +4051,9 @@ public class MainMod : MelonMod
             if (enbyCharacters.Contains(allDatas[i].characterName)) allDatas[i].gender = EGender.They;
         }
     }
+
+
+
     //int toxomancerPoisonTimer = 0;
     //int toxomancerDeathTimer = 0;
 
