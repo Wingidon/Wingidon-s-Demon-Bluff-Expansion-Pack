@@ -10,6 +10,7 @@ Almost none of the art was made by me. Most are either by Normandia, or edits of
 - Forager: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1409917727770021898)
 - Gravekeeper: LostIllustrator (https://discord.com/channels/1148903384968089640/1427769361707569153/1489444052175687801)
 - Jewelsmith: Astery (https://discord.com/channels/1148903384968089640/1399932582723846144/1433225282143129702)
+- Masquerade: Blue Cheesed (https://discord.com/channels/1148903384968089640/1399932582723846144/1415830646055632968)
 - Paperboy: Astery (https://discord.com/channels/1148903384968089640/1399932582723846144/1437801771090317392)
 - Scavenger: LostIllustrator (https://discord.com/channels/1148903384968089640/1408446574685585458/1408446574685585458)
 - Sentinel: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1433438063341731881)
