@@ -31,6 +31,7 @@ Currently, this mod includes the following roles:
 - Arithmetician - Learns the sum of all Evil characters.
 - Bartender - Learns which roles neighbour a Corrupted character.
 - Bloodseer - Gathers a lot of info... for a price.
+- Bounty Hunter - Learns an in-play Evil role, and you may choose to take damage to Learn who it is.
 - Cardshark - Picks 3, and heals or hurts you depending on how many Villagers you picked.
 - Cartomancer - Learns that only one of two roles is in-play.
 - Chiromancer - Learns 3 characters and which Evil role each is, but only one is correct.
@@ -48,6 +49,7 @@ Currently, this mod includes the following roles:
 - Jewelsmith - Learns an Honest character.
 - Knave - Learns three sets of info, but one is false.
 - Lamb - Learns his distance to a particular Outcast.
+- Masquerade - Lies and Disguises, but if you catch them, they kill an Evil for you.
 - Matchmaker - Picks 2 characters and Learns something they have in common.
 - Overseer - Picks a character and Disguises as them.
 - Paperboy - Learns how long his chain of Good characters is.
