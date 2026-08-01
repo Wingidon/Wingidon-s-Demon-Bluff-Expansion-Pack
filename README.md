@@ -15,6 +15,7 @@ Almost none of the art was made by me. Most are either by Normandia, or edits of
 - Scavenger: LostIllustrator (https://discord.com/channels/1148903384968089640/1408446574685585458/1408446574685585458)
 - Sentinel: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1433438063341731881)
 - Spy: Panda, though the original message was deleted for some reason? Remnants exist at https://discord.com/channels/1148903384968089640/1400730209472221234/1426689893211570293.
+- Stray: Made by me!
 - Warden: LullabiesMourn (https://discord.com/channels/1148903384968089640/1399932582723846144/1455229912179933244)
 - Lunatic: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1417961198258753627)
 - Snake Charmer: Blood on the Clocktower art from the same character name (https://wiki.bloodontheclocktower.com/Snake_Charmer)
