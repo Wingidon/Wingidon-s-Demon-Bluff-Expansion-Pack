@@ -64,6 +64,7 @@ Currently, this mod includes the following roles:
 - Sentinel - Learns that one of two characters is Corrupted.
 - Sleuth - Learns a role being used as a Disguise.
 - Spy - Learns an Evil role that hasn't been revealed yet.
+- Stray - Learn 3 numbers, but not which is which: the number of Evil pairs, the distance from me to Evil, and how many Evils within 2 cards of me.
 - Visionary - Learns what characters could be every few Reveals.
 - Warden - Picks 4 and learns the most common character type among them.
 ### Outcasts
