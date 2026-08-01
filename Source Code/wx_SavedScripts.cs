@@ -7,6 +7,7 @@ using Il2CppSystem.Collections.Generic;
 using MelonLoader;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using UnityEngine;
@@ -48,6 +49,11 @@ namespace WingidonExpansionPack
                 }
             }
             return newList;
+        }
+        public Il2CppSystem.Collections.Generic.List<int> SortList(Il2CppSystem.Collections.Generic.List<int> list)
+        {
+            list.Sort();
+            return list;
         }
         public Il2CppSystem.Collections.Generic.List<ECharacterType> SortList(Il2CppSystem.Collections.Generic.List<ECharacterType> list)
         {
@@ -916,6 +922,7 @@ namespace WingidonExpansionPack
             returnList.Add("Vizier_LRZH");
             returnList.Add("Apprentice_POW");
             returnList.Add("Squire_scm");
+            returnList.Add("WING_Dupery_Scoundrel");
             return returnList;
         }
 
@@ -959,6 +966,15 @@ namespace WingidonExpansionPack
                 // LRZH's Circus
                 returnChars.Add("Clown_LRZH"); // Clown
                 returnChars.Add("Wraith_LRZH"); // Wraith
+
+                // Dupery Bluff
+                returnChars.Add("WING_Dupery_Bad Cop"); // Bad Cop
+                returnChars.Add("WING_Dupery_Barkeep"); // Barkeep
+                returnChars.Add("WING_Dupery_Mobster"); // Mobster
+                returnChars.Add("WING_Dupery_Poisoner"); // Poisoner
+                returnChars.Add("WING_Dupery_Scoundrel"); // Scoundrel
+                returnChars.Add("WING_Dupery_Serial Killer"); // Serial Killer
+                returnChars.Add("WING_Dupery_Travel Agent"); // Travel Agent
             }
             if (roleID == "Occultist_WING")
             {
@@ -1053,6 +1069,13 @@ namespace WingidonExpansionPack
 
                 // CSK's Expansion Pack
                 returnChars.Add("Cavalier_EP"); // Cavalier
+
+                // Dupery Bluff
+                returnChars.Add("WING_Dupery_Mobster"); // Mobster
+                returnChars.Add("WING_Dupery_Poisoner"); // Poisoner
+                returnChars.Add("WING_Dupery_Scoundrel"); // Scoundrel
+                returnChars.Add("WING_Dupery_Serial Killer"); // Serial Killer
+                returnChars.Add("WING_Dupery_Travel Agent"); // Travel Agent
             }
             if (roleID == "Pandemonium_WING")
             {
@@ -1097,6 +1120,10 @@ namespace WingidonExpansionPack
 
                 // CSK's Expansion Pack
                 returnChars.Add("Belias_EP"); // Belias
+
+                // Dupery Bluff
+                returnChars.Add("WING_Dupery_Recruiter"); // Bad Cop
+                returnChars.Add("WING_Dupery_Idol"); // Barkeep
             }
             return returnChars;
         }
@@ -1362,6 +1389,23 @@ namespace WingidonExpansionPack
                 jinxedIDs.Add("Snake Charmer_WING");
                 jinxedIDs.Add("Swarm_Good_WING");
                 jinxedIDs.Add("Undying_WING");
+
+                jinxedIDs.Add("WING_Dupery_Good Cop");
+                jinxedIDs.Add("WING_Dupery_Private Eye");
+                jinxedIDs.Add("WING_Dupery_Weatherman");
+                jinxedIDs.Add("WING_Dupery_Copycat");
+                jinxedIDs.Add("WING_Dupery_Fall Guy");
+                jinxedIDs.Add("WING_Dupery_Surgeon");
+                jinxedIDs.Add("WING_Dupery_Wannabe");
+                jinxedIDs.Add("WING_Dupery_Bad Cop");
+                jinxedIDs.Add("WING_Dupery_Scoundrel");
+                jinxedIDs.Add("WING_Dupery_Serial Killer");
+            }
+
+            if (demonID == "Leviathan_WING")
+            {
+                jinxedIDs.Add("Guard_POW");
+                jinxedIDs.Add("Soldier_POW");
             }
 
 
@@ -1583,7 +1627,7 @@ namespace WingidonExpansionPack
             infoTypes.Add("Forager"); // Villager Cop
             // infoTypes.Add("Cartomancer"); // Learns an in-play character and an out-of-play character, but not which is which.
             // infoTypes.Add("Duchess"); // Learns 4 characters, among which are exactly 3 Types.
-            infoTypes.Add("Scout"); // Learns distance from an Evil character to its closest Evil.
+            if (evilCharacters.Count > 1) infoTypes.Add("Scout"); // Learns distance from an Evil character to its closest Evil.
             if (goodCharacters.Count != 0 && evilCharacters.Count != 0)
             {
                 infoTypes.Add("Medium"); // #X is a Good Y
@@ -3290,6 +3334,7 @@ namespace WingidonExpansionPack
                 case "82113114": return "Good (Mutant)";
                 case "16118119": return "Evil (Mutant)";
                 case "1615919151": return "Poisoned";
+                case "1615919152": return "Killed by the Snake Charmer";
                 case "1923920382": return "Killed by the Switchblade";
                 case "2051879715": return "Good (Tergiversator/Switchblade)";
                 case "2051879522": return "Evil (Tergiversator/Switchblade)";
@@ -3338,6 +3383,12 @@ namespace WingidonExpansionPack
                 case "312": return "Miraged (Mirage)";
                 case "313": return "Hosted (Lleech)";
                 case "314": return "Haunted (Wraith)";
+
+                // Dupery Bluff
+                case "315167151": return "Befriended (Good Cop)";
+                case "31516214": return "Befriended (Bad Cop)";
+                case "1853152120": return "Recruited";
+                case "1021192018": return "Just Revealed (Dupery Bluff)";
             }
             return statusID;
         }

@@ -62,6 +62,12 @@ public class w_BountyHunter : Role
                 charRef.pickableUses = 0;
                 OnActed(ETriggerPhase.Day, charRef, new ActedInfo("Something does not make sense"));
             }
+            if (bounty.characterName == "")
+            {
+                charRef.pickable.SetActive(false);
+                charRef.pickableUses = 0;
+                OnActed(ETriggerPhase.Day, charRef, new ActedInfo("Something does not make sense"));
+            }
             else
             {
                 Il2CppSystem.Collections.Generic.List<Character> bountyCharacters = new();

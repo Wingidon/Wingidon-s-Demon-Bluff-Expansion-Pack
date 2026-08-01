@@ -19,7 +19,7 @@ using static Il2CppSystem.Array;
 using static MelonLoader.Modules.MelonModule;
 using Il2CppSystem.Reflection;
 
-[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.3.4", "Wingidon")]
+[assembly: MelonInfo(typeof(MainMod), "Wingidon's Expansion Pack", "2.4.1", "Wingidon")]
 [assembly: MelonGame("UmiArt", "Demon Bluff")]
 
 namespace WingidonExpansionPack;
@@ -635,7 +635,16 @@ public class MainMod : MelonMod
         w_bountyhunter.gender = EGender.Female;
         w_bountyhunter.picking = true;
         w_bountyhunter.abilityUsage = EAbilityUsage.Once;
-        
+
+
+
+        CharacterData w_stray = newCharacter("Stray", EAlignment.Good, ECharacterType.Villager, true, false, "\"The neighbourhood stray cat.\nVery harsh language barrier there.\"", "Werewolf_78350415");
+        w_stray.role = new w_StrayCat();
+        w_stray.description = "Learn 3 numbers, but not which is which:\n- The number of pairs of Evil characters.\n- The distance from me to my nearest Evil.\n- How many Evil characters are within 2 cards of me.";
+        w_stray.hints = $"";
+        w_stray.ifLies = $"At least one of my numbers is wrong.";
+        w_stray.gender = EGender.They;
+
 
 
 
@@ -2881,6 +2890,7 @@ public class MainMod : MelonMod
             addRole(script.startingTownsfolks, w_sentinel);
             addRole(script.startingTownsfolks, w_sheriff);
             addRole(script.startingTownsfolks, w_spy);
+            addRole(script.startingTownsfolks, w_stray);
             //addRole(script.startingTownsfolks, w_slayerRework);
             addRole(script.startingTownsfolks, w_underling_v); // Allow Citizen to spawn naturally.
             addRole(script.startingTownsfolks, w_underling_v); // Allow natural double-ups.
@@ -2910,7 +2920,7 @@ public class MainMod : MelonMod
             addRoleIfNotJinxed(script.startingMinions, w_undying, undyingJinxes, script.startingDemons);
             for (int i = 0; i < 100; i++)
             {
-                //addRoleEvenIfDupe(script.startingTownsfolks, w_bountyhunter);
+                //addRoleEvenIfDupe(script.startingTownsfolks, w_stray);
                 //addRoleEvenIfDupe(script.startingOutsiders, w_underling_o);
                 //addRoleEvenIfDupe(script.startingMinions, w_heretic);
             }

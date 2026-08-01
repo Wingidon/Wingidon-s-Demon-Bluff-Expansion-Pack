@@ -28,7 +28,13 @@ public class w_Leviathan : Role
     {
         if (trigger == ETriggerPhase.Start)
         {
-            new wx_SavedScripts().DoJinxes(charRef, "Weather", false);
+            wx_SavedScripts sharedScripts = new wx_SavedScripts();
+            sharedScripts.DoJinxes(charRef, "Leviathan_WING", false);
+            sharedScripts.DoJinxes(charRef, "Weather", false);
+        }
+        if (trigger == ETriggerPhase.AfterRoundStart)
+        {
+            new wx_SavedScripts().DoJinxes(charRef, "Leviathan_WING", true);
         }
     }
     public w_Leviathan() : base(ClassInjector.DerivedConstructorPointer<w_Leviathan>())

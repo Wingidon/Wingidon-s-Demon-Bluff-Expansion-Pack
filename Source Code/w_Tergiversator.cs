@@ -123,8 +123,7 @@ public class w_Tergiversator : Role
 
     public override int GetDamageToYou()
     {
-        if (charRef.alignment == EAlignment.Good) return 4;
-        else return 0;
+        return 4;
     }
 
     public ActedInfo GetRandomNonsense()

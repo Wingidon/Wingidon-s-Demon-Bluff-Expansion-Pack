@@ -60,6 +60,7 @@ public class w_SnakeCharmer : Role
                     if (globalPoisonTarget.GetState() != ECharacterState.Dead && globalPoisonTarget.alignment == EAlignment.Good && globalPoisonTarget.statuses.Contains(PoisonStatus.w_poisoned))
                     {
                         // globalPoisonTarget.OnReveal();
+                        globalPoisonTarget.statuses.AddStatus(PoisonStatus.w_poisonDeath, charRef);
                         globalPoisonTarget.onReveal.Invoke();
                         globalPoisonTarget.KillByDemon(charRef);
                         globalPoisonTarget.Reveal();
@@ -133,6 +134,7 @@ public class w_SnakeCharmer : Role
     public static class PoisonStatus
     {
         public static ECharacterStatus w_poisoned = (ECharacterStatus)1615919151;
+        public static ECharacterStatus w_poisonDeath = (ECharacterStatus)1615919152;
         [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
         public static class pvt
         {
@@ -150,7 +152,7 @@ public class w_SnakeCharmer : Role
         {
             public static void Postfix(Character __instance)
             {
-                if (__instance.killedByDemon && __instance.statuses.Contains(w_poisoned))
+                if (__instance.killedByDemon && __instance.statuses.Contains(w_poisonDeath))
                 {
                     string colour = "#3F8538";
                     if (__instance.alignment == EAlignment.Evil) colour = "#FF0000";

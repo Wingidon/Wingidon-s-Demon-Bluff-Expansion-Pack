@@ -193,6 +193,7 @@ public class w_Carnicarius : Demon
             backupRoles.Add("Zealot_WING");
             backupRoles.Add("Turncoat_WING");
             backupRoles.Add("Copycat_WING");
+            backupRoles.Add("WING_Dupery_Mobster");
             Il2CppSystem.Collections.Generic.List<string> usefulOutcasts = new Il2CppSystem.Collections.Generic.List<string>(); // Outcasts that would be better kept alive and are therefore excluded from the relevant multiplier
             usefulOutcasts.Add("Bombardier_79093372");
             usefulOutcasts.Add("Chatterbox_WING");

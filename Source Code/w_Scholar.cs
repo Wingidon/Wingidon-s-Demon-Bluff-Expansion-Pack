@@ -110,6 +110,7 @@ public class w_Scholar : Role
             myDisguise = chars[0].dataRef;
         }
         if (myDisguise.startingAlignment == EAlignment.Evil) return;
+        if (!myDisguise.bluffable) return;
 
         chRef.statuses.statuses.Remove(ECharacterStatus.HealthyBluff);
         OnActed(ETriggerPhase.Day, chRef, new ActedInfo("I am the Overseer"));
