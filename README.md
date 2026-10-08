@@ -19,6 +19,7 @@ Almost none of the art was made by me. Most are either by Normandia, or edits of
 - Stray: Made by me!
 - Warden: LullabiesMourn (https://discord.com/channels/1148903384968089640/1399932582723846144/1455229912179933244)
 - Lunatic: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1417961198258753627)
+- Beast: Made by me!
 - Snake Charmer: Blood on the Clocktower art from the same character name (https://wiki.bloodontheclocktower.com/Snake_Charmer)
 - Acolyte, Fanatic, Zealot, Praesect: HydeTheFish (Sent to me in DMs)
 - Caedoccidere: I edited together a bunch of stock images I found online.
