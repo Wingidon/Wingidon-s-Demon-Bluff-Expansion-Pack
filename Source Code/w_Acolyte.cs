@@ -64,6 +64,7 @@ public class w_Acolyte : Role
         //int diceRoll = Calculator.RollDice(10);
         wx_SavedScripts savedScripts = new wx_SavedScripts();
         CharacterData bluff = savedScripts.GetOverrideNotInPlayBluff(charRef, true);
+        Gameplay.Instance.AddScriptCharacterIfAble(bluff.type, bluff);
         //}
         charRef.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
         return bluff;

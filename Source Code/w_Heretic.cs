@@ -54,6 +54,7 @@ public class w_Heretic : Minion
 
             //Let's define the IDs in each list
             blacklistOutcastIDs.Add("Trickster_o_scm"); // Just in case.
+            blacklistOutcastIDs.Add("Trickster_o_register_scm"); // Because apparently that's not good enough
 
             blacklistMinionIDs.Add("GoodTwin_POW"); // Good Twin is never in the Deck to begin with.
             blacklistMinionIDs.Add("Puppet_15989619"); // Puppet is never in the Deck to begin with.
@@ -64,6 +65,7 @@ public class w_Heretic : Minion
             blacklistMinionIDs.Add("Undying_WING"); // Undying is face-up. Don't add him as a fake Minion.
             blacklistMinionIDs.Add("Marionette_11628408"); // That's the wrong Marionette.
             blacklistMinionIDs.Add("Werewolf_78350415"); // Werewolf is never in the Deck to begin with.
+            blacklistMinionIDs.Add("WING_Dupery_Fall Guy MinionRegister"); // No.
             blacklistMinionIDs.Add("Wretch_Evil_91222191"); // That's the wrong Wretch.
             blacklistMinionIDs.Add("Vizier_LRZH"); // Leave everything to me...
 

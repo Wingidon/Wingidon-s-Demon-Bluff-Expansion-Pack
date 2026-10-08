@@ -81,6 +81,7 @@ public class w_Scholar : Role
         chRef.GiveBluff(myDisguise);
         chRef.RevealBluff();
         haveActed = true;
+        chRef.Act((ETriggerPhase)1856185198); // Fixes the BH interaction
         chRef.Act(ETriggerPhase.OnReveal);
         if (myDisguise.picking)
         {
@@ -117,6 +118,7 @@ public class w_Scholar : Role
         chRef.GiveBluff(myDisguise);
         chRef.RevealBluff();
         haveActed = true;
+        chRef.Act((ETriggerPhase)1856185198); // Fixes the BH interaction
         chRef.Act(ETriggerPhase.OnReveal);
         if (myDisguise.picking)
         {
@@ -150,8 +152,8 @@ public class w_Scholar : Role
     public override bool CheckIfCanBeKilled(Character charRef)
     {
         if (charRef.statuses.statuses.Contains(ECharacterStatus.HealthyBluff) && charRef.bluff)
+            if (charRef.bluff.characterId != "Overseer_WING")
             return charRef.bluff.role.CheckIfCanBeKilled(charRef);
-        else
-            return true;
+        return true;
     }
 }

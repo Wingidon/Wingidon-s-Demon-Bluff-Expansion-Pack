@@ -108,7 +108,7 @@ public class w_Mutant : Role
     {
         public static ECharacterStatus mutantGood = (ECharacterStatus)82113114;
         public static ECharacterStatus mutantEvil = (ECharacterStatus)16118119;
-        [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+        [HarmonyPatch(typeof(Character), nameof(Character.RevealStatusesIfAble))]
         public static class pvt
         {
             public static void Postfix(Character __instance)

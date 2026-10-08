@@ -124,7 +124,7 @@ public class w_MezephelesAlt : Demon
     {
 
         public static ECharacterStatus w_mezephelesMadnessOutcast = (ECharacterStatus)1521203119; // Evil Outcast
-        [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+        [HarmonyPatch(typeof(Character), nameof(Character.RevealStatusesIfAble))]
         public static class pvt
         {
             public static void Postfix(Character __instance)

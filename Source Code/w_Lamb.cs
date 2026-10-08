@@ -85,6 +85,14 @@ public class w_Lamb : Role
                 deckOutcasts.Add(character);
             }
         }
+        if (deckOutcasts.Count == 0)
+        {
+            // Failsafe for if no Outcasts are present in the Deck
+            foreach (CharacterData character in Gameplay.Instance.GetAscensionAllStartingCharacters())
+            {
+                if (character.type == ECharacterType.Outcast) deckOutcasts.Add(character);
+            }
+        }
         Il2CppSystem.Collections.Generic.List<string> misregisterOutcasts = new Il2CppSystem.Collections.Generic.List<string>();
         misregisterOutcasts.Add("Wretch_80988916");
         misregisterOutcasts.Add("Marionette_WING");
@@ -94,8 +102,8 @@ public class w_Lamb : Role
             if (misregisterOutcasts.Contains(character.characterId))
             {
                 noOutcastsValid = true;
+                break;
             }
-            break;
         }
         if (allOutcasts.Count == 0)
         {

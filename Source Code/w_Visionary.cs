@@ -106,6 +106,7 @@ public class w_Visionary : Role
         }
 
         newInfo = $"#{chosenTarget.id} is {theGoodRole} or {theEvilRole}";
+        if (chosenTarget.statuses.Contains((ECharacterStatus)911)) newInfo = $"My dream about #{chosenTarget.id} was hazy";
         return new ActedInfo(newInfo, newSelection);
 
     }
@@ -122,6 +123,10 @@ public class w_Visionary : Role
             {
                 validTargets.Add(character);
             }
+        }
+        if (selection.Count == 0)
+        {
+            validTargets = Characters.Instance.FilterCharacterMissingStatus(validTargets, (ECharacterStatus)911);
         }
         if (validTargets.Count == 0) return new ActedInfo("Something does not make sense");
 

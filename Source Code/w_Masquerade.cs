@@ -46,12 +46,32 @@ public class w_Masquerade : Role
         {
             new wx_SavedScripts().DebugMessage($"Masquerade initialised in seat {charRef.id}");
         }
+        if (trigger == (ETriggerPhase)1856185198) // Refreshed by the Devout
+        {
+            charRef.GiveBluff(GetBluffIfAble(charRef));
+            charRef.RevealBluff();
+            charRef.RefreshView();
+        }
+        if (trigger == ETriggerPhase.AfterRoundStart)
+        {
+            while (charRef.statuses.Contains(ECharacterStatus.HealthyBluff)) charRef.statuses.statuses.Remove(ECharacterStatus.HealthyBluff);
+        }
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
         if (trigger == ETriggerPhase.Init)
         {
             new wx_SavedScripts().DebugMessage($"Masquerade BluffAct-initialised in seat {charRef.id}");
+        }
+        if (trigger == (ETriggerPhase)1856185198) // Refreshed by the Devout
+        {
+            charRef.GiveBluff(GetBluffIfAble(charRef));
+            charRef.RevealBluff();
+            charRef.RefreshView();
+        }
+        if (trigger == ETriggerPhase.AfterRoundStart)
+        {
+            while (charRef.statuses.Contains(ECharacterStatus.HealthyBluff)) charRef.statuses.statuses.Remove(ECharacterStatus.HealthyBluff);
         }
     }
 
@@ -77,10 +97,15 @@ public class w_Masquerade : Role
             charRef.ShowActed(charRef.actedInfos[charRef.actedInfos.Count - 1], ETriggerPhase.Day);
             return true;
         }
+        if (charRef.bluff)
+        {
+            charRef.Reveal();
+            charRef.RevealAllReal();
+        }
+        if (charRef.statuses.Contains(ECharacterStatus.BrokenAbility)) return false;
         if (charRef.statuses.Contains(MasqKill.spentMasquerade)) return false;
+        charRef.statuses.AddStatus(ECharacterStatus.BrokenAbility, charRef); // Prevent attacking twice, even if refreshed.
         charRef.statuses.AddStatus(MasqKill.spentMasquerade, charRef);
-        charRef.Reveal();
-        charRef.RevealAllReal();
         sharedScripts.DebugMessage($"Masquerade at #{charRef.id} activating.");
         Il2CppSystem.Collections.Generic.List<Character> evilChars = new();
         Il2CppSystem.Collections.Generic.List<Character> lastStandChars = new();

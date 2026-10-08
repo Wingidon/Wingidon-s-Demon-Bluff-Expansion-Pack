@@ -135,7 +135,7 @@ public class w_SnakeCharmer : Role
     {
         public static ECharacterStatus w_poisoned = (ECharacterStatus)1615919151;
         public static ECharacterStatus w_poisonDeath = (ECharacterStatus)1615919152;
-        [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+        [HarmonyPatch(typeof(Character), nameof(Character.RevealStatusesIfAble))]
         public static class pvt
         {
             public static void Postfix(Character __instance)

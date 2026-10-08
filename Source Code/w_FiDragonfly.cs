@@ -282,7 +282,7 @@ public class w_FiDragonfly : Role
     {
         public static ECharacterStatus w_fiDragonflyTricked = (ECharacterStatus)2018931154;
 
-        [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+        [HarmonyPatch(typeof(Character), nameof(Character.RevealStatusesIfAble))]
         public static class pvt
         {
             public static void Postfix(Character __instance)

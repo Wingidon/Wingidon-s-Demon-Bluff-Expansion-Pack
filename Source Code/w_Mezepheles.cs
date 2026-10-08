@@ -137,7 +137,7 @@ public class w_Mezepheles : Role
     {
         public static ECharacterStatus w_mezephelesMadness = (ECharacterStatus)968;
 
-        [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+        [HarmonyPatch(typeof(Character), nameof(Character.RevealStatusesIfAble))]
         public static class pvt
         {
             public static void Postfix(Character __instance)

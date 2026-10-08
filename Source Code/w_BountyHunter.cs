@@ -13,6 +13,11 @@ public class w_BountyHunter : Role
     CharacterData bounty = new CharacterData();
     public override void Act(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == (ETriggerPhase)1856185198)
+        {
+            Act(ETriggerPhase.AfterRoundStart, charRef);
+            Act(wx_SavedScripts.w_AnyRevealPatch.SelfReveal, charRef);
+        }
         if (trigger == ETriggerPhase.AfterRoundStart)
         {
             wx_SavedScripts sharedScripts = new wx_SavedScripts();
@@ -95,6 +100,11 @@ public class w_BountyHunter : Role
     }
     public override void BluffAct(ETriggerPhase trigger, Character charRef)
     {
+        if (trigger == (ETriggerPhase)1856185198)
+        {
+            Act(ETriggerPhase.AfterRoundStart, charRef);
+            Act(wx_SavedScripts.w_AnyRevealPatch.SelfReveal, charRef);
+        }
         if (trigger == ETriggerPhase.AfterRoundStart)
         {
             wx_SavedScripts sharedScripts = new wx_SavedScripts();

@@ -1348,6 +1348,7 @@ namespace WingidonExpansionPack
                 jinxedIDs.Add("Lycanthrope_16077432");
                 jinxedIDs.Add("MadScientist_scm");
 
+                jinxedIDs.Add("EvilTwin_POW");
                 jinxedIDs.Add("Guardian_scm");
                 jinxedIDs.Add("Mezepheles_09511163");
                 jinxedIDs.Add("Poisoner_64796285");
@@ -1380,9 +1381,11 @@ namespace WingidonExpansionPack
                 jinxedIDs.Add("Jinx_POW"); // Ambusher
                 jinxedIDs.Add("Balancer_POW");
                 jinxedIDs.Add("Baron_04539999");
+                jinxedIDs.Add("Beast_WING");
                 jinxedIDs.Add("Mezepheles_09511163");
                 jinxedIDs.Add("Cryptid_WING");
                 jinxedIDs.Add("Grenadier_POW");
+                jinxedIDs.Add("PitHag_scm");
                 jinxedIDs.Add("Ritualist_WING");
                 jinxedIDs.Add("Saboteur_WING");
                 jinxedIDs.Add("Slinger_POW");
@@ -1415,6 +1418,9 @@ namespace WingidonExpansionPack
             if (jinxedIDs.Count == 0) return;
 
             Il2CppSystem.Collections.Generic.List<CharacterData> underlingDatas = GetUnderlingDatas(charRef);
+            Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Villager, underlingDatas[0]);
+            Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Outcast, underlingDatas[1]);
+            Gameplay.Instance.AddScriptCharacterIfAble(ECharacterType.Minion, underlingDatas[2]);
             if (!bluffs)
             {
                 foreach (Character character in Gameplay.CurrentCharacters)
@@ -1428,6 +1434,8 @@ namespace WingidonExpansionPack
                         if (character.dataRef.type == (ECharacterType)50) underlingID = 2; // Replace Weather (Power Play) with Minions.
                         DebugMessage($"{charRef.dataRef.characterName} (#{charRef.id}) found {character.dataRef.characterName} at #{character.id}, replacing with {underlingDatas[underlingID].characterName}");
                         character.Init(underlingDatas[underlingID]);
+                        character.RefreshCharacter();
+                        character.RefreshView();
                     }
                 }
             }
@@ -1446,6 +1454,8 @@ namespace WingidonExpansionPack
                             if (character.bluff.type == (ECharacterType)50) underlingID = 2; // Replace Weather (Power Play) with Minions.
                             DebugMessage($"{charRef.dataRef.characterName} (#{charRef.id}) found bad bluff of {character.bluff.characterName} at #{character.id}, replacing with {underlingDatas[underlingID].characterName}");
                             character.GiveBluff(underlingDatas[underlingID]);
+                            character.RefreshCharacter();
+                            character.RefreshView();
                         }
                     }
                 }
@@ -1841,7 +1851,7 @@ namespace WingidonExpansionPack
                 {
                     selection.Add(evilCharacters[UnityEngine.Random.RandomRangeInt(0, evilCharacters.Count)]);
                     if (selection[0].bluff) claimedRole = selection[0].bluff.characterName;
-                    else claimedRole = selection[0].GetRegisterAs().characterName;
+                    else claimedRole = selection[0].dataRef.characterName;
                 }
                 finalInfo = $"#{selection[0].id} is a Good {claimedRole}";
             }
@@ -2983,21 +2993,32 @@ namespace WingidonExpansionPack
                 int lieCheckNum = 0;
 
                 Il2CppSystem.Collections.Generic.List<Character> fakeGroup = GetFakeGroup(goodCharacters);
+                Il2CppSystem.Collections.Generic.List<Character> fakeEvils = GetFakeGroup(evilCharacters);
 
+                bool foundEvil = false;
+                bool foundFakeEvil = false;
                 foreach (Character character in villageTimesThree)
                 {
-                    if (goodCharacters.Contains(character)) truthCheckNum++;
-                    else
+                    if (foundEvil)
                     {
-                        if (truthCheckNum < truthFinalNum && truthCheckNum != 0) truthFinalNum = truthCheckNum;
-                        truthCheckNum = 0;
+                        if (goodCharacters.Contains(character)) truthCheckNum++;
+                        else
+                        {
+                            if (truthCheckNum < truthFinalNum && truthCheckNum != 0) truthFinalNum = truthCheckNum;
+                            truthCheckNum = 0;
+                        }
                     }
-                    if (fakeGroup.Contains(character)) lieCheckNum++;
-                    else
+                    else if (evilCharacters.Contains(character)) foundEvil = true;
+                    if (foundFakeEvil)
                     {
-                        if (lieCheckNum < lieFinalNum && lieCheckNum != 0) lieFinalNum = lieCheckNum;
-                        lieCheckNum = 0;
+                        if (fakeGroup.Contains(character)) lieCheckNum++;
+                        else
+                        {
+                            if (lieCheckNum < lieFinalNum && lieCheckNum != 0) lieFinalNum = lieCheckNum;
+                            lieCheckNum = 0;
+                        }
                     }
+                    else if (fakeEvils.Contains(character)) foundFakeEvil = true;
                 }
 
                 lieFinalNum = MakeNumberWrong(truthFinalNum, lieFinalNum, 1);
@@ -3362,6 +3383,7 @@ namespace WingidonExpansionPack
                 case "1204": return "Has Guardian Ability (Mad Scientist)";
                 case "873": return "Accused";
                 case "876": return "Killed by the Follower";
+                case "911": return "Erased by the Fracture";
 
                 // Power Play
                 case "195": return "Dueled (Pirate)";
@@ -3412,6 +3434,7 @@ namespace WingidonExpansionPack
         {
             public static ETriggerPhase AnyReveal = (ETriggerPhase)1121218522;
             public static ETriggerPhase SelfReveal = (ETriggerPhase)1951261852; // Used for Pick characters
+            public static ETriggerPhase OnRefresh = (ETriggerPhase)1856185198; // Called when the Devout refreshes someone.
             [HarmonyPrefix]
             public static bool CharacterRevealPrefix(Character obj)
             {

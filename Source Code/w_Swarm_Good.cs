@@ -89,72 +89,34 @@ public class w_Swarm_Good : Minion
     }
     public override ActedInfo GetInfo(Character charRef)
     {
-        Il2CppSystem.Collections.Generic.List<Character> characters = Gameplay.CurrentCharacters;
-        System.Collections.Generic.List<Character> newList = new System.Collections.Generic.List<Character>();
-        System.Collections.Generic.List<Character> newList2 = new System.Collections.Generic.List<Character>();
-        Il2CppSystem.Collections.Generic.List<Character> selection = new Il2CppSystem.Collections.Generic.List<Character>();
-        Characters charInst = Characters.Instance;
-        foreach (Character character in characters)
-        {
-            bool isSwarm = false;
-            if (character.statuses != null)
-            {
-                isSwarm = (character.GetRegisterAs().name == "Swarm (Good)" || character.GetRegisterAs().name == "Swarm (Evil)" || character.GetRegisterAs().name == "Swarm");
-            }
-            if (!isSwarm)
-            {
-                newList.Add(character);
-            }
-            else
-            {
-                newList2.Add(character);
-            }
-        }
-        string line = "Info";
-        if (newList2.Count > 1 && newList.Count > 1)
-        {
-            Character random = newList[UnityEngine.Random.RandomRangeInt(0, newList.Count)];
-            selection.Add(random);
-            newList.Remove(random);
-            Character random3 = newList[UnityEngine.Random.RandomRangeInt(0, newList.Count)];
-            selection.Add(random3);
-            Character random2 = newList2[UnityEngine.Random.RandomRangeInt(0, newList2.Count)];
-            selection.Add(random2);
-            newList2.Remove(random2);
-            Character random4 = newList2[UnityEngine.Random.RandomRangeInt(0, newList2.Count)];
-            selection.Add(random4);
-            Il2CppSystem.Collections.Generic.List<Character> infoChars = new Il2CppSystem.Collections.Generic.List<Character>();
-            // Time for a jank method of sorting this shit.
-            for (int k = 0; k < 20; k++)
-            {
-                if (random.id == k)
-                {
-                    infoChars.Add(random);
-                }
-                if (random2.id == k)
-                {
-                    infoChars.Add(random2);
-                }
-                if (random3.id == k)
-                {
-                    infoChars.Add(random3);
-                }
-                if (random4.id == k)
-                {
-                    infoChars.Add(random4);
-                }
-            }
-            line = string.Format("Two are Swarm:\n#{0}, #{1}, #{2}, #{3}", infoChars[0].id, infoChars[1].id, infoChars[2].id, infoChars[3].id);
-        }
-        else
-        {
-            //line = "I am the only Swarm.";
-            line = "Something does not make sense";
-            selection.Add(charRef);
-        }
+        wx_SavedScripts sharedScripts = new();
+        Il2CppSystem.Collections.Generic.List<Character> swarm = new();
+        Il2CppSystem.Collections.Generic.List<Character> nonSwarm = new();
+        Il2CppSystem.Collections.Generic.List<Character> selection = new();
 
-        ActedInfo actedInfo = new ActedInfo(line, selection);
-        return actedInfo;
+        foreach (Character character in Gameplay.CurrentCharacters)
+        {
+            if (character.GetRegisterAs().characterId == "Swarm_Good_WING" || character.GetRegisterAs().characterId == "Swarm_Evil_WING") swarm.Add(character);
+            else nonSwarm.Add(character);
+        }
+        sharedScripts.DebugMessage($"Good Swarm (#{charRef.id}) found the following Swarm: {sharedScripts.MentionEveryCharacterInList(swarm, "")}");
+        sharedScripts.DebugMessage($"...and the following non-Swarm: {sharedScripts.MentionEveryCharacterInList(nonSwarm, "")}");
+
+        if (swarm.Count < 2 || nonSwarm.Count < 2) return new ActedInfo("Something does not make sense");
+
+        selection.Add(swarm[UnityEngine.Random.RandomRangeInt(0, swarm.Count)]);
+        swarm.Remove(selection[0]);
+        selection.Add(swarm[UnityEngine.Random.RandomRangeInt(0, swarm.Count)]);
+
+        nonSwarm.Remove(selection[0]);
+        nonSwarm.Remove(selection[1]);
+        selection.Add(nonSwarm[UnityEngine.Random.RandomRangeInt(0, nonSwarm.Count)]);
+        nonSwarm.Remove(selection[2]);
+        selection.Add(nonSwarm[UnityEngine.Random.RandomRangeInt(0, nonSwarm.Count)]);
+
+        selection = sharedScripts.SortList(selection);
+
+        return new ActedInfo($"Two are Swarm:\n{sharedScripts.MentionEveryCharacterInList(selection, "")}", selection);
     }
     public override ActedInfo GetBluffInfo(Character charRef)
     {

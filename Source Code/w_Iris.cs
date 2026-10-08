@@ -90,9 +90,11 @@ public class w_Iris : Role
                 chosenEvilTarget.ChangeAlignment(EAlignment.Evil);
                 chosenEvilTarget.statuses.AddStatus(IrisStatus.w_irisTrick, charRef);
                 chosenEvilTarget.statuses.AddStatus(ECharacterStatus.MessedUpByEvil, charRef);
+                chosenEvilTarget.statuses.AddResistance(ECharacterStatus.Corrupted, charRef);
                 if (chosenEvilTarget.dataRef.characterId != "Knight_47970624") chosenEvilTarget.statuses.AddStatus(ECharacterStatus.HealthyBluff, charRef);
                 chosenEvilTarget.statuses.AddStatus(ECharacterStatus.WorkingAbility, charRef);
                 chosenEvilTarget.statuses.AddStatus(ECharacterStatus.AppearLying, charRef);
+                chosenEvilTarget.statuses.AddStatus(ECharacterStatus.AppearDisguised, charRef);
             }
         }
     }
@@ -166,7 +168,7 @@ public static class IrisStatus
     public static ECharacterStatus w_irisTrick = (ECharacterStatus)918919;
     public static ECharacterStatus w_irisName = (ECharacterStatus)918918;
 
-    [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+    [HarmonyPatch(typeof(Character), nameof(Character.RevealStatusesIfAble))]
     public static class pvt
     {
         public static void Postfix(Character __instance)

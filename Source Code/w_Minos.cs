@@ -70,6 +70,7 @@ public class w_Minos : Demon
                 }
                 myTarget.Reveal();
                 myTarget.onReveal.Invoke();
+                myTarget.revealed = true;
                 if (!myTarget.statuses.Contains(ECharacterStatus.UnkillableByDemon))
                 {
                     myTarget.RevealReal();

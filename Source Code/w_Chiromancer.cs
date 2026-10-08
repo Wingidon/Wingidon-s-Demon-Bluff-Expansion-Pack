@@ -25,6 +25,7 @@ public class w_Chiromancer : Role
             }
         }
         evilCharacters = Characters.Instance.FilterAlignmentCharacters(allCharacters, EAlignment.Evil);
+        if (evilCharacters.Count == 0) return new ActedInfo("Something does not make sense");
         Character chosenEvil = evilCharacters[UnityEngine.Random.RandomRangeInt(0, evilCharacters.Count)];
         allCharacters.Remove(chosenEvil);
         Character goodieOneShoe = allCharacters[UnityEngine.Random.RandomRangeInt(0, allCharacters.Count)];

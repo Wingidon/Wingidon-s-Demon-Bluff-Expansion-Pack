@@ -86,6 +86,14 @@ public class w_Saint : Role
         {
             charRef.statuses.statuses.Remove(ECharacterStatus.AppearLying);
         }
+        if (charRef.statuses.Contains((ECharacterStatus)235)) // Swapped (Advisor, Power Play)
+        {
+            charRef.statuses.statuses.Remove((ECharacterStatus)235);
+        }
+        if (charRef.statuses.Contains((ECharacterStatus)907)) // Evil (Prankster, Skill Cycler's Riddles)
+        {
+            charRef.statuses.statuses.Remove((ECharacterStatus)907);
+        }
     }
 
 

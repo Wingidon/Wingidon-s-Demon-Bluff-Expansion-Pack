@@ -89,7 +89,7 @@ public class w_DevoutRework : Role
             return;
         }
 
-
+        pickedChars[0].Act((ETriggerPhase)1856185198); // Notifies characters that they're being refreshed.
         // Now, let's check if they're a Pick character,
         if (pickedChars[0].GetCharacterBluffIfAble().picking) // If they're a Pick role,
         {
@@ -145,7 +145,8 @@ public class w_DevoutRework : Role
 
         pickedChars[0].statuses.AddStatus(ECharacterStatus.Corrupted, chRef); // Corrupt them if Lying
         pickedChars[0].statuses.statuses.Remove(ECharacterStatus.HealthyBluff);
-        
+
+        pickedChars[0].Act((ETriggerPhase)1856185198); // Notifies characters that they're being refreshed.
         // Now, let's check if they're a Pick character,
         if (pickedChars[0].GetCharacterBluffIfAble().picking) // If they're a Pick role,
         {

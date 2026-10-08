@@ -160,7 +160,8 @@ public class w_Tergiversator : Role
         randomNonsense.Add("One time, the Sentinel called the Drunk an idiot, and the Drunk agreed!");
         //randomNonsense.Add("The Sheriff wants to jail the Doppelganger and Copycat for identity theft, but he can't find either of them"); // COME UP WITH SOMETHING FOR SLEUTH LATER?
         randomNonsense.Add("The Spy sleeps on the roof of his house sometimes. He thinks nobody's caught on");
-        randomNonsense.Add("The Sheriff and Warden both think the other is an idiot, but they love each other. Romantically");
+        randomNonsense.Add("Most of the time, when the Introvert comes out of her home, it's to feed the Stray.\n\n...I kind of want a pet now");
+        randomNonsense.Add("The Sleuth and Warden both think the other is an idiot, but they love each other. Romantically");
         randomNonsense.Add("I think the Visionary and Dreamer are friends? They hang out a lot, but their speeches are both incoherent");
 
         randomNonsense.Add("Would it surprise you to learn that the Chatterbox and the Rambler usually get along?");
@@ -210,7 +211,7 @@ public static class TergiStatus
     public static ECharacterStatus w_tergiGood = (ECharacterStatus)2051879715;
     public static ECharacterStatus w_tergiEvil = (ECharacterStatus)2051879522;
 
-    [HarmonyPatch(typeof(Character), nameof(Character.RevealAllReal))]
+    [HarmonyPatch(typeof(Character), nameof(Character.RevealStatusesIfAble))]
     public static class pvt
     {
         public static void Postfix(Character __instance)

@@ -22,6 +22,7 @@ namespace WingidonExpansionPack;
 [RegisterTypeInIl2Cpp]
 public class w_Legion : Role
 {
+    bool haveStartActed = false;
     public override Il2CppSystem.Collections.Generic.List<SpecialRule> GetRules()
     {
         Il2CppSystem.Collections.Generic.List<SpecialRule> sr = new Il2CppSystem.Collections.Generic.List<SpecialRule>();
@@ -81,6 +82,8 @@ public class w_Legion : Role
         }
         if (trigger == ETriggerPhase.AfterRoundStart)
         {
+            if (haveStartActed) return;
+            haveStartActed = true;
             Il2CppSystem.Collections.Generic.List<Character> aliveGoods = new Il2CppSystem.Collections.Generic.List<Character>();
             aliveGoods = Characters.Instance.FilterAliveCharacters(Gameplay.CurrentCharacters);
             aliveGoods = Characters.Instance.FilterRealAlignmentCharacters(aliveGoods, EAlignment.Good);

@@ -27,7 +27,7 @@ public class w_Chatterbox : Role
     {
         if (trigger == ETriggerPhase.Init)
         {
-            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+            //new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
         }
         if (trigger == ETriggerPhase.Day)
         {
@@ -37,7 +37,7 @@ public class w_Chatterbox : Role
             unrevealedCharacters.Remove(charRef);
             if (unrevealedCharacters.Count == 0)
             {
-                onActed.Invoke(new ActedInfo("All characters have been revealed"));
+                onActed.Invoke(SomethingReallyInteresting());
                 return;
             }
             unrevealedCharacters = Characters.Instance.FilterCharacterType(unrevealedCharacters, ECharacterType.Villager);
@@ -86,7 +86,8 @@ public class w_Chatterbox : Role
 
         if (selection.Count == 0)
         {
-            info = "All characters have been revealed";
+            //info = "All characters have been revealed";
+            info = SomethingReallyInteresting().desc;
         }
         else if (selection.Count == 1)
         {
@@ -106,7 +107,7 @@ public class w_Chatterbox : Role
     {
         if (trigger == ETriggerPhase.Init)
         {
-            // new wx_SavedScripts().DebugMessage($"Initialised {charRef.dataRef.characterName} at #{charRef.id}");
+            //new wx_SavedScripts().DebugMessage($"Initialised lying Chatterbox ({charRef.dataRef.characterName}) at #{charRef.id}");
         }
         if (trigger != ETriggerPhase.Day) return;
         onActed.Invoke(GetInfo(charRef));
@@ -116,10 +117,77 @@ public class w_Chatterbox : Role
         return "";
     }
 
-    public ActedInfo GetRandomNonsense()
+    private ActedInfo SomethingReallyInteresting()
     {
-        Il2CppSystem.Collections.Generic.List<string> randomNonsense = new Il2CppSystem.Collections.Generic.List<string>();
-        ActedInfo returnInfo = new ActedInfo("");
+        Il2CppSystem.Collections.Generic.List<string> randomNames = wx_RandomLists.GetNameList();
+        Il2CppSystem.Collections.Generic.List<string> somethingReallyInteresting = new Il2CppSystem.Collections.Generic.List<string>();
+
+        string randomNameOne = randomNames[UnityEngine.Random.RandomRangeInt(0, randomNames.Count)];
+        randomNames.Remove(randomNameOne);
+        string randomNameTwo = randomNames[UnityEngine.Random.RandomRangeInt(0, randomNames.Count)];
+        randomNames.Remove(randomNameTwo);
+        string randomNameThree = randomNames[UnityEngine.Random.RandomRangeInt(0, randomNames.Count)];
+        randomNames.Remove(randomNameThree);
+        string randomNameFour = randomNames[UnityEngine.Random.RandomRangeInt(0, randomNames.Count)];
+
+        somethingReallyInteresting.Add("Something really interesting!");
+        somethingReallyInteresting.Add("Have you heard the latest gossip?");
+        somethingReallyInteresting.Add("Did you hear?");
+        somethingReallyInteresting.Add("Blah blah blah blah blah blah blah blah blah blah blah blah");
+        somethingReallyInteresting.Add("Do you wanna hear something funny?");
+        somethingReallyInteresting.Add("Do you wanna hear something interesting?");
+        somethingReallyInteresting.Add("Do you wanna hear something cool?");
+        somethingReallyInteresting.Add($"Did {randomNames[UnityEngine.Random.RandomRangeInt(0, randomNames.Count)]} update you on the latest drama?");
+        somethingReallyInteresting.Add($"Did {randomNames[UnityEngine.Random.RandomRangeInt(0, randomNames.Count)]} update you with the recent news?");
+        somethingReallyInteresting.Add($"Did {randomNames[UnityEngine.Random.RandomRangeInt(0, randomNames.Count)]} tell you what happened earlier?");
+        somethingReallyInteresting.Add($"I saw {randomNameOne} with {randomNameTwo} yesterday...");
+        somethingReallyInteresting.Add($"What was {randomNameOne} doing with {randomNameTwo} yesterday, I wonder");
+        somethingReallyInteresting.Add($"Did you hear that {randomNameOne} saw {randomNameTwo} and {randomNameThree} together yesterday?");
+        somethingReallyInteresting.Add($"I saw {randomNameOne}, {randomNameTwo}, {randomNameThree} and {randomNameFour} sitting around in a circle yesterday");
+        somethingReallyInteresting.Add($"I'm prettty sure {randomNameOne} is planning something sinister");
+        somethingReallyInteresting.Add($"{randomNameOne} should probably watch their back, I think {randomNameTwo} wants to do something to them...");
+        somethingReallyInteresting.Add($"{randomNameOne} is plotting something...");
+        somethingReallyInteresting.Add($"Between you and me, I think {randomNameOne} is suspicious");
+        somethingReallyInteresting.Add($"{randomNameOne} is Evil!");
+        somethingReallyInteresting.Add($"{randomNameOne} is Good!");
+        somethingReallyInteresting.Add($"Not liking our chances here");
+        somethingReallyInteresting.Add($"I saw {randomNameOne} on a date with {randomNameTwo} the other day...\n\nNah, I just made that up");
+        somethingReallyInteresting.Add($"I think {randomNameOne} and {randomNameTwo} are in <i>looooove</i>!");
+        somethingReallyInteresting.Add($"I think {randomNameOne} is hiding something!");
+        somethingReallyInteresting.Add($"{randomNameOne} is suspicious!");
+        somethingReallyInteresting.Add($"{randomNameOne} seems innocent");
+        somethingReallyInteresting.Add($"I wouldn't trust {randomNameOne} if I were you");
+        somethingReallyInteresting.Add($"{randomNameOne} and {randomNameTwo} had a massive argument yesterday!");
+        somethingReallyInteresting.Add($"Did you hear? Apparently {randomNameOne} stole something from {randomNameTwo} while they weren't looking");
+        somethingReallyInteresting.Add($"I heard {randomNameOne} discussing something about hideout locations with {randomNameTwo} the other day");
+        somethingReallyInteresting.Add($"I think {randomNameOne} is the Demon!");
+        somethingReallyInteresting.Add($"{randomNameOne} was muttering something to themselves earlier today");
+        somethingReallyInteresting.Add($"Keep an eye on {randomNameOne}!");
+        somethingReallyInteresting.Add($"The other day, {randomNameOne} told me how they saw {randomNameTwo} and {randomNameThree}...");
+        somethingReallyInteresting.Add($"Apparently {randomNameOne} and {randomNameTwo} have been talking about {randomNameThree} behind their back!");
+        somethingReallyInteresting.Add($"{randomNameOne} and {randomNameTwo} had a big argument with {randomNameThree} and {randomNameFour} a few days ago");
+        somethingReallyInteresting.Add($"{randomNameOne} was talking about me behind my back! How scummy!");
+        somethingReallyInteresting.Add($"Don't tell anyone, but... {randomNameOne} has a crush on {randomNameTwo}");
+        somethingReallyInteresting.Add($"You holding up okay?");
+        somethingReallyInteresting.Add($"Come to think of it, I haven't seen {randomNameOne} in a while...");
+        somethingReallyInteresting.Add($"Wonder how {randomNameOne} is doing...");
+        somethingReallyInteresting.Add($"Hey Exe, what's the news today?");
+        somethingReallyInteresting.Add($"I'm meeting up with {randomNameOne} in an hour or so, they heard something about {randomNameTwo}");
+
+
+        // Now for the reference
+        string toxicGossip = "I heard that";
+        string chosenName = "";
+        for (int i = 0; i < 5; i++)
+        {
+            chosenName = randomNames[UnityEngine.Random.RandomRangeInt(0, randomNames.Count)];
+            randomNames.Remove(chosenName);
+            if (chosenName.Length > 4) toxicGossip += $" {chosenName} said";
+            else toxicGossip += $" {chosenName} said that";
+        }
+        toxicGossip += "...";
+        somethingReallyInteresting.Add(toxicGossip);
+        ActedInfo returnInfo = new ActedInfo(somethingReallyInteresting[UnityEngine.Random.RandomRangeInt(0, somethingReallyInteresting.Count)]);
         return returnInfo;
     }
 
