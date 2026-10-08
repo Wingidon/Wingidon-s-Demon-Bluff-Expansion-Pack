@@ -9,6 +9,7 @@ Almost none of the art was made by me. Most are either by Normandia, or edits of
 - Empath: LimeOn (https://discord.com/channels/1148903384968089640/1427769361707569153/1521537343046291507)
 - Forager: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1409917727770021898)
 - Gravekeeper: LostIllustrator (https://discord.com/channels/1148903384968089640/1427769361707569153/1489444052175687801)
+- Insomniac: Derpy_Feesh (https://discord.com/channels/1148903384968089640/1399932582723846144/1499410659375317203)
 - Jewelsmith: Astery (https://discord.com/channels/1148903384968089640/1399932582723846144/1433225282143129702)
 - Masquerade: Blue Cheesed (https://discord.com/channels/1148903384968089640/1399932582723846144/1415830646055632968)
 - Paperboy: Astery (https://discord.com/channels/1148903384968089640/1399932582723846144/1437801771090317392)
@@ -19,7 +20,7 @@ Almost none of the art was made by me. Most are either by Normandia, or edits of
 - Warden: LullabiesMourn (https://discord.com/channels/1148903384968089640/1399932582723846144/1455229912179933244)
 - Lunatic: WeekendWolf (https://discord.com/channels/1148903384968089640/1399932582723846144/1417961198258753627)
 - Snake Charmer: Blood on the Clocktower art from the same character name (https://wiki.bloodontheclocktower.com/Snake_Charmer)
-- Zealot: HydeTheFish (Sent to me in DMs)
+- Acolyte, Fanatic, Zealot, Praesect: HydeTheFish (Sent to me in DMs)
 - Caedoccidere: I edited together a bunch of stock images I found online.
 - Carnicarius: Made by me!
 - Leviathan: Derpy_Feesh (https://discord.com/channels/1148903384968089640/1399932582723846144/1483655512808489110)
