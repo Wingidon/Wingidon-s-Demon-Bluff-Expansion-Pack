@@ -1,6 +1,8 @@
 ## Welcome!
 This is a mod that adds a LOT of new roles.
 
+I recommend grabbing [my Keyword Expansion mod](https://github.com/Wingidon/Keyword-Expansion) alongside this one, since this mod uses quite a few keywords added by that mod. It's not a hard-requirement, but I highly recommend it.
+
 There is an ArtSwap folder attached containing the art I use for each role.
 
 Almost none of the art was made by me. Most are either by Normandia, or edits of Normandia's work. Here are the ones that aren't:
