@@ -39,6 +39,7 @@ Currently, this mod includes the following roles:
 - Bloodseer - Gathers a lot of info... for a price.
 - Bounty Hunter - Learns an in-play Evil role, and you may choose to take damage to Learn who it is.
 - Cardshark - Picks 3, and heals or hurts you depending on how many Villagers you picked.
+- Cartographer - Learns how many Evils are 3 or more cards away from itself.
 - Cartomancer - Learns that only one of two roles is in-play.
 - Chiromancer - Learns 3 characters and which Evil role each is, but only one is correct.
 - Citizen - Learns random info. Is not Unique.
@@ -51,6 +52,7 @@ Currently, this mod includes the following roles:
 - Gossip - Picks 1 character and Learns random info about them.
 - Gravekeeper - Learns random info about every dead character when activated.
 - Hound Tamer - Learns a character that is either Lying, Disguising, or a non-Villager.
+- Insomniac - Picks 1 character and Reveals them. Starts Revealed. Refreshes at Night.
 - Introvert - Learns 2 roles that sit within 2 cards of herself.
 - Jewelsmith - Learns an Honest character.
 - Knave - Learns three sets of info, but one is false.
@@ -75,6 +77,7 @@ Currently, this mod includes the following roles:
 ### Outcasts
 - Chatterbox - Corrupts an unrevealed character on reveal.
 - Echo - Registers as anyone and anything.
+- Fugitive - Disguises. Dies if picked, dealing light damage.
 - Lunatic - Disguises, but only Lies sometimes.
 - Marionette - Lies, Disguises, Registers as a Puppet, and sits next to the Demon.
 - Mutant - Might become Evil. If it remains Good, it creates an additional Minion.
@@ -85,6 +88,7 @@ Currently, this mod includes the following roles:
 - Tergiversator - Starts with a random alignment, flips to the opposite each night.
 ### Minions
 - Acolyte - Minion created by another character's ability. Lies and Disguises as a not-in-play character.
+- Beast - Lies and Disguises as an in-play character. Deals damage & kills a Good character if the Demon is executed before it.
 - Cryptid - Becomes a random unknown Minion.
 - Fanatic - Minion created by another character's ability. Lies and Disguises.
 - Heretic - Adds two fake Minions and two fake Demons to the Deck. Lies and Disguises.
@@ -96,6 +100,7 @@ Currently, this mod includes the following roles:
 - Turncoat - Disguises as an in-play character.
 - Underling - Lies and Disguises. Is not Unique.
 - Undying - Doesn't Disguise, but can't be killed unless they're the last remaining Evil. Might create a Fanatic.
+- Widow - Silences a random character. Lies and Disguises.
 - Zealot - Minion created by another character's ability. Lies and Disguises as an in-play character.
 ### Demons
 (All Demons can be individually disabled through a config file in `/Demon Bluff Demo/UserData/`)
@@ -106,7 +111,7 @@ Currently, this mod includes the following roles:
 - Leviathan - Extra fake characters are added to the Deck. Lose if you execute a Villager. Lies and Disguises.
 - Magnere - Attacks you with bigger villages, becoming a different Demon in the process.
 - Mendaverte - Villagers are Corrupted. Evil characters tell the truth. Lies and Disguises.
-- Praesect - Creates an Acolyte and a Zealot. Deals damage if Executed before both are killed. Lies and Diguises.
+- Praesect - Creates an Acolyte and a Zealot. Makes the closest Minions Truthful. Lies and Diguises.
 - Sanguitaurus - Night falls twice as fast. Kills at night. Lose if all Good characters die. Lies and Disguises.
 - Tenecaligo - Effectively hides the Minion & Outcast count. Lies and Disguises.
 - Venelum - Corrupts an adjacent Villager. Turns a Corrupted character Evil. Lies and Disguises.
